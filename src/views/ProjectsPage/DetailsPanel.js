@@ -314,7 +314,7 @@ export default function DetailsPanel(props) {
 
       <div style={{ margin: '20px 5px 0 10px' }}>
         {
-          imageFileURL && <img src={imageFileURL} style={{ width: '100%' }} />
+          pprops && imageFileURL && <img src={imageFileURL} style={{ width: '100%' }} />
         }
       </div>
 
@@ -322,7 +322,7 @@ export default function DetailsPanel(props) {
 
       <Grid container>
         {
-          false && pprops.people.map((person) => {
+          /* pprops.people.map((person) => {
             return (
               <Grid item xs={12} sm={12} md={6}>
                 <Box display="flex" p={2} style={{ width: '100%' }}>
@@ -341,17 +341,13 @@ export default function DetailsPanel(props) {
                 </Box>
               </Grid>
             );
-          })
+          }) */
         }
-
-
       </Grid>
 
-
       <h4 style={{ margin: '30px 0px 20px 0px', fontWeight: 'bold' }}>Project Data</h4>
-
       {
-        dataFileURL &&
+        dataFileURL && pprops.dataFiles &&
         <GridContainer>
           <GridItem>
             <Card>
