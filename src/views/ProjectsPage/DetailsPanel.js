@@ -193,6 +193,7 @@ export default function DetailsPanel(props) {
     classes.imgFluid
   );
   const [imageFileURL, setImageFileURL] = useState();
+  const [dataFileURL, setDataFileURL] = useState();
 
   const { state } = props;
 
@@ -248,28 +249,31 @@ export default function DetailsPanel(props) {
   //let pmodes = pprops.mode.toLowerCase().split(';');
   let pmodes = pprops.mode;
 
-  //useEffect(() => {
-    async function onLoad() {
-      try {
-        if (pprops.imageFiles) {
-          //console.log(pprops.imageFiles + " | " + pprops.userId);
-          const image = await Storage.get(pprops.imageFiles, {
-            //level: "protected",
-            identityId: pprops.userId
-          });
-          setImageFileURL(image);
-          //console.log(pprops.imageFilesURL);
-        }
-
-        //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
-      } catch (e) {
-        onError(e);
+  async function onLoad() {
+    try {
+      if (pprops.imageFiles) {
+        const imagef = await Storage.get(pprops.imageFiles, {
+          identityId: pprops.userId
+        });
+        setImageFileURL(imagef);
+        //console.log(pprops.imageFilesURL);
       }
+      if (pprops.dataFiles) {
+        const dataf = await Storage.get(pprops.dataFiles, {
+          identityId: pprops.userId
+        });
+        setDataFileURL(dataf);
+      }
+      //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
+    } catch (e) {
+      onError(e);
     }
-    onLoad();
-  //}, []);
+  }
+  onLoad();
 
-
+  function formatFilename(str) {
+    return str.replace(/^\w+-/, "");
+  }
 
   return (
     <Paper style={{
@@ -318,7 +322,7 @@ export default function DetailsPanel(props) {
 
       <Grid container>
         {
-          pprops.people.map((person) => {
+          false && pprops.people.map((person) => {
             return (
               <Grid item xs={12} sm={12} md={6}>
                 <Box display="flex" p={2} style={{ width: '100%' }}>
@@ -346,7 +350,29 @@ export default function DetailsPanel(props) {
 
       <h4 style={{ margin: '30px 0px 20px 0px', fontWeight: 'bold' }}>Project Data</h4>
 
-      <GridContainer>
+      {
+        dataFileURL &&
+        <GridContainer>
+          <GridItem>
+            <Card>
+              <CardHeader color="success">
+                File
+              </CardHeader>
+              <CardBody>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={dataFileURL}
+                >
+                  {formatFilename(pprops.dataFiles)}
+                </a>
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
+      }
+
+      {/*       <GridContainer>
         <GridItem xs={12} sm={12} md={6}>
           <Card chart>
             <CardHeader color="success">
@@ -380,7 +406,7 @@ export default function DetailsPanel(props) {
             </CardBody>
           </Card>
         </GridItem>
-      </GridContainer>
+      </GridContainer> */}
 
     </Paper>
   );
