@@ -43,6 +43,10 @@ import {
   completedTasksChart
 } from "../../variables/charts.js";
 
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import DOMPurify from 'dompurify';
+
 
 import {
   defaultFont,
@@ -209,6 +213,7 @@ export default function DetailsPanel(props) {
       case Constants.STATUS_PLAN:
         return "Planning"
       case Constants.STATUS_DESIGN:
+        return "Implementation"
       case Constants.STATUS_IMPLEMENT:
         return "Implementation"
       case Constants.STATUS_LIVE:
@@ -275,6 +280,11 @@ export default function DetailsPanel(props) {
     return str.replace(/^\w+-/, "");
   }
 
+  function createDescriptionMarkup() {
+    var clean = DOMPurify.sanitize(draftToHtml(pprops.description));
+    return { __html: clean };
+  }
+
   return (
     <Paper style={{
       width: '50vw', height: 'calc(100vh - 65px)', overflow: 'auto', padding: '0px 15px 50px 15px',
@@ -310,7 +320,8 @@ export default function DetailsPanel(props) {
         </Box>
       </Box>
 
-      <div style={{ margin: '30px 0 0 0' }}>{pprops.desc_text}</div>
+      <div style={{ margin: '30px 0 0 0' }} dangerouslySetInnerHTML={createDescriptionMarkup()}>
+      </div>
 
       <div style={{ margin: '20px 5px 0 10px' }}>
         {
@@ -318,8 +329,27 @@ export default function DetailsPanel(props) {
         }
       </div>
 
-      <h4 style={{ margin: '30px 0px 0 0px', fontWeight: 'bold' }}>Project Team</h4>
-
+      {
+        pprops.lead && pprops.lead.name && <h4 style={{ margin: '30px 0px 0 0px', fontWeight: 'bold' }}>Project Lead</h4>
+      }
+      {
+        pprops.lead && pprops.lead.name &&
+        <Grid container>
+          <Grid>
+            <Box display="flex" p={0} style={{ width: '100%' }}>
+              <div style={{ padding: '10px 10px', verticalAlign: 'middle' }}>
+                <FormLabel style={{ fontWeight: 'bold', color: 'black' }}>{pprops.lead.name}</FormLabel>
+                {
+                  pprops.lead.email &&
+                  <span style={{ marginLeft: '20px' }}>
+                    <a href={"mailto:" + pprops.lead.email}>{pprops.lead.email}</a>
+                  </span>
+                }
+              </div>
+            </Box>
+          </Grid>
+        </Grid>
+      }
       <Grid container>
         {
           /* pprops.people.map((person) => {
@@ -345,7 +375,10 @@ export default function DetailsPanel(props) {
         }
       </Grid>
 
-      <h4 style={{ margin: '30px 0px 20px 0px', fontWeight: 'bold' }}>Project Data</h4>
+      {
+        dataFileURL && pprops.dataFiles &&
+        <h4 style={{ margin: '30px 0px 20px 0px', fontWeight: 'bold' }}>Project Data</h4>
+      }
       {
         dataFileURL && pprops.dataFiles &&
         <GridContainer>

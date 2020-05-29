@@ -156,6 +156,7 @@ function processProjectData2(data) {
     p["properties"] = proj;
     p.properties["id"] = proj.projectId;
     p.properties["name"] = proj.title;
+    p.properties["status"] = parseInt(proj.status);
 
     // img url
     /*var imgURL = proj.properties.desc_photo;
