@@ -1,0 +1,845 @@
+[
+	{
+	  "status": "deployed",
+	  "coords": {
+	    "lat": 40.7440477,
+	    "lng": -111.9412099
+	  },
+	  "location": "Redwood Road, a north-south arterial corridor in the Salt Lake Valley, specifically from 400 South to 8020 South (11 miles).",
+	  "timeline": "Thirty of the 35 intersections along this corridor are equipped with DSRC RSUs and are currently broadcasting SPaT and MAP messages.",
+	  "description": "In addition to broadcasting SPaT and MAP messages, this deployment is focused on two other goals:  1) testing the interoperability of RSUs and OBUs from various DSRC vendors, and 2) utilizing a version of the MMITSS (Multi-Modal Intelligent Traffic Signal Systems) V2I application to provide conditional transit signal priority. For the first goal, DSRC hardware from Arada, Savari, Cohda and Lear is deployed on the intersections of this corridor, and testing is on-going. Hardware includes RSUs which meet the USDOT 3.0 specification, and newer hardware which reportedly meets the 4.1 specification. OBUs from the same DSRC vendors are also being used. Signal controllers include the Econolite Cobalt and the Intelight controller. For the second goal, priority is currently being granted to Utah Transit Authority (UTA) buses along the south half of the corridor when they are behind schedule. A customized version of MMITSS is being used to provide this priority. Utah MMITSS is running on standalone Linux computers in the signal cabinets and on the buses, connected to Lear DSRC hardware. This is the first DSRC-based V2I corridor in the U.S. with data being actively used in operational decisions on a transportation system.",
+	  "contact": "Blaine Leonard, P.E., Utah DOT <a href=\"mailto:bleonard@utah.gov\">bleonard@utah.gov</a>, 801-887-3723"
+	},
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 40.269987,
+	    "lng": -111.679991
+	  },
+	  "location": "University Parkway, University Avenue, and a few adjacent local streets extending from the Front Runner Commuter Rail Station to downtown Provo, Utah. The corridor includes about 45 signalized intersections.",
+	  "timeline": "Construction of the Bus Rapid Transit (BRT) line is underway and connected vehicle improvements are just beginning. Completion is scheduled for August 2018.",
+	  "description": "The intent of this project is to deploy the Utah version of MMITSS (Multi-Modal Intelligent Traffic Signal Systems), which has previously been deployed on Redwood Road in Salt Lake City, Utah, to provide conditional bus transit priority to a new Bus Rapid Transit system. DSRC equipment will be installed in about 45 signalized intersections along the corridor and in 25 BRT vehicles. The Utah MMITSS application will run on stand-alone Linux boards and communicate with Econolite signal controllers and the on-board transit operations software. SPaT and MAP will be broadcast at each of these intersections. The project is being constructed jointly by the Utah Transit Authority and the Utah Department of Transportation, with the cooperation of local cities and the metropolitan planning organization. ",
+	  "contact": "Blaine Leonard, P.E., Utah DOT <a href=\"mailto:bleonard@utah.gov\">bleonard@utah.gov</a>, 801-887-3723"
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 37.442150,
+			"lng": -122.143121
+		},
+		"location": "Palo Alto, California; on State Route 82, also known as El Camino Real, which is a high-volume arterial route that carries about 50,000 vehicles per day. Starting from north to south, the Connected Vehicle Test Bed consists of 16 consecutive equipped intersections at the following cross streets: Stanford, Cambridge, California, Page Mill, Hansen/Portage, Matadero, Curtner, Ventura, Los Robles, Maybell, Charleston, Medical Foundation Dr, Embarcadero Rd, Churchill Ave, Serra/Park Rd and Dinah Ct. The test bed is 3 miles long.",
+		"timeline": "The test-bed is currently active and its status can be checked at the following web link:<br><a href=\"http://caconnectedvehicletestbed.org/index.php/status_list.php\" target=\"_blank\">http://caconnectedvehicletestbed.org/index.php/status_list.php</a><br>In addition to the test bed expansion mentioned above, in early 2018 the existing RSU's will be replaced with ones that comply with version 4.1 of the RSU specification. The new RSU's will support the Security Credential Management System (SCMS), which ensures the security of messages broadcast via DSRC.  At that point, this location will be an initial deployment, not just a test bed.",
+		"description": "The testbed consists of the following hardware and software: Savari/Lear DSRC Radios(compliant with version 3.0 of the Roadside Unit[RSU] specification), Roadside Processors(Linux - based industrial PC's), Ethernet Switches, Power over Ethernet(PoE) equipment, 4G/LTE Backhaul Modems, and GPS receivers.The Roadside Processor performs the connected vehicle safety and mobility applications, and uses a serial port connection to obtain the Signal Phase and Timing(SPaT) information from the existing model 2070E traffic signal controller. The RSU's are mounted on the signal mast, and the DSRC antennas are mounted over the travel lanes on the signal mast arm, which gives them better line - of -sight visibility to approaching vehicles.The test bed intersections are currently broadcasting SAE J2735 - 2016 compliant SPaT and MAP messages.They also support Transit Signal Priority applications, broadcasting Signal Status Messages and receiving and processing Signal Request Messages. Development is underway to prepare and broadcast GPS - corrections using the Radio Technical Commission for Maritime Services(RTCM) standard adopted by the auto industry, which enables vehicles to obtain the lane - level positioning accuracy necessary for safety applications.",
+		"contact": "Pete Hansra, PE, TE, Chief, <a href=\"mailto:gurprit.hansra@dot.ca.gov\">gurprit.hansra@dot.ca.gov</a>, (916) 227-8008."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 33.842942,
+			"lng": -112.135186
+		},
+		"location": "Anthem Arizona",
+		"timeline": "Currently SPaT broadcasts are operational",
+		"description": "There are 11 intersections in Anthem, AZ currently broadcasting SPaT and operating the Multi-Modal Intelligent Traffic Signal System (MMITSS) application.",
+		"contact": "Faisal Saleem, Maricopa County DOT, <a href=\"mailto:faisalsaleem@mail.maricopa.gov\">faisalsaleem@mail.maricopa.gov</a>, (602) 506-1241"
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.2750206,
+			"lng": -76.8551436
+		},
+		"location": "Walnut Street, Third Street, Seventh Street, and Forster Street in Harrisburg are all equipped with SPaT deployment.",
+		"timeline": "Currently active and broadcasting",
+		"description": "A total of 8 signalized intersections in Harrisburg are broadcasting SPaT messages.",
+		"contact": "Mark Kopko, PennDOT, <a href=\"mailto:markopko@pa.gov\">markopko@pa.gov</a>, (717) 783-1903"
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.440374,
+			"lng": -79.996144
+		},
+		"location": "Within the city of Pittsburgh, as well as surrounding townships of Ross Township and Cranberry Township.",
+		"timeline": "SPaT broadcasts are operational and additional locations are being added",
+		"description": "A total of 24 signalized intersections are operational on Baum Boulevard & Centre Avenue.  Carnegie Mellon was the lead in deploying these with assistance from the city, MPO, and Penn DOT.  In Ross Township, 11 signalized intersections are equipped with SPaT Broadcasts on McKnight Road.  In Cranberry Township, 11 signalized intersections are equipped with SPaT broadcasts on Route 19.  Carnegie Mellon was the lead, with assistance from the Township, MPO, and Penn DOT.</p><p>The city of Pittsburgh is planning an additional 90 SPaT deployments at signalized intersections with a completion date of 2019",
+		"contact": "Mark Kopko, PennDOT, <a href=\"mailto:markopko@pa.gov\">markopko@pa.gov</a>, (717) 783-1903"
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 33.793017,
+			"lng": -84.382708
+		},
+		"location": "North Avenue, a major east-west arterial in the urban core of Midtown Atlanta that connects universities, public and private transit hubs, Fortune 500 companies, shopping, and residents.",
+		"timeline": "The system became operational in September 2017.",
+		"description": "The City of Atlanta’s Renew Atlanta Infrastructure Bond Program includes funding for a Smart Corridor Demonstration Project along North Avenue from the Georgia Tech campus to Ponce City Market (3.2 miles).  One element of the Smart Corridor Project effort is to provide V2I applications, deployment and demonstrate the capabilities of dedicated short range communications (DSRC) and roadside equipment (RSE) for implementing systems such as intersection Map and Signal Phase and Timing (SPaT) messaging, signal prioritization and preemption for transit, vehicle traveler information, and other advanced systems to support Autonomous Vehicle (AV) technology and demonstration.",
+		"contact": "Keary Lord, City of Atlanta, Renew Atlanta Bond Program, <a href=\"mailto:renewatl-klord@atlantaga.gov\">renewatl-klord@atlantaga.gov</a>, (770) 933-2275"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 39.961564,
+			"lng": -75.182478
+		},
+		"location": "Within Philadelphia, there are plans to equip signalized intersections near I-76 with SPaT broadcasts.",
+		"timeline": "Estimated deployment 2020",
+		"description": "A total of 154 signalized intersections are planned for SPaT broadcasts.",
+		"contact": "Mark Kopko, PennDOT, <a href=\"mailto:markopko@pa.gov\">markopko@pa.gov</a>, (717) 783-1903"
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 33.748995,
+			"lng": -84.387982
+		},
+		"location": "Atlanta, GA: SR 141 from SR 9 to I-285, SR 8 from SR 9 to SR 42, I-75/85 in downtown Atlanta",
+		"timeline": "The system is operational.",
+		"description": "DSRC installation at 54 signalized intersections and 12 freeway locations (ramp meter signals) for broadcasting SPaT messaging and receiving BSM data; system integration for output of signal data for public availability of signal phasing and timing data (for third party use).",
+		"contact": "Alan Davis, PE, PTOE, Georgia DOT, <a href=\"mailto:aladavis@dot.ga.gov\">aladavis@dot.ga.gov</a>, (404) 635-2832"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 40.783060,
+			"lng": -73.971249
+		},
+		"location": "317 intersections providing MAP, SPaT, and RTCM in New York City, including 10 that support pedestrian detection and notification to vehicles of pedestrians in walkways; 36 additional RSUs for operations and maintenance support; 8000 interoperable aftermarket safety devices from two suppliers to be installed in taxis, buses, sanitation and DOT vehicles, and UPS delivery trucks; and 100 visually challenged participants testing a support application for crossing the street using SPaT and MAP message contents.",
+		"timeline": "Installation will start in September 2017 and proceeding through 2017; Full operational testing through April 2018; 18 months of observation and data collection starting April 2018.",
+		"description": "The project will be testing multiple connected vehicle safety applications on all aftermarket safety devices, which will support and simultaneously “run” all six V2V and six V2I safety applications, as well as six operations, maintenance, and performance analysis applications and three other applications.",
+		"contact": "Mohamad Talas, PE, PTOE, Ph.D, NYC Project Manager, <a href=\"mailto:mtalas@dot.nyc.gov\">mtalas@dot.nyc.gov</a>, (212) 839-3348; Robert Rausch, PE, TransCore Project Manager, <a href=\"mailto:Robert.rausch@transcore.com\">Robert.rausch@transcore.com</a>, (678) 427-7834"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 39.961176,
+			"lng": -82.998794
+		},
+		"location": "City of Columbus; 175 signals",
+		"timeline": "Estimated deployment in 2018",
+		"description": "The Smart Columbus deployment includes traffic detection and sensors, DSRC radio, I-SIG DMA suite (including MMITSS, Transit Signal Priority (TSP), Freight Signal Prioritization (FSP) and PREEMPT), Global Positioning System (GPS) correction, pedestrian detection (pedestrians in the roadway and pedestrians awaiting transit service) will be deployed as part of the Connected Columbus Transportation Network (CCTN).",
+		"contact": "Ryan Bollo, City of Columbus, <a href=\"mailto:rjbollo@columbus.gov\">rjbollo@columbus.gov</a>"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 40.236449,
+			"lng": -83.367143
+		},
+		"location": "Cities of Marysville and Dublin, Union County",
+		"timeline": "Estimated deployment in 2018",
+		"description": "As part of the US-33 Smart Mobility Corridor, DSRC technology will be installed in 2018 along the US-33 Corridor and at select intersections for connected and autonomous vehicles. Traffic signals will respond dynamically to traffic based on the detection of equipped vehicles, altering signal phase and timing to optimize intersection safety and mobility. Additionally, dynamic signals will be able to support pre-emption for emergency vehicles.",
+		"contact": "Eric Phillips, Union County, <a href=\"mailto:ephillips@unioncounty.org\">ephillips@unioncounty.org</a>; Aaron Story, <a href=\"mailto:astory@marysvilleohio.org\">astory@marysvilleohio.org</a>"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 43.073052,
+			"lng": -89.401230
+		},
+		"location": "Park Street from University Avenue to Beltline Freeway (US-12/18) in Madison is a major corridor connecting the Beltline freeway to downtown, UW campus and a few regional medical facilities. It is also a heavily used transit corridor.",
+		"timeline": "Project was initiated in 2016, and will be phased over the next 5+ years",
+		"description": "The City of Madison, in collaboration with UW-Madison, will equip 20-30 intersections with the DSRC technology along the 4-mile long Park Street/Fish Hatchery Road corridor. The City Traffic Engineering Division and UW TOPS Lab will coordinate with Madison Metro Transit to install onboard units on busses that run the corridor multiple times per day. The initial step provides priority to busses behind schedule, leveraging open-source software – the prototype Multi-Modal Intelligent Traffic Signal System (MMITS) with Transit Signal Priority (TSP) available via the Open Source Application Development Portal. Success for the initial deployment will be measured through improved travel-time and on-time reliability of transit vehicles, while causing minimal adverse effects on other road users.  Then onboard units will be installed on select fire trucks, ambulances and taxis that frequently use the route. Eventually applications will be developed for vehicle-to-pedestrian and vehicle-to-bicycle communications. The test-bed will also be open to other private partners for testing and research purposes.",
+		"contact": "Yang Tao, Ph.D., P.E., City of Madison, <a href=\"mailto:ytao@cityofmadison.com\">ytao@cityofmadison.com</a>, (608) 266-4815"
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 38.840391,
+			"lng": -77.428877
+		},
+		"location": "Northern Virginia - Routes 29, 50, and 7",
+		"timeline": "SPaT broadcasts are operational and additional locations are being added.",
+
+		"description": "Virginia Department of Transportation (VDOT) and Virginia Tech Transportation Institute (VTTI) are working to DSRC units to broadcast SPaT and MAP messages from RSUs installed at 30 intersections on Routes 29, 50, and 7 in Northern VA. These units are a subset of the 51 total RSUs installed and connected to the Virginia Connected Corridor. The initiative will also broadcast SPaT data for all of signals that VDOT controls in Northern Virginia via a data interface to support SPAT data sharing in absence of a DSRC radio. The initial application focus is to demonstrate a traffic signal assistant and red light violation applications.",
+		"contact": "Virginia R. Lingham, P.E., Virginia Department of Transportation, Connected and Automated Vehicle Program Manager, <a href=\"mailto:virginia.lingham@vdot.virginia.gov\">virginia.lingham@vdot.virginia.gov</a>, 804.692.0455"
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 30.438256,
+			"lng": -84.280733
+		},
+		"location": "Tallahassee, Florida",
+		"timeline": "Deployment completed March 2018, system configuration/testing completed April 2018",
+		"description": "Florida Department of Transportation (FDOT), in partnership with the City of Tallahassee, has deployed Roadside Units (RSUs) at 21 traffic signal intersections on US 90 (W. Tennessee St and Mahan Drive) from North Adams Street to just west of Interstate-10. The RSUs are broadcasting Signal Phase and Timing (SPaT) and Map data for each individual signal location using 5.9 GHz Dedicated Short Range Communications (DSRC). FDOT is completing testing of portable on-board units and has confirmed the RSU are broadcasting SPaT and MAP data via the DSRC. Future plans for this corridor include the potential of receiving vehicle basic safety messages (BSM) from vehicles and inclusion of a Security Credential Management System to ensure network and system security.  This project is an important component of FDOT’s Connected Vehicle (CV) Program.",
+		"contact": "Fred H. Heery, Sr., P.E., <a href=\"mailto:Fred.Heery@dot.state.fl.us\">Fred.Heery@dot.state.fl.us</a>, 850-410-5606 or Raj Ponnaluri, PhD, P.E., PTOE, <a href=\"mailto:raj.ponnaluri@dot.state.fl.us\">raj.ponnaluri@dot.state.fl.us</a>, 850-410-5616"
+	}, 
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 29.651634,
+	    "lng": -82.324826
+	  },
+	  "location": "Gainesville, Florida",
+	  "timeline": "",
+	  "description": "This project will deploy and test connected vehicle technologies and applications along four roads forming a trapezium surrounding the University of Florida main campus. The goal of the project is to improve travel time reliability, safety, throughput, and traveler information. This project will also deploy pedestrian and bicyclist safety applications for both web-based and/or Smartphone-based applications. The routes are SR 121, SR 26, US 441, and SR 24. Approximately 45 Roadside Units will be installed in this project. For additional information, please contact Raj Ponnaluri at <a href=\"mailto:raj.ponnaluri@dot.state.fl.us\">raj.ponnaluri@dot.state.fl.us</a>",
+	  "contact": "Fred H. Heery, Sr., P.E., <a href=\"mailto:Fred.Heery@dot.state.fl.us\">Fred.Heery@dot.state.fl.us</a>, 850-410-5606 or Raj Ponnaluri, PhD, P.E., PTOE, <a href=\"mailto:raj.ponnaluri@dot.state.fl.us\">raj.ponnaluri@dot.state.fl.us</a>, 850-410-5616"
+	},
+
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 35.791540,
+			"lng": -78.781117
+		},
+		"location": "NC55 Cary, North Carolina",
+		"timeline": "The system is operational.",
+		"description": "We are deploying SPaT at 20+ intersections and are in the purchasing process.",
+		"contact": "Kevin Lacy, <a href=\"mailto:jklacy1@ncdot.gov\">jklacy1@ncdot.gov</a>, 919-814-5000 or Mohd Aslami, <a href=\"mailto:maslami@ncdot.gov\">maslami@ncdot.gov</a>, 919-814-5000"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 37.182128,
+			"lng": -93.295029
+		},
+		"location": "Springfield: The entire signalized portions of Sunshine Street (MO 413/RT D) and Campbell Avenue (US 160)",
+		"timeline": "Estimated completion: 2019",
+		"description": "SPaT broadcast in at least one corridor of 10+ signals for each city listed. Initial work will be to identify work needed to make controllers compatible with DSRC broadcasts. The goal is to deploy DSRC equipment and enable both MAP and RTCM after installation.",
+		"contact": "Alex Wassman <a href=\"mailto:Alexander.wassman@modot.mo.gov\">Alexander.wassman@modot.mo.gov</a>, Traffic Management and Operations Engineer, (573) 526-0121.  Ashley Buechter <a href=\"mailto:ashley.buechter@modot.mo.gov\">ashley.buechter@modot.mo.gov</a>, Traffic Liaison, (573) 751-0982."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 38.612298,
+			"lng": -90.346692
+		},
+		"location": "St. Louis: Manchester Rd (MO 100) between Lindbergh Blvd (US 61) and Big Bend Blvd",
+		"timeline": "Estimated completion: 2019",
+		"description": "SPaT broadcast in at least one corridor of 10+ signals for each city listed. Initial work will be to identify work needed to make controllers compatible with DSRC broadcasts. The goal is to deploy DSRC equipment and enable both MAP and RTCM after installation.",
+		"contact": "Alex Wassman <a href=\"mailto:Alexander.wassman@modot.mo.gov\">Alexander.wassman@modot.mo.gov</a>, Traffic Management and Operations Engineer, (573) 526-0121.  Ashley Buechter <a href=\"mailto:ashley.buechter@modot.mo.gov\">ashley.buechter@modot.mo.gov</a>, Traffic Liaison, (573) 751-0982."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 39.213853,
+			"lng": -94.520788
+		},
+		"location": "Kansas City: US 69 from west of I-435 to Pleasant Valley Rd/Liberty Pkwy",
+		"timeline": "Estimated completion: 2019",
+		"description": "SPaT broadcast in at least one corridor of 10+ signals for each city listed. Initial work will be to identify work needed to make controllers compatible with DSRC broadcasts. The goal is to deploy DSRC equipment and enable both MAP and RTCM after installation.",
+		"contact": "Alex Wassman <a href=\"mailto:Alexander.wassman@modot.mo.gov\">Alexander.wassman@modot.mo.gov</a>, Traffic Management and Operations Engineer, (573) 526-0121.  Ashley Buechter <a href=\"mailto:ashley.buechter@modot.mo.gov\">ashley.buechter@modot.mo.gov</a>, Traffic Liaison, (573) 751-0982."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.984084,
+			"lng": -93.291221
+		},
+		"location": "West of Minneapolis, MN. State Highway 55, Possibly State Highway 7 and ramp signals on Interstate I394 with sufficient funding",
+		"timeline": "Concept, network security and detailed project plan - Aug 2017 to July 2018. Start of field installation – Summer 2018. Completion of project – Dec 2019.",
+		"description": "Broadcast SPAT and MAP messages meeting SAE J2735 Mar 2016 standard using DSRC at over 20 intersections along an Integrated Corridor Management corridor. Make MAP and real time SPAT data available over the network to external service providers. Incorporate SCMS message security and network security. Broadcast BSM messages from a portion of the agency fleet. Receive BSM messages and research creating traffic performance measures from BSMs. Implement automatic Dynamic Message Sign messages warning of moving maintenance operations and snow plow operations ahead. Potentially implement snow plow priority along signalized corridor.",
+		"contact": "Cory Johnson, <a href=\"mailto:coryj.johnson@state.mn.us\">coryj.johnson@state.mn.us</a>, 651-234-7062."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 41.297336,
+			"lng": -105.594599
+		},
+		"location": "I-80 signals on ramps in Wyoming.",
+		"timeline": "Late summer 2018",
+		"description": "Connect signals along I-80 near truck stops and WYDOT shops to complement the pilot CV project along I-80 for truck and weather related issues.",
+		"contact": "Joel Meena PE, <a href=\"mailto:Joel.meena@wyo.gov\">Joel.meena@wyo.gov</a>, 307-777-4374."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 35.910890,
+			"lng": -84.090886
+		},
+		"location": "SR 1 from Hayfield Road to Neyland Drive",
+		"timeline": "Completion Fall 2018",
+		"description": "147 ATC Signal Controllers capable of SPaT data output to cloud connect services broadcasting SPaT data to various 2017 brand CAV.",
+		"contact": "Phillip Reyes, Master Signal Technician, City of Knoxville, Engineering Dept., <a href=\"mailto:preyes@knoxvilletn.gov\">preyes@knoxvilletn.gov</a>, 865-389-7952."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 36.039097,
+			"lng": -83.930326
+		},
+		"location": "SR 33 from Colonial Circle to Depot Street",
+		"timeline": "Completion Fall 2018  ",
+		"description": "147 ATC Signal Controllers capable of SPaT data output to cloud connect services broadcasting SPaT data to various 2017 brand CAV. ",
+		"contact": "Phillip Reyes, Master Signal Technician, City of Knoxville, Engineering Dept., <a href=\"mailto:preyes@knoxvilletn.gov\">preyes@knoxvilletn.gov</a>, 865-389-7952."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 35.943043,
+			"lng": -83.911047
+		},
+		"location": "SR 71 from Blount Avenue to Majestic Grove Road",
+		"timeline": "Completion Fall 2018",
+		"description": "147 ATC Signal Controllers capable of SPaT data output to cloud connect services broadcasting SPaT data to various 2017 brand CAV. ",
+		"contact": "Phillip Reyes, Master Signal Technician, City of Knoxville, Engineering Dept., <a href=\"mailto:preyes@knoxvilletn.gov\">preyes@knoxvilletn.gov</a>, 865-389-7952."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 35.956540,
+			"lng": -83.932419
+		},
+		"location": "Cumberland Ave / UT Campus Area",
+		"timeline": "Completion Fall 2018",
+		"description": "DSRC at 1 signalized intersections currently broadcasting and expanding to 17 signalized intersections for broadcasting SPaT data messaging to vehicles.",
+		"contact": "Phillip Reyes, Master Signal Technician, City of Knoxville, Engineering Dept., <a href=\"mailto:preyes@knoxvilletn.gov\">preyes@knoxvilletn.gov</a>, 865-389-7952."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 35.944015,
+			"lng": -84.070021
+		},
+		"location": "SR 169 from Joe Hinton Road to 21st Street",
+		"timeline": "Completion Fall 2019",
+		"description": "147 ATC Signal Controllers capable of SPaT data output to cloud connect services broadcasting SPaT data to various 2017 brand CAV.",
+		"contact": "Phillip Reyes, Master Signal Technician, City of Knoxville, Engineering Dept., <a href=\"mailto:preyes@knoxvilletn.gov\">preyes@knoxvilletn.gov</a>, 865-389-7952."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 39.5951339,
+			"lng": -104.8688994
+		},
+		"location": "Arapahoe Rd, an east-west arterial corridor in the southeast Denver metro area, Colorado.",
+		"timeline": "Concept of Operations and detailed project plan – July 2017 through June 2018. State of Field Installations – late summer 2018 Completion of project – June 2019.",
+		"description": "SPaT broadcast in one corridor of 10+ signals.  Initial work to upgrade the signal field infrastructure (controllers, cabinet configurations, and communications) is nearly complete.  The next step is to deploy DSRC equipment, enable DSRC broadcast and potentially implement snow plow priority along the signalized corridor.  CDOT will explore the MMITSS (Multi-Modal Intelligent Traffic Signal Systems) algorithm to manage signal priorities.  The goal is to deploy MMITSS and enable both SPaT and MAP data broadcast at each intersection.",
+		"contact": "Nitin Deshpande, <a href=\"mailto:nitin.deshpande@state.co.us\">nitin.deshpande@state.co.us</a>, 303-512-5835."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 42.741073,
+			"lng": -84.671096
+		},
+		"location": "Lansing, Michigan – M-43",
+		"timeline": "Operational",
+		"description": "A total of 9 intersections along a 4.5 mile corridor serving as a testbed for SPaT, MAP, TIM and BSM related Connected and Automated Vehicle applications.",
+		"contact": "Collin Castle, Michigan DOT, <a href=\"mailto:castlec@michigan.gov\">castlec@michigan.gov</a>, 517-636-0715."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 42.506532,
+			"lng": -83.047098
+		},
+		"location": "Warren, Michigan – Mound Road",
+		"timeline": "Operational",
+		"description": "2 Intersections broadcasting SpaT and MAP information.",
+		"contact": "Collin Castle, Michigan DOT, <a href=\"mailto:castlec@michigan.gov\">castlec@michigan.gov</a>, 517-636-0715."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 41.471147,
+			"lng": -87.365007
+		},
+		"location": "Merrillville - 8 intersections on US30 west of I65",
+		"timeline": "Deployment by end of 2017",
+		"description": "Coming Soon",
+		"contact": "John McGregor, Indiana Department of Transportation, <a href=\"mailto:JMcGregor@indot.IN.gov\">JMcGregor@indot.IN.gov</a>"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 40.418983,
+			"lng": -86.937396
+		},
+		"location": "West Lafayette - 2 intersections on US231/US52",
+		"timeline": "Deployment by end of 2017",
+		"description": "Coming Soon",
+		"contact": "John McGregor, Indiana Department of Transportation, <a href=\"mailto:JMcGregor@indot.IN.gov\">JMcGregor@indot.IN.gov</a>"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 39.606231,
+			"lng": -86.107761
+		},
+		"location": "Greenwood - 6 intersections on US31 and I65 ramps",
+		"timeline": "Deployment by end of 2017",
+		"description": "Coming Soon",
+		"contact": "John McGregor, Indiana Department of Transportation, <a href=\"mailto:JMcGregor@indot.IN.gov\">JMcGregor@indot.IN.gov</a>"
+	}, 
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 43.496823,
+	    "lng": -112.092674
+	  },
+	  "location": "The pilot intersection is located on US 20 in Idaho Falls at the Old Butte Road intersection",
+	  "timeline": "Current plan is to have the SPaT and MAP data broadcasting in late 2018.",
+	  "description": "The pilot project is intended to provide ITD with the necessary learning to plan and deploy additional connected vehicle intersections statewide, initially broadcasting SPaT/MAP data and eventually safety applications.  For the pilot deployment, vehicles from the Idaho National Laboratory (INL) and ITD will be equipped with DSRC units to receive the intersection broadcast messages.",
+	  "contact": "Bob Koeberlein. ITD, <a href=\"mailto:Robert.Koeberlein@itd.idaho.gov\">Robert.Koeberlein@itd.idaho.gov</a>, 208-334-8487."
+	}, 
+	{
+	  "status": "deployed",
+	  "coords": {
+	    "lat": 43.197574,
+	    "lng": -70.882551
+	  },
+	  "location": "Dover, New Hampshire.",
+	  "timeline": "Once initiated, the project schedule is eight (8) months.",
+	  "description": "As of October 2018, 3 intersections along Silver Street in Dover are broadcasting SPaT and MAP data using both DSRC and 4G LTE communication paths as a test bed.  Also using FHWA’s V2I Hub in this installation.",
+	  "contact": "Ann Scholz, Research Engineer, <a href=\"mailto:ann.scholz@dot.nh.gov\">ann.scholz@dot.nh.gov</a>, 603-271-1659."
+	}, 
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 39.171842,
+	    "lng": -76.785367
+	  },
+	  "location": "US 1 in Howard County, from MD 32 to MD 100; also includes portions of MD 175 both east and west of US 1 (20 intersections in total).",
+	  "timeline": "Physical deployment should be complete and SPaT messages broadcast by the end of 2018.  Future V2I applications will be tested in 2019.",
+	  "description": "MDOT SHA is developing a technology testbed along US 1 in Howard County, called the US 1 Innovative Technology Deployment Corridor.  The project includes traditional ITS deployment, components of MDOT’s Smart Signal Program, and a testbed for connected vehicle technology and DSRC deployment.  Twenty intersections will be outfitted with new controllers, DSRC radios, and the equipment necessary to broadcast SPaT, MAP, and RTCM messages in accordance with meeting the SPaT Challenge.  A small number of MDOT SHA vehicles will be equipped with OBUs so that message verification can be accomplished.  Planning is underway to explore future applications such as RLVW, TSP, and other V2I applications.",
+
+	  "contact": "Egua Igbinosun, MDOT State Highway Administration, Programming, Planning & Development Division, <a href=\"mailto:eigbinosun@sha.state.md.us\">eigbinosun@sha.state.md.us</a>, (410) 787-5873."
+	}, 
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 39.3155833,
+	    "lng": -75.617272
+	  },
+	  "location": "11 traffic signals on US 13 in Smyrna, DE",
+	  "timeline": "Mid 2018",
+	  "description": "As DelDOT's first phase of the SPaT Challenge, DelDOT is working to deploy DSRC units at 11 traffic signals to broadcast SPaT and MAP information. Initial applications are expected to be red light violation warnings. Fleet vehicles will be equipped with On Board Units in this initial phase of deployment.",
+	  "contact": "Mark Luszcz, <a href=\"mailto:mailto:Mark.luszcz@state.de.us\">mailto:Mark.luszcz@state.de.us</a>, (302) 659-4062."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 47.739692,
+			"lng": -122.289463
+		},
+		"location": "Seattle, Washington area (WSDOT SR 522)",
+		"timeline": "Phase 1 is operational at 10 intersections as of April 2019.",
+		"description": "Corridor is along SR 522 from NE 153rd Street to 83rd Place NE. Phase 1 of the project involved implementing SPaT and MAP data broadcasting over DSRC. Phase 2 will include developing features in existing app for in-vehicle and active transportation use. The WSDOT installation uses Intelight hardware and mobile app for the OBU testing. Additional support for features beyond SPaT and MAP messaging will include transit priority, red light violation warning, travel management ATM.",
+		"contact": "Justin Belk, WSDOT HQ, <a href=\"mailto:justin.belk@wsdot.wa.gov\">justin.belk@wsdot.wa.gov</a>, 360-705-7296 or Glenn Wagemann, Eastern Region, 509-324-6550."
+		},
+
+	{
+	  "status": "deployed",
+	  "coords": {
+	    "lat": 36.169263,
+	    "lng": -115.140615
+	  },
+	  "location": "Fremont St., Las Vegas, NV",
+	  "timeline": "6 intersections are operational.",
+	  "description": "The (6) DSRC are broadcasting SPaT and map in support of connected vehicle and autonomous vehicle applications.  The DSRC are deployed with the intersections of Las Vegas Boulevard/Fremont, Fremont/6th, Fremont/7th, Fremont/8th, and Carson/7th.",
+	  "contact": "Joanna Wadsworth <a href=\"mailto:jwadsworth@LasVegasNevada.GOV\"><jwadsworth@LasVegasNevada.GOV></a>, 702-229-2214."
+	},
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 35.371231,
+	    "lng": -80.733335
+	  },
+	  "location": "Concord, NC",
+	  "timeline": "Fall 2018 – 1st stage. Summer 2019 – 2nd stage.",
+	  "description": "Concord Mills Blvd., Brutton Smith Blvd (9 intersections from Carolina Lilly Rd/Odell School Rd. to Bruton Smith Blvd., Papa Joe Hendrick) Fall 2018  deployment of SPaT broadcasting at 9 intersections with MAP planned initially and possibly RTCM to come in the following year.",
+	  "contact": "Andrei Dumitru, E.I., Traffic Engineer, <a href=\"mailto:dumitrua@concordnc.gov\"><dumitrua@concordnc.gov></a>, 704-920-5377."
+	},
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 43.615949,
+	    "lng": -116.215017
+	  },
+	  "location": "Boise, ID. The exact corridor has yet to be determined.",
+	  "timeline": "Initial testing in 2018, deployment in 2019.",
+	  "description": "Ada County Highway District is planning a 2 year deployment of the SPAT technology at 20-25 intersections in the Boise area. Once deployed, the system will send out basic SPaT and MAP data. Also, additional safety messages will be considered.  The first phase in 2018 will be a partnership with University of Idaho and Boise State University to test various DSRC vendors and possible cloud based systems at several test intersections in Boise on Chinden Blvd.",
+	  "contact": "Jim Larsen, Ada County Highway District. <a href=\"mailto:jlarsen@achdidaho.org\">jlarsen@achdidaho.org</a>, 208-387-6196."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 33.234281,
+			"lng": -87.63857
+		},
+		"location": "Tuscaloosa, Alabama",
+		"timeline": "Timeline for deployment (rough estimate of planned completion date): Number of intersections that are planned to be operational in 2018 / 2019 / 2020 <br>2018 - 85",
+		"description": "How many units deployed: 85 (additional units coming in the future), How many corridors: 5 (1 of these corridors could almost count as 2 because of separation), What type of radio: Lear. DSRC units are installed (but not currently broadcasting) and will be operation in late 2018.",
+		"contact": "Alex Hainen. <a href=\"mailto:ahainen@eng.ua.edu\">ahainen@eng.ua.edu</a>, 231-883-2669."
+	},
+	{
+	  "status": "deployed",
+	  "coords": {
+	    "lat": 30.264083,
+	    "lng": -97.747056
+	  },
+	  "location": "Cesar Chavez St/Riverside Dr (Austin, TX)",
+	  "timeline": "Deployment completed in August 2018. Five (5) operational intersections.",
+	  "description": "Austin was chosen to work with Battelle (through the USDOT) on the Connected Vehicle Reference Implementation Architecture (CVRIA) project to install RSUs and V2I hubs at five (5) intersections, which are now transmitting BSM, SPaT, and MAP data. The CVRIA project is being used to create a national guidance document to be issued by the USDOT for future RSU/V2I configuration and deployments by transportation agencies.",
+	  "contact": "Jorge Riveros. <a href=\"mailto:jorge.riveros@austintexas.gov\">jorge.riveros@austintexas.gov</a>, 512-974-7768."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 30.227028,
+			"lng": -97.707944
+		},
+		"location": "Grove Blvd (Austin, TX)",
+		"timeline": "Deployment to be completed in early 2019. No operational intersections at this time. Two (2) intersections to be operational in 2019.",
+		"description": "Austin is working directly with Cisco (using its latest solution and architecture) to install RSUs at two intersections (E Riverside Dr/Grove Blvd and Grove Blvd/Fairway St) and install OBUs on fleet vehicles broadcasting advanced warning of pedestrian presence in the intersection, and to gather, aggregate, and analyze data from the DSRC equipment to assess the reliability of the system, the interoperability with existing equipment (controller firmware, V2I hubs, etc), and the quality of data.",
+		"contact": "Jorge Riveros. <a href=\"mailto:jorge.riveros@austintexas.gov\">jorge.riveros@austintexas.gov</a>, 512-974-7768."
+	}, 
+	{
+	  "status": "underway",
+	  "coords": {
+	    "lat": 30.267000,
+	    "lng": -97.750028
+	  },
+	  "location": "3rd St Automated Shuttle (Austin, TX)",
+	  "timeline": "Deployment to be completed in late 2019/early 2020. No operational intersections at this time. Seven (7) intersections anticipated to be operational in 2019/early 2020.",
+	  "description": "Austin is collaborating with the Capital Metropolitan Transit Authority (CMTA) on the pilot deployment of an automated shuttle in the central business district (CBD), which will entail the placement of RSUs along 3rd St and will produce data about highly automated driving systems in urban environments. 3rd St, in the City’s CBD, is a low-speed, two-lane urban roadway that has a mix of residential, office, retail, and commercial uses with a mix of travel modes, including vehicular, transit, bicycle, pedestrian, and electric scooters. The potential use case is to study the feasibility of running a fully automated transit service in a complex urban environment that could work as a future-case platoon for moving people, managing congestion, and improving air quality.",
+	  "contact": "Jorge Riveros. <a href=\"mailto:jorge.riveros@austintexas.gov\">jorge.riveros@austintexas.gov</a>, 512-974-7768."
+	},{
+		"status": "underway",
+		"coords": {
+			"lat": 41.147294,
+			"lng": -96.100558
+		},
+		"location": "Sarpy County, NE. State Highway 370 from US-6 to US-75.",
+		"timeline": "Late Summer 2020. 26 intersections are planned to be operational in 2018/2019/2020.",
+		"description": "Initial project to bring fiber optic cable to provide backhaul communication and upgrade traffic signal controllers is scheduled to be completed by Fall 2019. The project to deploy RSU to broadcast SPaT at intersections with MAP and RTCM is schedule to be completed by late Summer 2020.",
+		"contact": "Vladimir Zhuromski. <a href=\"mailto:vladimir.zhuromski@nebraska.gov\"> vladimir.zhuromski@nebraska.gov</a>, 402-479-4594."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 34.006607,
+			"lng": -117.963033
+		},
+		"location": "Unincorporated Los Angeles County – East Los Angeles and South Bay Region.",
+		"timeline": "Projects are currently grant funded and in the planning/design process.",
+		"description": "Install DSRC radios at 20 intersections in East Los Angeles, and 3 intersections in the South Bay to deploy connected vehicle applications and potentially SPaT broadcasting.",
+		"contact": "Jane White, LACDPW <a href=\"mailto:jwhite@dpw.lacounty.gov\"> jwhite@dpw.lacounty.gov</a>, 626-300-4774."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 33.831575,
+			"lng": -118.287390
+		},
+		"location": "City of Carson and Unincorporated Los Angeles County.",
+		"timeline": "Testing and demonstration expected in August 2018, with a 12-month deployment period.",
+		"description": "In this project, Metro, City of Carson, LA County, Port of Los Angeles and UCR will deploy Eco-Drive (also known as Eco-Approach and Departure) on 20 drayage trucks at 10 intersections that these trucks frequently travel through for a period of 12 months. Eco-Drive, uses signal phase and timing (SPaT) information from the upcoming traffic signal through cellular communications, along with the information about the current position of the vehicle (from on-board GPS), the distance from the preceding vehicle (from on-board radar), and the relative location of the intersection (from on-board digital map).",
+		"contact": "Ed Alegre, LA Metro <a href=\"mailto:AlegreE@metro.net\"> AlegreE@metro.net</a>, 213-418-3287."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 28.166760,
+			"lng": -82.740453
+		},
+		"location": "US 19, Pinellas County, Florida.",
+		"timeline": "Underway.",
+		"description": "FDOT, in partnership with Pinellas County, plans to deploy a Signal Phase and Timing (SPaT) project at 23 traffic signals along a portion of US 19 corridor. 11 traffic signals are at-grade intersections on US 19 and 12 signals are along frontage roads. This project will add to two other FDOT initiatives with the National SPaT Challenge: Tallahassee US 90 and Gainesville Trapezium.",
+		"contact": "Raj Ponnaluri <a href=\"mailto:raj.ponnaluri@dot.state.fl.us\"> raj.ponnaluri@dot.state.fl.us</a>, 850-410-5616."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 33.831575,
+			"lng": -118.287390
+		},
+		"location": "City of Carson and Unincorporated Los Angeles County.",
+		"timeline": "Testing and demonstration expected in August 2018, with a 12-month deployment period.",
+		"description": "In this project, Metro, City of Carson, LA County, Port of Los Angeles and UCR will deploy Eco-Drive (also known as Eco-Approach and Departure) on 20 drayage trucks at 10 intersections that these trucks frequently travel through for a period of 12 months. Eco-Drive, uses signal phase and timing (SPaT) information from the upcoming traffic signal through cellular communications, along with the information about the current position of the vehicle (from on-board GPS), the distance from the preceding vehicle (from on-board radar), and the relative location of the intersection (from on-board digital map).",
+		"contact": "Ed Alegre, LA Metro <a href=\"mailto:AlegreE@metro.net\"> AlegreE@metro.net</a>, 213-418-3287."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 30.481504,
+			"lng": -97.832544
+		},
+		"location": "Cypress Creek Road & Lakeline Blvd.",
+		"timeline": "Deployment is anticipated in 2019 and 2020. Five (5) intersections are anticipated to be operational in 2020.",
+		"description": "The City of Cedar Park intends to instrument five traffic signals along Cypress Creek Rd and Lakeline Blvd with RSUs and City fleet vehicles with OBUs. Initially SPaT and MAP messages will be broadcast to be supplemented with RTCM in the future. The intended goal is to broadcast safety messages (red light violation, emergency vehicle, ped/bike, etc) as well as relevant traffic signal operations messages.",
+		"contact": "Stephen Hanuscin, P.E. <a href=\"mailto:stephen.hanuscin@cedarparktexas.gov\"> stephen.hanuscin@cedarparktexas.gov</a>, 512-401-5550."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 36.843595,
+			"lng": -76.130659
+		},
+		"location": "Hampton Roads – Route 58 along Virginia Beach Boulevard between Lynnhaven Parkway and Newtown Road.",
+		"timeline": "Estimated deployment 2020.",
+		"description": "The City of Virginia Beach will utilize existing infrastructure such as fiber optic communication network, Traffic Management Center, Bluetooth sensors, and other assets to deploy a connected vehicle (CV) communications system capable of meeting the requirements of the Signal Phase and Timing (SPaT) Challenge. This pilot corridor involves two phases. Phase I of this project will involve implementation of roadside units (RSUs). Phase II of this project proposes onboard-units (OBUs) installation on City fleet vehicles, transit vehicles, or select motorists for testing the pilot corridor. Use cases may also include vulnerable road users (VRUs), including pedestrians and cyclists. Design infrastructure includes upgrades to approximately 25 locations along Virginia Beach Boulevard between Lynnhaven Parkway and Newtown Road with the possibility of a regional extension. The project will leverage added capacity provided by the future implementation of a regional dark fiber ring. The City of Virginia Beach desires creating a test bed capable of demonstrating the benefits of emerging transportation technologies.",
+		"contact": "Tara D. Reel, MPA <a href=\"mailto:tdreel@vbgov.com\"> tdreel@vbgov.com</a>, 757-385-6597."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.914592,
+			"lng": -122.986076
+		},
+		"location": "Salem, Oregon - Mission St. at I-5 NB Ramp",
+		"timeline": "ODOT is planning on having the 7 DSRC radios installed and operational by the end of July 2019.",
+		"description": "The 7 DSRC radios being installed will broadcast SPaT and MAP data. During the first phase of this installation data will not be received from any vehicles. In addition to the roadside DSRC effort, ODOT is also implementing a central portal application that can broadcast SPaT and MAP data to automotive industry information providers. SPaT and MAP data will be available from every ODOT intersection that utilizes the latest advanced transportation controller, which will include several hundred intersections once they are all installed. It will take a while to implement this technology, but ODOT plans to have this completed by end of 2020.",
+		"contact": "Galen McGill, <a href=\"mailto:Galen.E.MCGILL@odot.state.or.us\"> Galen.E.MCGILL@odot.state.or.us</a>, 503-986-4486."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.916117,
+			"lng": -122.991108
+		},
+		"location": "Salem, Oregon - Mission St. at I-5 SB Ramp",
+		"timeline": "ODOT is planning on having the 7 DSRC radios installed and operational by the end of July 2019.",
+		"description": "The 7 DSRC radios being installed will broadcast SPaT and MAP data. During the first phase of this installation data will not be received from any vehicles. In addition to the roadside DSRC effort, ODOT is also implementing a central portal application that can broadcast SPaT and MAP data to automotive industry information providers. SPaT and MAP data will be available from every ODOT intersection that utilizes the latest advanced transportation controller, which will include several hundred intersections once they are all installed. It will take a while to implement this technology, but ODOT plans to have this completed by end of 2020.",
+		"contact": "Galen McGill, <a href=\"mailto:Galen.E.MCGILL@odot.state.or.us\"> Galen.E.MCGILL@odot.state.or.us</a>, 503-986-4486."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.918516,
+			"lng": -122.997761
+		},
+		"location": "Salem, Oregon - Mission St. at Hawthorne Ave. SE",
+		"timeline": "ODOT is planning on having the 7 DSRC radios installed and operational by the end of July 2019.",
+		"description": "The 7 DSRC radios being installed will broadcast SPaT and MAP data. During the first phase of this installation data will not be received from any vehicles. In addition to the roadside DSRC effort, ODOT is also implementing a central portal application that can broadcast SPaT and MAP data to automotive industry information providers. SPaT and MAP data will be available from every ODOT intersection that utilizes the latest advanced transportation controller, which will include several hundred intersections once they are all installed. It will take a while to implement this technology, but ODOT plans to have this completed by end of 2020.",
+		"contact": "Galen McGill, <a href=\"mailto:Galen.E.MCGILL@odot.state.or.us\"> Galen.E.MCGILL@odot.state.or.us</a>, 503-986-4486."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.920474,
+			"lng": -123.004182
+		},
+		"location": "Salem, Oregon - Mission St. at Airport Rd. SE",
+		"timeline": "ODOT is planning on having the 7 DSRC radios installed and operational by the end of July 2019.",
+		"description": "The 7 DSRC radios being installed will broadcast SPaT and MAP data. During the first phase of this installation data will not be received from any vehicles. In addition to the roadside DSRC effort, ODOT is also implementing a central portal application that can broadcast SPaT and MAP data to automotive industry information providers. SPaT and MAP data will be available from every ODOT intersection that utilizes the latest advanced transportation controller, which will include several hundred intersections once they are all installed. It will take a while to implement this technology, but ODOT plans to have this completed by end of 2020.",
+		"contact": "Galen McGill, <a href=\"mailto:Galen.E.MCGILL@odot.state.or.us\"> Galen.E.MCGILL@odot.state.or.us</a>, 503-986-4486."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.922743,
+			"lng": -123.011005
+		},
+		"location": "Salem, Oregon - Mission St. at 25th St. SE",
+		"timeline": "ODOT is planning on having the 7 DSRC radios installed and operational by the end of July 2019.",
+		"description": "The 7 DSRC radios being installed will broadcast SPaT and MAP data. During the first phase of this installation data will not be received from any vehicles. In addition to the roadside DSRC effort, ODOT is also implementing a central portal application that can broadcast SPaT and MAP data to automotive industry information providers. SPaT and MAP data will be available from every ODOT intersection that utilizes the latest advanced transportation controller, which will include several hundred intersections once they are all installed. It will take a while to implement this technology, but ODOT plans to have this completed by end of 2020.",
+		"contact": "Galen McGill, <a href=\"mailto:Galen.E.MCGILL@odot.state.or.us\"> Galen.E.MCGILL@odot.state.or.us</a>, 503-986-4486."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.925521,
+			"lng": -123.017603
+		},
+		"location": "Salem, Oregon - Mission St. at 22nd St. SE",
+		"timeline": "ODOT is planning on having the 7 DSRC radios installed and operational by the end of July 2019.",
+		"description": "The 7 DSRC radios being installed will broadcast SPaT and MAP data. During the first phase of this installation data will not be received from any vehicles. In addition to the roadside DSRC effort, ODOT is also implementing a central portal application that can broadcast SPaT and MAP data to automotive industry information providers. SPaT and MAP data will be available from every ODOT intersection that utilizes the latest advanced transportation controller, which will include several hundred intersections once they are all installed. It will take a while to implement this technology, but ODOT plans to have this completed by end of 2020.",
+		"contact": "Galen McGill, <a href=\"mailto:Galen.E.MCGILL@odot.state.or.us\"> Galen.E.MCGILL@odot.state.or.us</a>, 503-986-4486."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 45.667258,
+			"lng": -122.552575
+		},
+		"location": "Clark County, Washington (WSDOT SR 500/503)",
+		"timeline": "Planned deployment of about 5 RSUs in a couple corridors by early 2020",
+		"description": "Deployments will be along the SR 500/503 corridors from Fourth Plain Boulevard at NE 117th Avenue to the north. Siemens RSUs with Trafficware software will be used to broadcast SPaT and MAP messages over DSRC.",
+		"contact": "Justin Belk, WSDOT HQ, <a href=\"mailto:justin.belk@wsdot.wa.gov\">justin.belk@wsdot.wa.gov</a>, 360-705-7296 or Glenn Wagemann, Eastern Region, 509-324-6550."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.745463,
+			"lng": -74.189767
+		},
+		"location": "1st Ave @ Warren St.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.744046,
+			"lng": -74.187604
+		},
+		"location": "West Market St. @ Warren St.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.743612,
+			"lng": -74.186269
+		},
+		"location": "Hudson St. @ Warren St.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.743037,
+			"lng": -74.184510
+		},
+		"location": "Norfolk St. @ Warren St.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.742019,
+			"lng": -74.181385
+		},
+		"location": "Lock St. @ Warren St.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.741071,
+			"lng": -74.178635
+		},
+		"location": "Summit St. @ Warren St.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.741071,
+			"lng": -74.178635
+		},
+		"location": "University Ave. @ Raymond Blvd.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.738266,
+			"lng": -74.173829
+		},
+		"location": "Washington St. @ Raymond Blvd.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.737928,
+			"lng": -74.172641
+		},
+		"location": "Halsey St. @ Raymond Blvd.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.737490,
+			"lng": -74.171042
+		},
+		"location": "Broad St.  @ Raymond Blvd.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.737122,
+			"lng": -74.169659
+		},
+		"location": "Commerce Ct. @ Raymond Blvd.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.736640,
+			"lng": -74.168045
+		},
+		"location": "Mulberry St. @ Raymond Blvd.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 40.735942,
+			"lng": -74.165853
+		},
+		"location": "McCarter Highway @ Raymond Blvd.",
+		"timeline": "In-Vehicle Traffic Signal Assistant System (ITSAS) for Eco-Driving: completed field tests. Cooperative Intersection Collision Avoidance System (CICAS): planned for 2020. Mobile Accessible Pedestrian Signal and Pedestrian Crossing Warning Systems: completed prototype. Real-time Corridor Monitoring System for Traffic Congestion and Air Quality: in-progress.",
+		"description": "Benefits: Reduce crashes and fatalities by more than 5%. Reduce travel time in signalized corridors by 25%. Reduce vehicle emissions and fuel consumption by 10%. Combined, these savings can amount to millions of dollars in societal benefits annually. The deployment of this system will inform planning and design of similar systems throughout the State, thus multiplying the benefits for the residents of New Jersey.",
+		"contact": "Ridwan Ahmed, Transportation Mobility, New Jersey Department of Transportation <a href=\"mailto:Ridwan.Ahmed@dot.nj.gov\">Ridwan.Ahmed@dot.nj.gov</a>, 609-963-1414 or Branislav Dimitrijevic, Ph.D., John A. Reif, Jr. Department of Civil and Environmental Engineering <a href=\"mailto:dimitrijevic@njit.edu\">dimitrijevic@njit.edu</a>, 973-596-6463."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 44.929046,
+			"lng": -123.023604
+		},
+		"location": "Salem, Oregon - Mission St. at 17th St. SE",
+		"timeline": "ODOT is planning on having the 7 DSRC radios installed and operational by the end of July 2019.",
+		"description": "The 7 DSRC radios being installed will broadcast SPaT and MAP data. During the first phase of this installation data will not be received from any vehicles. In addition to the roadside DSRC effort, ODOT is also implementing a central portal application that can broadcast SPaT and MAP data to automotive industry information providers. SPaT and MAP data will be available from every ODOT intersection that utilizes the latest advanced transportation controller, which will include several hundred intersections once they are all installed. It will take a while to implement this technology, but ODOT plans to have this completed by end of 2020.",
+		"contact": "Galen McGill, <a href=\"mailto:Galen.E.MCGILL@odot.state.or.us\"> Galen.E.MCGILL@odot.state.or.us</a>, 503-986-4486."
+	},
+	{
+		"status": "deployed",
+		"coords": {
+			"lat": 47.67173694637487,
+			"lng": -117.23967326603298
+		},
+		"location": "Spokane Valley, Washington (WSDOT SR 27)",
+		"timeline": "Operational at 3 intersections as of February 2019",
+		"description": "Corridor is along SR 27 from Mission Avenue to Sprague Avenue.  SPaT and MAP messages are broadcasting over DSRC.  The WSDOT installation uses hardware provided by Intelight.",
+		"contact": "Justin Belk, WSDOT HQ, <a href=\"mailto:justin.belk@wsdot.wa.gov\">justin.belk@wsdot.wa.gov</a>, 360-705-7296 or Glenn Wagemann, Eastern Region, 509-324-6550."
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 42.274018,
+			"lng": -71.758959
+		},
+		"location": "Worcester – West End - Massachusetts State Route 9, located in the following municipalities: Worcester, Shrewsbury, Northborough, Westborough, Southborough, Framingham, Natick, Wellesley",
+		"timeline": "Winter 2020/2021",
+		"description": "This connected vehicle corridor would include the installation of a hybrid DSRC system that uses a cellular based 4g LTE/5G as well as a 5.9 GHZ DSRC radio based system to provide for CV messages to be broadcast between the SPaT Infrastructure System and SPaT Vehicle System.  Applications for connected vehicles may include Red-Light Violation Warning (RLVW), Pedestrian in Signalized Crosswalk Warning, and Eco-Approach and Departure at Signalized Intersections (Eco A/D). Additionally, DSRC deployments along the corridor could support a Mobile Accessible Pedestrian Signal System (PED-SIG) application on a mobile Personal Information Device (PID).  Other possible uses of the SPaT data include Signal Priority (transit, freight, other fleet vehicles), Emergency Vehicle Preemption (EVP), and Probe-Enabled Traffic Monitoring.  MassDOT hopes to work closely with auto manufacturers, freight delivery companies, transit agencies, research organizations and other entities to deploy and test these mentioned applications.",
+		"contact": "Corey O'Connor, Project Manager, <a href=\"mailto:corey.oconnor@state.ma.us\">corey.oconnor@state.ma.us</a>, 857-368-9638, James Danila, Asst. State Traffic Engineer, <a href=\"mailto:james.danila@state.ma.us\">james.danila@state.ma.us</a>, 857-368-9640, Neil Boudreau, State Traffic Engineer, <a href=\"mailto:neil.boudreau@state.ma.us\">neil.boudreau@state.ma.us</a>, 857-368-9655,"
+	},
+	{
+		"status": "underway",
+		"coords": {
+			"lat": 42.316806,
+			"lng": -71.231958
+		},
+		"location": "Wellesley – East End - Massachusetts State Route 9, located in the following municipalities: Worcester, Shrewsbury, Northborough, Westborough, Southborough, Framingham, Natick, Wellesley",
+		"timeline": "Winter 2020/2021",
+		"description": "This connected vehicle corridor would include the installation of a hybrid DSRC system that uses a cellular based 4g LTE/5G as well as a 5.9 GHZ DSRC radio based system to provide for CV messages to be broadcast between the SPaT Infrastructure System and SPaT Vehicle System.  Applications for connected vehicles may include Red-Light Violation Warning (RLVW), Pedestrian in Signalized Crosswalk Warning, and Eco-Approach and Departure at Signalized Intersections (Eco A/D). Additionally, DSRC deployments along the corridor could support a Mobile Accessible Pedestrian Signal System (PED-SIG) application on a mobile Personal Information Device (PID).  Other possible uses of the SPaT data include Signal Priority (transit, freight, other fleet vehicles), Emergency Vehicle Preemption (EVP), and Probe-Enabled Traffic Monitoring.  MassDOT hopes to work closely with auto manufacturers, freight delivery companies, transit agencies, research organizations and other entities to deploy and test these mentioned applications.",
+		"contact": "Corey O'Connor, Project Manager, <a href=\"mailto:corey.oconnor@state.ma.us\">corey.oconnor@state.ma.us</a>, 857-368-9638, James Danila, Asst. State Traffic Engineer, <a href=\"mailto:james.danila@state.ma.us\">james.danila@state.ma.us</a>, 857-368-9640, Neil Boudreau, State Traffic Engineer, <a href=\"mailto:neil.boudreau@state.ma.us\">neil.boudreau@state.ma.us</a>, 857-368-9655,"
+	}
+
+
+
+
+]
