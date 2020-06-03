@@ -130,7 +130,7 @@ export default function ProjectsPage(props) {
 
     if (!feature.properties.cluster) {
       // clicked on project
-      console.log('view project ' + feature.properties.id);
+      //console.log('view project ' + feature.properties.id);
 
       // change only if not viewing project details
       if (!projectId) {
@@ -183,7 +183,7 @@ export default function ProjectsPage(props) {
       if (hoveredProject != 0) {
         //_setGeomVisibility(hoveredProject, false);
         toggleGeomVisibility(0, state, dispatch);
-        console.log('hide geoms');
+        //console.log('hide geoms');
         setHoveredProject(0);
       }
     } else {
@@ -191,7 +191,7 @@ export default function ProjectsPage(props) {
       let projectId = event.features[0].properties.id;
 
       if (hoveredProject != projectId) {
-        console.log('show geom project ' + projectId);
+        //console.log('show geom project ' + projectId);
         //_setGeomVisibility(projectId, true);
         toggleGeomVisibility(projectId, state, dispatch);
         setHoveredProject(projectId);
@@ -204,7 +204,7 @@ export default function ProjectsPage(props) {
   }
 
   const onMapStyleClick = event => {
-    console.log("toggle map style");
+    //console.log("toggle map style");
     toggleMapStyle(state, dispatch);
   }
 

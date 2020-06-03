@@ -57,7 +57,7 @@ export default function FilterPanel(props) {
     var isActive = projectFilters.findIndex(function (element) {
       return element.name == filterName && element.value == filterValue;
     }) >= 0;
-    console.log(filterName + '-' + filterValue + ': ' + isActive);
+    //console.log(filterName + '-' + filterValue + ': ' + isActive);
     return isActive;
   };
 

@@ -178,7 +178,7 @@ function processProjectData2(data) {
       return 0;
     }); */
 
-  console.log(projects);
+  //console.log(projects);
 
   return projects;
 }
@@ -215,7 +215,7 @@ function processBikeshareData(data) {
     return n;
   });
 
-  console.log(networks);
+  //console.log(networks);
 
   return networks;
 }
@@ -246,7 +246,7 @@ function processBikeshareStationData(data) {
 
   network["stations"] = stations;
 
-  console.log(network);
+  //console.log(network);
 
   return network;
 }
@@ -271,7 +271,7 @@ function reducer(state, action) {
         g.properties["status"] = proj.properties.status;
         return g;
       });
-      console.log(geoms);
+      //console.log(geoms);
 
       return {
         ...state, projects: projects, visibleProjects: Array.from(projects), projectGeoms: geoms
@@ -382,7 +382,7 @@ function reducer(state, action) {
       };
     case Constants.TOGGLE_GEOM_VISIBILITY:
       let projId = action.payload;
-      console.log(action.type + ' ' + action.payload);
+      //console.log(action.type + ' ' + action.payload);
       if (projId) {
         return {
           ...state,
