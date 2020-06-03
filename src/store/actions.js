@@ -33,7 +33,7 @@ export const fetchProjectsGeom = async dispatch => {
 export const fetchBikeshareData = async dispatch => {
   let networks = [];
   try {
-    await fetch("http://api.citybik.es/v2/networks")
+    await fetch("https://api.citybik.es/v2/networks")
       .then(response => response.json())
       .then(data => networks = data.networks)
   } catch (e) {
@@ -51,11 +51,11 @@ export const fetchBikeshareStationData = async (networkId, state, dispatch) => {
     return element.properties.id === networkId;
   });
  */
-  console.log("GET http://api.citybik.es/v2/networks/" + networkId);
+  //console.log("GET http://api.citybik.es/v2/networks/" + networkId);
 
   let networkData;
   try {
-    await fetch("http://api.citybik.es/v2/networks/" + networkId)
+    await fetch("https://api.citybik.es/v2/networks/" + networkId)
       .then(response => response.json())
       .then(data => networkData = data.network)
   } catch (e) {
