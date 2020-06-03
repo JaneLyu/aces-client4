@@ -8,10 +8,12 @@ import VisionPage from "../views/VisionPage";
 import PeoplePage from "../views/PeoplePage";
 import LoginPage from "../views/LoginPage/LoginPage.js";
 import ProjectsPage from "../views/ProjectsPage/ProjectsPage.js";
+import BikesharePage from "../views/ProjectsPage/BikesharePage.js";
 import DashboardProjects from "../views/Dashboard/DashboardProjects";
 import DashboardUsers from "../views/Dashboard/DashboardUsers";
 import TestPage from "../views/TestPage"
 import SpatPage from "../views/SpatPage";
+import USDOTPage from "../views/USDOTPage";
 
 // context
 import { useUserState } from "../context/UserContext";
@@ -29,8 +31,11 @@ export default function App() {
       <Switch>
         <Route path={rootpath + "vision"} component={VisionPage} />
         <Route path={rootpath + "projects/:id"} component={ProjectsPage} />
+        <Route path={rootpath + "bikeshare/:id"} component={BikesharePage} />
         <Route path={rootpath + "projects"} component={ProjectsPage} />
-        <Route path={rootpath + "federal"} component={SpatPage} />
+        <Route path={rootpath + "bikeshare"} component={ProjectsPage} />
+        <Route path={rootpath + "federal/nocoe"} component={SpatPage} />
+        <Route path={rootpath + "federal/usdot"} component={USDOTPage} />
         <Route path={rootpath + "people"} component={PeoplePage} />
 
         <PublicRoute path={rootpath + "login"} component={LoginPage} />

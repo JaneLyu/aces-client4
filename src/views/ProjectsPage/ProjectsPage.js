@@ -36,7 +36,7 @@ import FilterPanel from "./FilterPanel";
 import { Store } from "../../store/store"
 import {
   fetchProjectsData, fetchProjectsGeom, toggleProjectFilters, viewProjects, viewOneProject,
-  setViewport, toggleGeomVisibility, toggleMapStyle
+  setViewport, toggleGeomVisibility, toggleMapStyle, fetchBikeshareData
 } from "../../store/actions"
 import DetailsPanel from "./DetailsPanel";
 import ResultsPanel from "./ResultsPanel";
@@ -99,18 +99,34 @@ export default function ProjectsPage(props) {
   React.useEffect(
     () => {
       state.projects.length === 0 && fetchProjectsData(dispatch)
-        //&& fetchProjectsGeom(dispatch);
+      //&& fetchProjectsGeom(dispatch);
     },
     [state.projects]
   );
 
+  React.useEffect(
+    () => {
+      state.bikeshares.length === 0 && fetchBikeshareData(dispatch)
+    },
+    []
+  );
+
+
   const mbProjectSourceRef = React.useRef();
   const mbPolygonSourceRef = React.useRef();
   const mapboxRef = React.useRef();
+  const mbBikeshareSourceRef = React.useRef();
 
   const handleMapOnClick = event => {
+    if (!event.features || event.features.length === 0) return;
     const feature = event.features[0];
-    if (!feature) return;
+
+    // bikeshare
+    if (feature.properties && feature.properties.dataType === "bikeshare") {
+      // fetch station data
+      props.history.push(Constants.ROOT_URL + "bikeshare/" + feature.properties.id);
+      return;
+    }
 
     if (!feature.properties.cluster) {
       // clicked on project
@@ -149,11 +165,18 @@ export default function ProjectsPage(props) {
   const [hoveredProject, setHoveredProject] = React.useState(0);
 
   const handleMapOnHover = event => {
+    // bikeshare
+    if (event.features && event.features.length > 0 &&
+      event.features[0].properties && event.features[0].properties.dataType === "bikeshare") {
+      return;
+    }
+
     //console.log(projectId)
     if (projectId) {
       return;
     }
 
+    // projects
     if (!event.features || event.features.length <= 0 ||
       !event.features[0].properties || !event.features[0].properties.id) {
       // not over project icon, hide any visible geom
@@ -199,7 +222,7 @@ export default function ProjectsPage(props) {
           {...rest}
         />
       </div>
-      
+
       <div>
         <Box display="flex" p={0} style={{ width: '100%' }}>
           <Box p={0} style={{ width: state.project != null ? '50vw' : '100%', height: 'calc(100vh - 65px)', overflow: 'hidden' }}>
@@ -210,7 +233,7 @@ export default function ProjectsPage(props) {
               mapStyle={state.mapStyle}
               onViewportChange={onViewportChange}
               mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-              interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
+              interactiveLayerIds={[projectSymbolLayer.id, bikeshareSymbolLayer.id]}
               onClick={handleMapOnClick} onHover={handleMapOnHover}
             >
               <Source
@@ -237,9 +260,19 @@ export default function ProjectsPage(props) {
                 clusterRadius={20}
                 ref={mbProjectSourceRef}
               >
-                <Layer {...unclusteredSymbolLayer} filter={state.mapMarkerFilter} paint={state.mapMarkerPaint} />
-                <Layer {...clusterLayer} />
-                <Layer {...clusterCountLayer} />
+                <Layer {...projectSymbolLayer} filter={state.mapMarkerFilter} paint={state.mapMarkerPaint} />
+              </Source>
+
+              <Source
+                type="geojson"
+                data={{
+                  type: 'FeatureCollection',
+                  features: !projectId && state.bikesharesVisible && state.bikeshares
+                }}
+                cluster={false}
+                ref={mbBikeshareSourceRef}
+              >
+                <Layer {...bikeshareSymbolLayer} />
               </Source>
 
               <div style={{
@@ -259,7 +292,7 @@ export default function ProjectsPage(props) {
 
         <Paper elevation={2} style={{
           position: 'absolute', bottom: (projectId) ? '34px' : '24px',
-          left: (projectId) ? '10px' : 'calc(250px + 20px)',
+          left: (projectId) ? '10px' : 'calc(200px + 20px)',
           width: '75px', height: '75px', borderRadius: '5px', overflow: 'hidden'
         }}>
           {
@@ -321,8 +354,8 @@ const clusterCountLayer = {
   }
 };
 
-const unclusteredSymbolLayer = {
-  id: 'unclustered-point',
+const projectSymbolLayer = {
+  id: 'project-symbols',
   type: 'symbol',
   source: 'projectdata',
   layout: {
@@ -343,25 +376,38 @@ const unclusteredSymbolLayer = {
   },
 };
 
+const bikeshareSymbolLayer = {
+  id: 'bikeshare-symbols',
+  type: 'symbol',
+  source: 'bikeshare',
+  layout: {
+    'icon-image': 'bicycle-share',
+    //'icon-size': 1.5,
+    'icon-anchor': 'bottom',
+    //'icon-ignore-placement': true,
+    'icon-allow-overlap': true,
+    'text-field': ['get', 'name'],
+    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    'text-size': 12,
+    //'text-anchor': 'top',
+    //'text-offset': [0,-.2],
+    'text-variable-anchor': ['top', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
+    'text-radial-offset': 0.15,
+    'text-optional': true,
+  },
+
+};
+
 const unclusteredPointLayer = {
   id: 'unclustered-point',
   type: 'circle',
-  source: 'projectdata',
+  source: 'bikeshares',
   filter: ['!', ['has', 'point_count']],
   layout: {
     'visibility': 'visible'
   },
   paint: {
-    'circle-color': [
-      'match',
-      ['get', 'status'],
-      Constants.STATUS_PLAN, Constants.STATUS_COLORS[Constants.STATUS_PLAN],
-      Constants.STATUS_DESIGN, Constants.STATUS_COLORS[Constants.STATUS_DESIGN],
-      Constants.STATUS_IMPLEMENT, Constants.STATUS_COLORS[Constants.STATUS_IMPLEMENT],
-      Constants.STATUS_LIVE, Constants.STATUS_COLORS[Constants.STATUS_LIVE],
-      Constants.STATUS_ARCHIVE, Constants.STATUS_COLORS[Constants.STATUS_ARCHIVE],
-      Constants.STATUS_COLORS[0]
-    ],
+    'circle-color': 'red',
     'circle-radius': 6,
     'circle-stroke-width': 2,
     'circle-stroke-color': '#fff'

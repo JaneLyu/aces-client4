@@ -69,7 +69,7 @@ export default function FilterPanel(props) {
     });
 
     setCategoryState({
-      autonomous: filterIsActive(FILTER_NAME_CATEGORY, 'a'),
+      automated: filterIsActive(FILTER_NAME_CATEGORY, 'a'),
       connected: filterIsActive(FILTER_NAME_CATEGORY, 'c'),
       electric: filterIsActive(FILTER_NAME_CATEGORY, 'e'),
       shared: filterIsActive(FILTER_NAME_CATEGORY, 's')
@@ -121,7 +121,7 @@ export default function FilterPanel(props) {
   };
 
   const [categoryState, setCategoryState] = React.useState({
-    autonomous: false,
+    automated: false,
     connected: false,
     electric: false,
     shared: false
@@ -129,7 +129,7 @@ export default function FilterPanel(props) {
   const handleChangeCategory = (value) => event => {
     switch (value) {
       case 'a':
-        setCategoryState({ ...categoryState, autonomous: event.target.checked });
+        setCategoryState({ ...categoryState, automated: event.target.checked });
         break;
       case 'c':
         setCategoryState({ ...categoryState, connected: event.target.checked });
@@ -220,7 +220,7 @@ export default function FilterPanel(props) {
   return (
     <Paper elevation={2} style={{
       position: 'absolute', top: '75px', left: '10px', bottom: '24px',
-      width: '250px', overflow: 'auto'
+      width: '200px', overflow: 'auto'
     }}>
       {/*       {
         state.state.projectFilters.map(filter => {
@@ -232,34 +232,34 @@ export default function FilterPanel(props) {
 
       <List>
         <Box component="div" style={{ padding: '0px 15px 10px 15px', margin: '0', fontWeight: 'bold', fontSize: '1rem' }}>
-          Total Projects: {state.state.visibleProjects.length}
+          {/* Total Projects: {state.state.visibleProjects.length} */}
         </Box>
-        <ListItem className={classes.filterTitle}>Status</ListItem>
+        <ListItem className={classes.filterTitle}>Type</ListItem>
         <ListItem>
           <FormGroup>
             <Box>
               <FormControlLabel className={classes.filterCheckboxLabel}
                 control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.planning}
                   onChange={handleChangeStatus(1)} value="1" />} label="Planning" />
-              <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
+              {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
                 <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" fill={STATUS_COLORS[STATUS_PLAN]} />
-              </svg>
+              </svg> */}
             </Box>
             <Box>
               <FormControlLabel className={classes.filterCheckboxLabel}
                 control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.implementation}
                   onChange={handleChangeStatus(2)} value="2" />} label="Implementation" />
-              <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
+              {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
                 <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" fill={STATUS_COLORS[STATUS_DESIGN]} />
-              </svg>
+              </svg> */}
             </Box>
             <Box>
               <FormControlLabel className={classes.filterCheckboxLabel}
                 control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.live}
                   onChange={handleChangeStatus(4)} value="4" />} label="Live" />
-              <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
+              {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
                 <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" fill={STATUS_COLORS[STATUS_LIVE]} />
-              </svg>
+              </svg> */}
             </Box>
           </FormGroup>
         </ListItem>
@@ -268,8 +268,8 @@ export default function FilterPanel(props) {
         <ListItem>
           <FormGroup>
             <FormControlLabel className={classes.filterCheckboxLabel}
-              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.autonomous}
-                onChange={handleChangeCategory('a')} value="a" />} label="Autonomous" />
+              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.automated}
+                onChange={handleChangeCategory('a')} value="a" />} label="Automated" />
             <FormControlLabel className={classes.filterCheckboxLabel}
               control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.connected}
                 onChange={handleChangeCategory('c')} value="c" />} label="Connected" />
@@ -297,7 +297,7 @@ export default function FilterPanel(props) {
           </FormGroup>
         </ListItem>
 
-        <ListItem className={classes.filterTitle}>District</ListItem>
+{/*         <ListItem className={classes.filterTitle}>District</ListItem>
         <ListItem>
           <FormGroup>
             <FormControlLabel className={classes.filterCheckboxLabel}
@@ -325,7 +325,7 @@ export default function FilterPanel(props) {
               control={<Checkbox color='primary' className={classes.filterCheckbox} checked={districtState.turnpike}
                 onChange={handleChangeDistrict('t')} value="t" />} label="Turnpike" />
           </FormGroup>
-        </ListItem>
+        </ListItem> */}
       </List>
 
 

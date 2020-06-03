@@ -54,6 +54,11 @@ const initialState = {
   spatViewport: spatInitialViewport,
   spatList: [],
 
+  bikeshares: [],
+  bikesharesVisible: true,
+  bikeshareNetwork: null,
+  bikeshareNetworkViewport: initialViewport
+
 };
 
 
@@ -100,7 +105,7 @@ function processProjectData(projects) {
     // people
     var num = 2 + Math.floor(Math.random() * 8);
     let ppeople = [];
-    while(ppeople.length < num) {
+    while (ppeople.length < num) {
       var rnd = Math.floor(Math.random() * peopleDB.length);
       var person = peopleDB[rnd];
       const match = ppeople.find(function (element) {
@@ -149,87 +154,107 @@ function processProjectData(projects) {
 }
 
 function processProjectData2(data) {
+  if (!data) return [];
 
-  let projects = data.map((proj, index) => {
+  let filtered = data.filter((proj, index) => {
+    return proj.active;
+  });
+
+  let projects = filtered.map((proj, index) => {
     let p = Object.assign({}, proj.location);
     //p["type"] = "Feature";
     p["properties"] = proj;
     p.properties["id"] = proj.projectId;
     p.properties["name"] = proj.title;
     p.properties["status"] = parseInt(proj.status);
-
-    // img url
-    /*var imgURL = proj.properties.desc_photo;
-    if (imgURL && !imgURL.toLowerCase().startsWith('http')) {
-      proj.properties.desc_photo = Constants.STATIC_ROOT_URL + proj.properties.desc_photo;
-    }*/
-
-    // people
-    var num = 2 + Math.floor(Math.random() * 8);
-    let ppeople = [];
-    while(ppeople.length < num) {
-      var rnd = Math.floor(Math.random() * peopleDB.length);
-      var person = peopleDB[rnd];
-      const match = ppeople.find(function (element) {
-        return element.id == person.id;
-      });
-      if (!match)
-        ppeople.push(person);
-    }
-    p.properties['people'] = ppeople;
-
-    // datasets
-    let lineseries = [];
-    for (let i = 0; i < 7; i++) {
-      lineseries.push(Math.floor(Math.random() * 50));
-    }
-    let linechartData = {
-      labels: ["M", "T", "W", "T", "F", "S", "S"],
-      series: [lineseries]
-    }
-
-    let barseries = [];
-    for (let i = 0; i < 12; i++) {
-      barseries.push(50 + Math.floor(Math.random() * 950));
-    }
-    let barchartData = {
-      labels: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "Mai",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ],
-      series: [barseries]
-    }
-    p.properties['datasets'] = [linechartData, barchartData];
-
     return p;
   });
 
-  projects.sort((a, b) => {
-    if (a.properties.name < b.properties.name)
-      return -1;
-    if (a.properties.name > b.properties.name)
-      return 1;
-    return 0;
-  });
+  /*   projects.sort((a, b) => {
+      if (a.properties.name < b.properties.name)
+        return -1;
+      if (a.properties.name > b.properties.name)
+        return 1;
+      return 0;
+    }); */
 
   console.log(projects);
 
   return projects;
 }
 
+// data: array of networks
+function processBikeshareData(data) {
+  if (!data) return [];
+
+  //console.log(data);
+
+  // filter us only
+  /*   let filtered = data.filter((network, index) => {
+      return network.location.country.toLowerCase() === "us";
+    }); */
+
+  // filter florida only
+  let filtered = data.filter((network, index) => {
+    return network.location.city.toLowerCase().endsWith(", fl");
+  });
+
+  //console.log(filtered.length + " filtered networks")
+
+  let networks = filtered.map((network, index) => {
+    let n = {};
+    n["type"] = "Feature";
+    n["geometry"] = {
+      "type": "Point",
+      "coordinates": [network.location.longitude, network.location.latitude]
+    };
+    n["properties"] = network;
+    n.properties["city"] = network.location.city;
+    n.properties["dataType"] = "bikeshare"; // TODO
+
+    return n;
+  });
+
+  console.log(networks);
+
+  return networks;
+}
+
+function processBikeshareStationData(data) {
+  if (!data) return null;
+
+  //console.log(data);
+
+  let network = data;
+
+  // filter out zero slot stations (demo)
+  let filtered = data.stations.filter((station, index) => {
+    return station.empty_slots > 0;
+  });
+
+  let stations = filtered.map((station, index) => {
+    let n = {};
+    n["type"] = "Feature";
+    n["geometry"] = {
+      "type": "Point",
+      "coordinates": [station.longitude, station.latitude]
+    };
+    n["properties"] = station;
+
+    return n;
+  });
+
+  network["stations"] = stations;
+
+  console.log(network);
+
+  return network;
+}
+
 
 function reducer(state, action) {
   var newFilters;
+  let newVp;
 
   //console.log('reducer: ' + action.type);
 
@@ -255,6 +280,77 @@ function reducer(state, action) {
       // payload = projects
       return {
         ...state, projectGeoms: action.payload
+      };
+    case Constants.FETCH_BIKESHARE_DATA:
+      let networks = processBikeshareData(action.payload);
+      return {
+        ...state, bikeshares: networks
+      };
+    case Constants.FETCH_BIKESHARE_STATION_DATA:
+      let network = processBikeshareStationData(action.payload);
+      newVp = state.bikeshareNetworkViewport;
+      // update viewport
+      if (network) {
+        if (network.stations.length > 0) {
+          const geoms = {
+            "type": "FeatureCollection",
+            "features": network.stations
+          };
+          // calculate bbox of geom
+          const [minLng, minLat, maxLng, maxLat] = bbox(geoms);
+          //console.log("bbox minLng: " + minLng);
+          //console.log("bbox maxLng: " + maxLng);
+          //console.log("bbox minLat: " + minLat);
+          //console.log("bbox maxLat: " + maxLat);
+
+          // assume new viewport is half width
+          const futureVp = {
+            ...state.bikeshareNetworkViewport,
+            //width: state.viewport.width / 2
+          }
+
+          // construct a viewport instance from the current state
+          let vp = null;
+          try {
+            vp = new WebMercatorViewport(futureVp);
+          } catch (err) {
+            console.error(err);
+          }
+
+          if (vp) {
+            const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+              padding: 40
+            });
+            newVp = {
+              ...state.bikeshareNetworkViewport,
+              //width: state.viewport.width,
+              //height: state.viewport.height,
+              longitude,
+              latitude,
+              zoom,
+              /*transitionInterpolator: new LinearInterpolator({
+                around: [event.offsetCenter.x, event.offsetCenter.y]
+              }),*/
+              transitionDuration: Constants.MAPBOX_TRANSITION_DURATION
+            }
+          }
+        } else {
+          newVp = {
+            latitude: network.location.latitude,
+            longitude: network.location.longitude,
+            zoom: 12,
+            bearing: 0,
+            pitch: 0,
+            transitionDuration: Constants.MAPBOX_TRANSITION_DURATION
+          }
+        }
+      }
+      return {
+        ...state, bikeshareNetwork: network, bikeshareNetworkViewport: newVp
+      };
+    case Constants.SET_BIKESHARE_NETWORK_VIEWPORT:
+      return {
+        ...state, bikeshareNetworkViewport: action.payload
       };
     case Constants.SET_VIEWPORT:
       return {
@@ -303,7 +399,7 @@ function reducer(state, action) {
       };
     case Constants.VIEW_PROJECTS:
       // reset viewport
-      let newVp = {
+      newVp = {
         ...state.viewport,
         latitude: initialViewport.latitude,
         longitude: initialViewport.longitude,
@@ -339,7 +435,8 @@ function reducer(state, action) {
       return {
         ...state,
         projectFilters: newFilters,
-        visibleProjects: filterProjects(state.projects, newFilters)
+        visibleProjects: filterProjects(state.projects, newFilters),
+        bikesharesVisible: filterBikeshares(newFilters)
       };
       return state;
     case Constants.REMOVE_PROJECT_FILTER:
@@ -347,14 +444,16 @@ function reducer(state, action) {
       return {
         ...state,
         projectFilters: action.payload,
-        visibleProjects: filterProjects(state.projects, action.payload)
+        visibleProjects: filterProjects(state.projects, action.payload),
+        bikesharesVisible: filterBikeshares(action.payload)
       };
     case Constants.RESET_PROJECT_FILTERS:
       // payload = null
       return {
         ...state,
         filters: [],
-        visibleProjects: Array.from(state.projects)
+        visibleProjects: Array.from(state.projects),
+        bikesharesVisible: true
       };
 
     case Constants.FETCH_SPAT_DATA:
@@ -370,6 +469,32 @@ function reducer(state, action) {
     default:
       return state;
   }
+}
+
+// return boolean show/hide
+// bikeshares are live, connected+shared, bike
+function filterBikeshares(filters) {
+  let statusMatch = false;
+  let categoryMatch = false;
+  let modeMatch = false;
+
+  let statusFilters = filters.filter(function (element) {
+    return element.name === 'status';
+  });
+  statusMatch = statusFilters.length === 0 || statusFilters.some(e => e.value === Constants.STATUS_LIVE);
+
+  let categoryFilters = filters.filter(function (element) {
+    return element.name === 'category';
+  });
+  categoryMatch = categoryFilters.length === 0 ||
+    categoryFilters.some(e => e.value.toLowerCase() === 'c' || e.value.toLowerCase() === 's');
+
+  let modeFilters = filters.filter(function (element) {
+    return element.name == 'mode';
+  });
+  modeMatch = modeFilters.length === 0 || modeFilters.some(e => e.value.toLowerCase() == 'b');
+
+  return statusMatch && categoryMatch && modeMatch;
 }
 
 // todo: optimize

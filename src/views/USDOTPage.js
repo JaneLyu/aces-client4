@@ -43,64 +43,12 @@ import * as Constants from "../constants"
 
 const useStyles = makeStyles(styles);
 
-export default function SpatPage(props) {
+export default function USDOTPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
 
   const { state, dispatch } = React.useContext(Store);
 
-  const [popupInfo, setPopupInfo] = React.useState();
-
-
-  React.useEffect(
-    () => {
-      state.spatList.length === 0 && fetchSpatData(dispatch);
-    },
-    [state.spatList]
-  );
-
-  const mbProjectSourceRef = React.useRef();
-
-  const handleMapOnClick = event => {
-    const feature = event.features[0];
-    if (!feature) return;
-
-    setPopupInfo(feature)
-  };
-
-  const onViewportChange = vp => {
-    if (popupInfo) return;
-
-    setSpatViewport(vp, state, dispatch);
-  }
-
-  const onMapStyleClick = event => {
-    console.log("toggle map style");
-    toggleMapStyle(state, dispatch);
-  }
-
-  const renderPopup = () => {
-    // TODO: dangerouslySetInnerHTML, DOMPurify
-    return (
-      popupInfo &&
-      <Popup
-        tipSize={4}
-        anchor="bottom"
-        longitude={popupInfo.geometry.coordinates[0]}
-        latitude={popupInfo.geometry.coordinates[1]}
-        closeOnClick={true}
-        captureScroll={true}
-        onClose={() => setPopupInfo(null)}
-      >
-        <div style={{ width: '240px', height: '300px', overflow: 'auto' }}>
-          <p style={{ fontSize: '10px' }}><strong>Location:</strong>&nbsp;&nbsp;{popupInfo.properties.location}</p>
-          <p style={{ fontSize: '10px' }}><strong>Timeline:</strong>&nbsp;&nbsp;{popupInfo.properties.timeline}</p>
-          <p style={{ fontSize: '10px' }}><strong>Description:</strong>&nbsp;&nbsp;{popupInfo.properties.description}</p>
-          <p style={{ fontSize: '10px' }}><strong>Contact:</strong>&nbsp;&nbsp;<span dangerouslySetInnerHTML={{ __html: popupInfo.properties.contact }} /></p>
-        </div>
-      </Popup>
-    );
-  }
 
   return (
     <Box>
@@ -118,64 +66,18 @@ export default function SpatPage(props) {
       </div>
 
       <div>
-        <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px' }}>
+        <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px', overflow: 'hidden' }}>
           <Box display="flex" style={{padding: '5px 0 10px 0'}}>
-            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>NOCoE SPaT Challenge</span>
-            <a href="https://transportationops.org/spatchallenge" target="_blank" rel="noopener noreferrer"
-              style={{ marginLeft: '20px' }}>
+            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Operational Connected Vehicle Deployments in the U.S.</span>
+            <a href="https://www.transportation.gov/research-and-technology/operational-connected-vehicle-deployments-us" 
+            target="_blank" rel="noopener noreferrer" style={{ marginLeft: '20px' }}>
               <img src={Constants.STATIC_ROOT_URL + 'images/external_link.png'} style={{ width: '20px', marginBottom: '5px' }} />
             </a>
           </Box>
-
-          <Box p={0} style={{ width: '100%', height: 'calc(100vh - 150px)', overflow: 'hidden' }}>
-            <MapGL
-              {...state.spatViewport}
-              width="100%"
-              height="100%"
-              mapStyle={state.mapStyle}
-              onViewportChange={onViewportChange}
-              mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-              interactiveLayerIds={[unclusteredSymbolLayer.id]}
-              onClick={handleMapOnClick}
-            >
-              <Source
-                type="geojson"
-                data={{
-                  type: 'FeatureCollection',
-                  features: state.spatList
-                }}
-                cluster={false}
-                clusterMaxZoom={14}
-                clusterRadius={20}
-                ref={mbProjectSourceRef}
-              >
-                <Layer {...unclusteredSymbolLayer} paint={state.mapMarkerPaint} />
-              </Source>
-
-              {
-                renderPopup()
-              }
-
-              <div style={{ position: 'absolute', padding: '10px', top: '2px', right: '0px' }}>
-                <NavigationControl />
-              </div>
-
-              <div style={{
-                position: 'absolute', padding: '10px', top: '2px', left: '0px',
-                background: 'white', boxShadow: '2px 2px 2px rgba(0,0,0,0.3)',
-                margin: '10px', fontSize: '13px', borderRadius: '5px'
-              }}>
-                <div>
-                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-4.svg'} style={{ marginRight: '5px' }} />
-                  SPaT deployment underway
-                </div>
-                <div>
-                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-3.svg'} style={{ marginRight: '5px' }} />
-                  SPaT deployment operational
-                </div>
-              </div>
-
-            </MapGL>
+          <div style={{fontStyle: 'italic'}}>Last updated: Tuesday, June 2, 2020</div>
+          <Box p={0} style={{ width: '100%', overflow: 'hidden' }}>
+            <img src="https://www.transportation.gov/sites/dot.gov/files/2020-05/CV%20Deployment%20Map%205-2020_0.JPG" 
+            style={{ width: '100%' }} />
           </Box>
         </Box>
 

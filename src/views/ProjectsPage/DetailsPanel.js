@@ -226,7 +226,7 @@ export default function DetailsPanel(props) {
   const getCategoryLabel = category => {
     switch (category) {
       case 'a':
-        return "Autonomous";
+        return "Automated";
       case 'c':
         return "Connected";
       case 'e':

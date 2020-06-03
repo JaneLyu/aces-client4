@@ -186,7 +186,7 @@ export default function ProjectView(props) {
                   <FormGroup>
                     <FormControlLabel
                       control={<Switch value="a" color="primary" />}
-                      label="Autonomous" style={{ color: '#666' }}
+                      label="Automated" style={{ color: '#666' }}
                     />
                     <FormControlLabel
                       control={<Switch value="c" color="primary" />}

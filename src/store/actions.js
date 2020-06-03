@@ -30,12 +30,58 @@ export const fetchProjectsGeom = async dispatch => {
   });
 };
 
+export const fetchBikeshareData = async dispatch => {
+  let networks = [];
+  try {
+    await fetch("http://api.citybik.es/v2/networks")
+      .then(response => response.json())
+      .then(data => networks = data.networks)
+  } catch (e) {
+    console.log(e);
+  }
+
+  return dispatch({
+    type: Constants.FETCH_BIKESHARE_DATA,
+    payload: networks
+  });
+};
+
+export const fetchBikeshareStationData = async (networkId, state, dispatch) => {
+  /* const network = state.bikeshares.find(function (element) {
+    return element.properties.id === networkId;
+  });
+ */
+  console.log("GET http://api.citybik.es/v2/networks/" + networkId);
+
+  let networkData;
+  try {
+    await fetch("http://api.citybik.es/v2/networks/" + networkId)
+      .then(response => response.json())
+      .then(data => networkData = data.network)
+  } catch (e) {
+    console.log(e);
+  }
+
+  return dispatch({
+    type: Constants.FETCH_BIKESHARE_STATION_DATA,
+    payload: networkData
+  });
+};
+
+export const setBikeshareNetworkViewport = (viewport, state, dispatch) => {
+  let dispatchObj = {
+    type: Constants.SET_BIKESHARE_NETWORK_VIEWPORT,
+    payload: viewport
+  };
+  return dispatch(dispatchObj);
+};
+
 // param: {filter name, filter data}
 // payload: projectFilters
 export const toggleProjectFilters = (filter, state, dispatch) => {
   // find filter from list
   // add or remove filter
-  const filterActive = state.projectFilters.find(function(element) { 
+  const filterActive = state.projectFilters.find(function (element) {
     return element.name == filter.name && element.value == filter.value;
   });
 
@@ -47,7 +93,7 @@ export const toggleProjectFilters = (filter, state, dispatch) => {
   if (filterActive != undefined) {
     dispatchObj = {
       type: Constants.REMOVE_PROJECT_FILTER,
-      payload: state.projectFilters.filter(function(element) { 
+      payload: state.projectFilters.filter(function (element) {
         return element.name != filter.name || element.value != filter.value;
       })
     }
@@ -65,11 +111,11 @@ export const toggleProjectFilters = (filter, state, dispatch) => {
 // payload: project
 export const viewOneProject = (projectId, state, dispatch) => {
   if (state.project != null && state.project.properties.id == projectId)
-    return {type: '', payload: null};
-  
+    return { type: '', payload: null };
+
   // future: fetch project data from server
-  var project = state.projects.find(function(element) {
-      return element.properties.id == projectId;
+  var project = state.projects.find(function (element) {
+    return element.properties.id == projectId;
   });
 
   let dispatchObj = {

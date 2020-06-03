@@ -66,6 +66,16 @@ export default function HeaderLinks(props) {
     }
   };
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   return (
     <List className={classes.list}>
@@ -78,8 +88,24 @@ export default function HeaderLinks(props) {
           activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>Projects</NavLink>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <NavLink to={Constants.ROOT_URL + "federal"} className={classes.navLink}
-          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>Federal Initiatives</NavLink>
+        <CustomDropdown
+          noLiPadding
+          buttonText="Federal Initiatives"
+          buttonProps={{
+            className: classes.navLink,
+            color: "transparent"
+          }}
+          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}
+          dropdownList={[
+            <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>NOCoE</Link>,
+            <Link to={Constants.ROOT_URL + "federal/usdot"} className={classes.dropdownLink}>US DOT</Link>
+
+/*             <NavLink to={Constants.ROOT_URL + "federal"} className={classes.navLink}
+          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>NOCoE</NavLink>,
+            <NavLink to={Constants.ROOT_URL + "federal"} className={classes.navLink}
+          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>US DOT</NavLink> */
+          ]}
+        />
       </ListItem>
       <ListItem className={classes.listItem}>
         <NavLink to={Constants.ROOT_URL + "people"} className={classes.navLink}
