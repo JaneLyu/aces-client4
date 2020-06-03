@@ -77,7 +77,7 @@ export default function USDOTPage(props) {
           <div style={{fontStyle: 'italic'}}>Last updated: Tuesday, June 2, 2020</div>
           <Box p={0} style={{ width: '100%', overflow: 'hidden' }}>
             <img src="https://www.transportation.gov/sites/dot.gov/files/2020-05/CV%20Deployment%20Map%205-2020_0.JPG" 
-            style={{ width: '100%' }} />
+            style={{ maxWidth: '100%', height: 'auto' }} />
           </Box>
         </Box>
 
