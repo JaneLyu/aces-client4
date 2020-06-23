@@ -106,8 +106,8 @@ export default function CustomDropdown(props) {
               ? "top-start"
               : "top"
             : left
-            ? "bottom-start"
-            : "bottom"
+              ? "bottom-start"
+              : "bottom"
         }
         className={classNames({
           [classes.popperClose]: !anchorEl,
@@ -143,6 +143,13 @@ export default function CustomDropdown(props) {
                           onClick={() => handleClose("divider")}
                           className={classes.dropdownDividerItem}
                         />
+                      );
+                    }
+                    if (prop.header) {
+                      return (
+                        <MenuItem disabled={true} className={dropdownItem} style={{padding: '10px 20px', color: 'black'}}>
+                          {prop.content}
+                        </MenuItem>
                       );
                     }
                     return (

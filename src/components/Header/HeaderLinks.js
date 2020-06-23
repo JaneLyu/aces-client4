@@ -80,14 +80,29 @@ export default function HeaderLinks(props) {
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
-        <NavLink to={Constants.ROOT_URL + "vision"} className={classes.navLink}
-          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>Vision</NavLink>
+        <NavLink to={Constants.ROOT_URL + "about"} className={classes.navLink}
+          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>About</NavLink>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <NavLink to={Constants.ROOT_URL + "projects"} className={classes.navLink}
-          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>Projects</NavLink>
+        <CustomDropdown
+          left
+          noLiPadding
+          //dropdownHeader="Dropdown Header"
+          buttonText={Constants.ACES_LABEL + " Initiatives"}
+          buttonProps={{
+            className: classes.navLink,
+            color: "transparent"
+          }}
+          dropdownList={[
+            <Link to={Constants.ROOT_URL + "projects"} className={classes.dropdownLink}>Florida</Link>,
+            { divider: true },
+            { header: true, content: <span>Federal</span> },
+            <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;NOCoE</Link>,
+            <Link to={Constants.ROOT_URL + "federal/usdot"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;US DOT</Link>
+          ]}
+        />
       </ListItem>
-      <ListItem className={classes.listItem}>
+      {/* <ListItem className={classes.listItem}>
         <CustomDropdown
           noLiPadding
           buttonText="Federal Initiatives"
@@ -99,18 +114,13 @@ export default function HeaderLinks(props) {
           dropdownList={[
             <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>NOCoE</Link>,
             <Link to={Constants.ROOT_URL + "federal/usdot"} className={classes.dropdownLink}>US DOT</Link>
-
-/*             <NavLink to={Constants.ROOT_URL + "federal"} className={classes.navLink}
-          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>NOCoE</NavLink>,
-            <NavLink to={Constants.ROOT_URL + "federal"} className={classes.navLink}
-          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>US DOT</NavLink> */
           ]}
         />
-      </ListItem>
-      <ListItem className={classes.listItem}>
+      </ListItem> */}
+      {/*       <ListItem className={classes.listItem}>
         <NavLink to={Constants.ROOT_URL + "people"} className={classes.navLink}
           activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>People</NavLink>
-      </ListItem>
+      </ListItem> */}
 
       <ListItem className={classes.listItem}>
         <IconButton style={{ padding: '0', margin: '7px 0 10px 30px' }} onClick={handleAvatarClick}>

@@ -10,10 +10,15 @@ export const ROOT_URL = "/";
 export const STATIC_ROOT_URL = root_url;
 
 
+export const ACES_LABEL = "A⋅C⋅E⋅S";
+export const ACES_BRAND = "FL " + ACES_LABEL;
+
 
 export const MAPBOX_TOKEN = "pk.eyJ1IjoieWh1YW5nNyIsImEiOiJjazJocjliaWEwdnd6M2hxZ2FnNHM3cDkwIn0.UQxOTkmbQTAv-e9El4zLKQ";
-export const MAPBOX_STYLE_STREET = "mapbox://styles/yhuang7/ck6nudp1h1am11intobzjm1em";
-export const MAPBOX_STYLE_SATELLITE = "mapbox://styles/yhuang7/ck7sem6mk2mi61imk9yqls0un";
+//export const MAPBOX_STYLE_STREET = "mapbox://styles/yhuang7/ck6nudp1h1am11intobzjm1em";
+export const MAPBOX_STYLE_STREET = "mapbox://styles/yhuang7/ckbmj7s1o1gps1hmh1eny04eh"; // streets2
+//export const MAPBOX_STYLE_SATELLITE = "mapbox://styles/yhuang7/ck7sem6mk2mi61imk9yqls0un";
+export const MAPBOX_STYLE_SATELLITE = "mapbox://styles/yhuang7/ckbmkf85r1hzc1iqixkmp0bw5"; // satellite2
 export const MAPBOX_TRANSITION_DURATION = 0;
 
 export const MAPBOX_MARKER_BASE_FILTER = ['!', ['has', 'point_count']];
@@ -40,14 +45,14 @@ export const MAPBOX_SYMBOL_PAINT_SATELLITE = {
 
 export const MAPBOX_GEOM_POINT_PAINT_MAP = {
   'circle-color': MAPBOX_GEOM_COLOR_MAP,
-  'circle-radius': 8,
+  'circle-radius': ['step', ['zoom'], 5, 9, 10],
   'circle-stroke-width': 2,
   'circle-stroke-color': 'white',
   'circle-opacity': 1
 };
 export const MAPBOX_GEOM_POINT_PAINT_SATELLITE = {
   'circle-color': MAPBOX_GEOM_COLOR_SATELLITE,
-  'circle-radius': 7,
+  'circle-radius': ['step', ['zoom'], 5, 9, 10],
   'circle-stroke-width': 2,
   'circle-stroke-color': 'white',
   'circle-opacity': 1
@@ -76,6 +81,18 @@ export const MAPBOX_GEOM_POLYGON_PAINT_SATELLITE = {
   'fill-outline-color': 'white',
 };
 
+export const MAPBOX_INITIAL_VIEWPORT = {
+  latitude: 27.75,
+  longitude: -84.0,
+  zoom: 6.2,
+  bearing: 0,
+  pitch: 0,
+  transitionDuration: MAPBOX_TRANSITION_DURATION
+};
+
+
+//export const NREL_TOKEN = "FfZup1v4iecWbIY61fLkhgvql6eEdZzYiCcoQeXQ";
+export const NREL_TOKEN = "DEMO_KEY";
 
 
 // zoom levels from 0, meters / pixel
@@ -84,19 +101,20 @@ export const flHeight = 721000;
 export const flWidth = 582000;
 
 
-export const STATUS_PLAN = 1;
-export const STATUS_DESIGN = 2;
-export const STATUS_IMPLEMENT = 3;
-export const STATUS_LIVE = 4;
-export const STATUS_ARCHIVE = 5;
+export const PROJECT_TYPE_PLAN = 1;
+export const PROJECT_TYPE_DESIGN = 2;
+export const PROJECT_TYPE_EVALUATION = 3;
+export const PROJECT_TYPE_DEPLOYMENT = 4;
+export const PROJECT_TYPE_DATA = 5;
+export const PROJECT_TYPE_OTHER = 6;
 
-export const FILTER_NAME_STATUS = 'status';
+export const FILTER_NAME_TYPE = 'status';
 export const FILTER_NAME_CATEGORY = 'category';
 export const FILTER_NAME_MODE = 'mode';
 export const FILTER_NAME_DISTRICT = 'district';
 
-//export const STATUS_COLORS = ['#ccc', '#9A00F0', '#FFD417', '#7373ff', '#00DC13', '#a3a3a3'];
-export const STATUS_COLORS = ['#ccc', '#F609B1', '#FFD000', '#7373ff', '#4EF609', '#a3a3a3'];
+//export const PROJECT_TYPE_COLORS = ['#ccc', '#9A00F0', '#FFD417', '#7373ff', '#00DC13', '#a3a3a3'];
+export const PROJECT_TYPE_COLORS = ['#ccc', '#F609B1', '#FFD000', '#7373ff', '#4EF609', '#a3a3a3'];
 
 
 // actions
@@ -125,3 +143,10 @@ export const FETCH_BIKESHARE_DATA = 'FETCH_BIKESHARE_DATA';
 export const FETCH_BIKESHARE_STATION_DATA = 'FETCH_BIKESHARE_STATION_DATA';
 export const SET_BIKESHARE_NETWORK_VIEWPORT = 'SET_BIKESHARE_NETWORK_VIEWPORT';
 
+export const FETCH_FUELING_DATA = 'FETCH_FUELING_DATA';
+export const SET_FUELING_CITY = 'SET_FUELING_CITY';
+export const SET_FUELING_VIEWPORT = 'SET_FUELING_VIEWPORT';
+
+export const TOGGLE_PROJECTS_VISIBILITY = 'TOGGLE_PROJECTS_VISIBILITY';
+export const TOGGLE_BIKESHARE_VISIBILITY = 'TOGGLE_BIKESHARE_VISIBILITY';
+export const TOGGLE_FUEL_VISIBILITY = 'TOGGLE_FUEL_VISIBILITY';

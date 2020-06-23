@@ -11,37 +11,21 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 
 import styles from "assets/jss/material-kit-react/views/projectsPage.js";
 
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import { Paper, ButtonBase } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import { IconButton, Button } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import { pink, red, lightBlue, grey, lightGreen, blueGrey } from "@material-ui/core/colors";
-import { SearchIcon, Satellite, Map as MapIcon } from '@material-ui/icons';
-import Box from '@material-ui/core/Box';
+import { Box, Paper, ButtonBase, ButtonGroup, Button } from '@material-ui/core';
+
 import FilterPanel from "./FilterPanel";
 
 import { Store } from "../../store/store"
 import {
   fetchProjectsData, fetchProjectsGeom, toggleProjectFilters, viewProjects, viewOneProject,
-  setViewport, toggleGeomVisibility, toggleMapStyle, fetchBikeshareData
+  setViewport, toggleGeomVisibility, toggleMapStyle, fetchBikeshareData, fetchFuelStationData,
+  toggleProjectsVisibility, toggleBikeshareVisibility, toggleFuelVisibility
 } from "../../store/actions"
 import DetailsPanel from "./DetailsPanel";
 import ResultsPanel from "./ResultsPanel";
 
 import * as Constants from "../../constants"
+import "./ProjectsPage.css"
 
 
 const useStyles = makeStyles(styles);
@@ -111,11 +95,32 @@ export default function ProjectsPage(props) {
     []
   );
 
+  React.useEffect(
+    () => {
+      state.fuelStations.length === 0 && fetchFuelStationData(dispatch)
+    },
+    []
+  );
 
   const mbProjectSourceRef = React.useRef();
   const mbPolygonSourceRef = React.useRef();
   const mapboxRef = React.useRef();
   const mbBikeshareSourceRef = React.useRef();
+  const mbFuelStationSourceRef = React.useRef();
+
+  const handleBikeshareClick = event => {
+    if (!event.features || event.features.length === 0) return;
+    const feature = event.features[0];
+
+    console.log("bikeshare: " + feature.properties.id);
+  }
+
+  const handleFuelCityClick = event => {
+    if (!event.features || event.features.length === 0) return;
+    const feature = event.features[0];
+
+    console.log("fuel city: " + feature.properties.name);
+  }
 
   const handleMapOnClick = event => {
     if (!event.features || event.features.length === 0) return;
@@ -125,6 +130,13 @@ export default function ProjectsPage(props) {
     if (feature.properties && feature.properties.dataType === "bikeshare") {
       // fetch station data
       props.history.push(Constants.ROOT_URL + "bikeshare/" + feature.properties.id);
+      return;
+    }
+
+    // fuel station
+    if (feature.properties && feature.properties.dataType === "fuel") {
+      //console.log("show fuel stations for " + feature.properties.name);
+      props.history.push(Constants.ROOT_URL + "fueling/" + feature.properties.name);
       return;
     }
 
@@ -165,9 +177,9 @@ export default function ProjectsPage(props) {
   const [hoveredProject, setHoveredProject] = React.useState(0);
 
   const handleMapOnHover = event => {
-    // bikeshare
-    if (event.features && event.features.length > 0 &&
-      event.features[0].properties && event.features[0].properties.dataType === "bikeshare") {
+    // bikeshare or fuel
+    if (event.features && event.features.length > 0 && event.features[0].properties
+      && (event.features[0].properties.dataType === "bikeshare" || event.features[0].properties.dataType === "fuel")) {
       return;
     }
 
@@ -208,6 +220,20 @@ export default function ProjectsPage(props) {
     toggleMapStyle(state, dispatch);
   }
 
+  const handleMapLoad = event => {
+    console.log("===== Mapbox load (projects)");
+  };
+
+  const handleACESViewClick = event => {
+    toggleProjectsVisibility(state, dispatch);
+  };
+  const handleBikeshareViewClick = event => {
+    toggleBikeshareVisibility(state, dispatch);
+  };
+  const handleFuelViewClick = event => {
+    toggleFuelVisibility(state, dispatch);
+  };
+
   return (
     <Box>
       <div style={{
@@ -217,7 +243,7 @@ export default function ProjectsPage(props) {
         <Header
           color="dark"
           fixed
-          brand="FL A&middot;C&middot;E&middot;S"
+          brand={Constants.ACES_BRAND}
           rightLinks={<HeaderLinks {...props} />}
           {...rest}
         />
@@ -233,14 +259,37 @@ export default function ProjectsPage(props) {
               mapStyle={state.mapStyle}
               onViewportChange={onViewportChange}
               mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-              interactiveLayerIds={[projectSymbolLayer.id, bikeshareSymbolLayer.id]}
-              onClick={handleMapOnClick} onHover={handleMapOnHover}
+              interactiveLayerIds={[projectSymbolLayer.id, bikeshareSymbolLayer.id, fuelStationSymbolLayer.id]}
+              onHover={handleMapOnHover} onLoad={handleMapLoad} onClick={handleMapOnClick}
             >
               <Source
                 type="geojson"
                 data={{
                   type: 'FeatureCollection',
-                  features: state.projectGeoms
+                  features: !projectId && state.fuelStationVisible && state.fuelStations
+                }}
+                ref={mbFuelStationSourceRef}
+              >
+                <Layer {...fuelStationSymbolLayer} paint={state.mapMarkerPaint} />
+              </Source>
+
+              <Source
+                type="geojson"
+                data={{
+                  type: 'FeatureCollection',
+                  features: !projectId && state.bikesharesVisible && state.bikeshares
+                }}
+                cluster={false}
+                ref={mbBikeshareSourceRef}
+              >
+                <Layer {...bikeshareSymbolLayer} paint={state.mapMarkerPaint} />
+              </Source>
+
+              <Source
+                type="geojson"
+                data={{
+                  type: 'FeatureCollection',
+                  features: state.projectsVisible && state.projectGeoms
                 }}
                 ref={mbPolygonSourceRef}
               >
@@ -253,7 +302,7 @@ export default function ProjectsPage(props) {
                 type="geojson"
                 data={{
                   type: 'FeatureCollection',
-                  features: state.visibleProjects
+                  features: state.projectsVisible && state.visibleProjects
                 }}
                 cluster={false}
                 clusterMaxZoom={14}
@@ -263,21 +312,9 @@ export default function ProjectsPage(props) {
                 <Layer {...projectSymbolLayer} filter={state.mapMarkerFilter} paint={state.mapMarkerPaint} />
               </Source>
 
-              <Source
-                type="geojson"
-                data={{
-                  type: 'FeatureCollection',
-                  features: !projectId && state.bikesharesVisible && state.bikeshares
-                }}
-                cluster={false}
-                ref={mbBikeshareSourceRef}
-              >
-                <Layer {...bikeshareSymbolLayer} />
-              </Source>
-
               <div style={{
                 position: 'absolute', padding: '10px', top: '2px',
-                right: (true /*projectId > 0*/) ? '0px' : 'calc(20vw + 10px)'
+                right: (true) ? '0px' : 'calc(20vw + 10px)'
               }}>
                 <NavigationControl />
               </div>
@@ -288,11 +325,34 @@ export default function ProjectsPage(props) {
         </Box>
 
         {/* <ResultsPanel {...resultsProps} /> */}
-        <FilterPanel {...filtersProps} />
+        {
+          state.projectsVisible && <FilterPanel {...filtersProps} />
+        }
+
+        {
+          !projectId &&
+          <ButtonGroup size="small" variant="contained" aria-label="contained primary button group" elevation={2}
+            style={{ position: 'absolute', top: '78px', left: '10px', backgroundColor: 'white' }}>
+            <Button onClick={handleACESViewClick} style={{
+              backgroundColor: state.projectsVisible ? '#031A43' : '#f8f8f8',
+              color: state.projectsVisible ? 'white' : '#888'
+            }}>
+              {Constants.ACES_LABEL}
+            </Button>
+            <Button onClick={handleBikeshareViewClick} style={{
+              backgroundColor: state.bikesharesVisible ? '#031A43' : '#f8f8f8',
+              color: state.bikesharesVisible ? 'white' : '#888'
+            }}>Bikeshare</Button>
+            <Button onClick={handleFuelViewClick} style={{
+              backgroundColor: state.fuelStationVisible ? '#031A43' : '#f8f8f8',
+              color: state.fuelStationVisible ? 'white' : '#888'
+            }}>Charging</Button>
+          </ButtonGroup>
+        }
 
         <Paper elevation={2} style={{
           position: 'absolute', bottom: (projectId) ? '34px' : '24px',
-          left: (projectId) ? '10px' : 'calc(200px + 20px)',
+          left: (projectId || !state.projectsVisible) ? '10px' : 'calc(200px + 20px)',
           width: '75px', height: '75px', borderRadius: '5px', overflow: 'hidden'
         }}>
           {
@@ -368,9 +428,10 @@ const projectSymbolLayer = {
     'text-field': ['get', 'name'],
     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
     'text-size': 12,
+    //'text-size': ['step', ['zoom'], 0, 8, 12],  // show label at zoom level
     //'text-anchor': 'top',
     //'text-offset': [0,-.2],
-    'text-variable-anchor': ['top', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
+    'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
     'text-radial-offset': 0.15,
     'text-optional': true,
   },
@@ -389,13 +450,35 @@ const bikeshareSymbolLayer = {
     'text-field': ['get', 'name'],
     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
     'text-size': 12,
+    //'text-size': ['step', ['zoom'], 0, 8, 12],  // show label at zoom level 9+,
     //'text-anchor': 'top',
     //'text-offset': [0,-.2],
-    'text-variable-anchor': ['top', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
+    'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
     'text-radial-offset': 0.15,
     'text-optional': true,
   },
+};
 
+const fuelStationSymbolLayer = {
+  id: 'fuelstation-symbols',
+  type: 'symbol',
+  source: 'fuelstation',
+  layout: {
+    'icon-image': 'charging-station-15',
+    //'icon-size': 1.5,
+    'icon-anchor': 'bottom',
+    //'icon-ignore-placement': true,
+    'icon-allow-overlap': true,
+    'text-field': ['get', 'name'],
+    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    'text-size': 12,
+    //'text-size': ['step', ['zoom'], 0, 8, 12],  // show city names at zoom level 9+
+    //'text-anchor': 'top',
+    //'text-offset': [0,-.2],
+    'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
+    'text-radial-offset': 0.15,
+    'text-optional': true,
+  }
 };
 
 const unclusteredPointLayer = {

@@ -32,7 +32,7 @@ export default function Footer(props) {
     <footer className={footerClasses}>
       <div className={classes.container}>
         <div className={classes.left}>
-          <List className={classes.list}>
+{/*           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
               <Link to={ROOT_URL + "about"} className={classes.block}>About</Link>
             </ListItem>
@@ -42,16 +42,23 @@ export default function Footer(props) {
             <ListItem className={classes.inlineBlock}>
               <Link to={ROOT_URL + "legal"} className={classes.block}>Legal</Link>
             </ListItem>
-          </List>
+          </List> */}
         </div>
         <div className={classes.right}>
           &copy; {1900 + new Date().getYear()}&nbsp;&nbsp;
-          <a
+{/*           <a
             href="https://www.fdot.gov"
             className={aClasses}
             target="_blank"
           >
             FDOT
+          </a> */}
+          <a
+            href="https://www.cutr.usf.edu"
+            className={aClasses}
+            target="_blank"
+          >
+            CUTR @ USF
           </a>
         </div>
       </div>

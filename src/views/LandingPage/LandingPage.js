@@ -59,12 +59,12 @@ export default function LandingPage(props) {
                   Electric &nbsp;&nbsp; &#8226; &nbsp;&nbsp; Shared
                 </h3>
                 <br /><br />
-              <Button component={Link} to={ROOT_URL + "vision"} variant="contained"
+              <Button component={Link} to={ROOT_URL + "projects"} variant="contained"
                 color="info"
                 size="lg"
               >
                 <i className="fas fa-play" />&nbsp;
-                Learn more
+                Current Projects
               </Button>
               </div>
             </GridItem>
@@ -74,8 +74,9 @@ export default function LandingPage(props) {
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
           <ProductSection />
+          {/* 
           <TeamSection />
-          <WorkSection />
+          <WorkSection /> */}
         </div>
       </div>
       <Footer />

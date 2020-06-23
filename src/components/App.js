@@ -9,6 +9,7 @@ import PeoplePage from "../views/PeoplePage";
 import LoginPage from "../views/LoginPage/LoginPage.js";
 import ProjectsPage from "../views/ProjectsPage/ProjectsPage.js";
 import BikesharePage from "../views/ProjectsPage/BikesharePage.js";
+import FuelStationPage from "../views/ProjectsPage/FuelStationPage.js";
 import DashboardProjects from "../views/Dashboard/DashboardProjects";
 import DashboardUsers from "../views/Dashboard/DashboardUsers";
 import TestPage from "../views/TestPage"
@@ -29,9 +30,10 @@ export default function App() {
   return (
     <HashRouter history={hist} basename={ROOT_URL} >
       <Switch>
-        <Route path={rootpath + "vision"} component={VisionPage} />
+        <Route path={rootpath + "about"} component={VisionPage} />
         <Route path={rootpath + "projects/:id"} component={ProjectsPage} />
         <Route path={rootpath + "bikeshare/:id"} component={BikesharePage} />
+        <Route path={rootpath + "fueling/:id"} component={FuelStationPage} />
         <Route path={rootpath + "projects"} component={ProjectsPage} />
         <Route path={rootpath + "bikeshare"} component={ProjectsPage} />
         <Route path={rootpath + "federal/nocoe"} component={SpatPage} />

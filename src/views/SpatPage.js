@@ -1,35 +1,16 @@
 import React, { Component } from "react";
 import { render } from 'react-dom';
-import MapGL, { Source, Layer, NavigationControl, ScaleControl, Popup } from "react-map-gl";
 import { useParams } from "react-router-dom";
+//import MapGL, { Source, Layer, NavigationControl, ScaleControl, Popup } from "react-map-gl";
+import MapGL, { Popup, Source, Layer, NavigationControl } from '@urbica/react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import DOMPurify from 'dompurify';
 
-// @material-ui/core components
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-// core components
 import Header from "components/Header/Header.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 
 import styles from "assets/jss/material-kit-react/views/projectsPage.js";
-
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import { Paper, ButtonBase } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
-import Drawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import { IconButton, Button } from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
-import MenuIcon from '@material-ui/icons/Menu';
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import { pink, red, lightBlue, grey, lightGreen, blueGrey } from "@material-ui/core/colors";
-import { SearchIcon, Satellite, Map as MapIcon } from '@material-ui/icons';
 import Box from '@material-ui/core/Box';
 
 import { Store } from "../store/store"
@@ -46,11 +27,9 @@ const useStyles = makeStyles(styles);
 export default function SpatPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
-
   const { state, dispatch } = React.useContext(Store);
-
   const [popupInfo, setPopupInfo] = React.useState();
-
+  const [mapCursorStyle, setMapCursorStyle] = React.useState();
 
   React.useEffect(
     () => {
@@ -59,48 +38,57 @@ export default function SpatPage(props) {
     [state.spatList]
   );
 
-  const mbProjectSourceRef = React.useRef();
+  const onViewportChange = vp => {
+    setSpatViewport(vp, state, dispatch);
+  }
 
-  const handleMapOnClick = event => {
+  const renderPopup = () => {
+    return (
+      popupInfo &&
+      <Popup
+        longitude={popupInfo.geometry.coordinates[0]}
+        latitude={popupInfo.geometry.coordinates[1]}
+        closeButton={true}
+        closeOnClick={false}
+        maxWidth="300px"
+        onClose={() => setPopupInfo(null)}
+      >
+        <div style={{ maxHeight: '300px', overflow: 'auto', marginTop: '8px' }}>
+          <p style={{ fontSize: '0.7rem' }}><strong>Location:</strong>&nbsp;&nbsp;{popupInfo.properties.location}</p>
+          <p style={{ fontSize: '0.7rem' }}><strong>Timeline:</strong>&nbsp;&nbsp;{popupInfo.properties.timeline}</p>
+          <p style={{ fontSize: '0.7rem' }}><strong>Description:</strong>&nbsp;&nbsp;
+            <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(popupInfo.properties.description) }} /></p>
+          <p style={{ fontSize: '0.7rem' }}><strong>Contact:</strong>&nbsp;&nbsp;
+            <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(popupInfo.properties.contact) }} /></p>
+        </div>
+      </Popup>
+    );
+  }
+
+  const handleLayerClick = event => {
     const feature = event.features[0];
     if (!feature) return;
 
     setPopupInfo(feature)
   };
 
-  const onViewportChange = vp => {
-    if (popupInfo) return;
+  const handleLayerHover = event => {
+    setMapCursorStyle("pointer");
+  };
 
-    setSpatViewport(vp, state, dispatch);
-  }
+  const handleLayerLeave = event => {
+    setMapCursorStyle();
+  };
 
-  const onMapStyleClick = event => {
-    console.log("toggle map style");
-    toggleMapStyle(state, dispatch);
-  }
+  const handleMapLoad = event => {
+    console.log("===== Mapbox load (spat)");
+  };
 
-  const renderPopup = () => {
-    // TODO: dangerouslySetInnerHTML, DOMPurify
-    return (
-      popupInfo &&
-      <Popup
-        tipSize={4}
-        anchor="bottom"
-        longitude={popupInfo.geometry.coordinates[0]}
-        latitude={popupInfo.geometry.coordinates[1]}
-        closeOnClick={true}
-        captureScroll={true}
-        onClose={() => setPopupInfo(null)}
-      >
-        <div style={{ width: '240px', height: '300px', overflow: 'auto' }}>
-          <p style={{ fontSize: '10px' }}><strong>Location:</strong>&nbsp;&nbsp;{popupInfo.properties.location}</p>
-          <p style={{ fontSize: '10px' }}><strong>Timeline:</strong>&nbsp;&nbsp;{popupInfo.properties.timeline}</p>
-          <p style={{ fontSize: '10px' }}><strong>Description:</strong>&nbsp;&nbsp;{popupInfo.properties.description}</p>
-          <p style={{ fontSize: '10px' }}><strong>Contact:</strong>&nbsp;&nbsp;<span dangerouslySetInnerHTML={{ __html: popupInfo.properties.contact }} /></p>
-        </div>
-      </Popup>
-    );
-  }
+  const handleMapClick = event => {
+    if (!event.features || !event.features[0]) {
+      setPopupInfo(null);
+    }
+  };
 
   return (
     <Box>
@@ -119,7 +107,7 @@ export default function SpatPage(props) {
 
       <div>
         <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px' }}>
-          <Box display="flex" style={{padding: '5px 0 10px 0'}}>
+          <Box display="flex" style={{ padding: '5px 0 10px 0' }}>
             <span style={{ fontSize: '25px', fontWeight: 'bold' }}>NOCoE SPaT Challenge</span>
             <a href="https://transportationops.org/spatchallenge" target="_blank" rel="noopener noreferrer"
               style={{ marginLeft: '20px' }}>
@@ -128,7 +116,45 @@ export default function SpatPage(props) {
           </Box>
 
           <Box p={0} style={{ width: '100%', height: 'calc(100vh - 150px)', overflow: 'hidden' }}>
-            <MapGL
+            <MapGL {...state.spatViewport}
+              style={{ width: '100%', height: '100%' }}
+              cursorStyle={mapCursorStyle}
+              mapStyle={state.mapStyle}
+              accessToken={Constants.MAPBOX_TOKEN}
+              onViewportChange={onViewportChange}
+              onLoad={handleMapLoad} onClick={handleMapClick}
+            >
+              <Source id="spatsource"
+                type="geojson"
+                data={{
+                  type: 'FeatureCollection',
+                  features: state.spatList
+                }}
+              />
+              <Layer {...spatSympbolLayer} paint={state.mapMarkerPaint} 
+                onClick={handleLayerClick} onHover={handleLayerHover} onLeave={handleLayerLeave} />
+
+              {renderPopup()}
+
+              <NavigationControl showCompass showZoom position='top-right' />
+
+              <div style={{
+                position: 'absolute', padding: '10px', top: '2px', left: '0px',
+                background: 'white', boxShadow: '2px 2px 2px rgba(0,0,0,0.3)',
+                margin: '10px', fontSize: '0.8rem', borderRadius: '5px'
+              }}>
+                <div>
+                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-4.svg'} style={{ marginRight: '5px' }} />
+                  SPaT deployment underway
+                </div>
+                <div>
+                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-3.svg'} style={{ marginRight: '5px' }} />
+                  SPaT deployment operational
+                </div>
+              </div>
+            </MapGL>
+
+            {/* <MapGL
               {...state.spatViewport}
               width="100%"
               height="100%"
@@ -144,22 +170,16 @@ export default function SpatPage(props) {
                   type: 'FeatureCollection',
                   features: state.spatList
                 }}
-                cluster={false}
-                clusterMaxZoom={14}
-                clusterRadius={20}
                 ref={mbProjectSourceRef}
               >
-                <Layer {...unclusteredSymbolLayer} paint={state.mapMarkerPaint} />
+                <Layer {...spatSympbolLayer} paint={state.mapMarkerPaint} />
               </Source>
-
               {
                 renderPopup()
               }
-
               <div style={{ position: 'absolute', padding: '10px', top: '2px', right: '0px' }}>
                 <NavigationControl />
               </div>
-
               <div style={{
                 position: 'absolute', padding: '10px', top: '2px', left: '0px',
                 background: 'white', boxShadow: '2px 2px 2px rgba(0,0,0,0.3)',
@@ -174,24 +194,17 @@ export default function SpatPage(props) {
                   SPaT deployment operational
                 </div>
               </div>
-
-            </MapGL>
+            </MapGL> */}
           </Box>
         </Box>
-
       </div>
-
-
     </Box >
-
   );
-
 }
 
-
-
-const unclusteredSymbolLayer = {
-  id: 'unclustered-point',
+const spatSympbolLayer = {
+  id: 'spatsymbols',
+  source: 'spatsource',
   type: 'symbol',
   layout: {
     'icon-image': ['concat', 'maki-marker-stroked-15-', [
@@ -203,7 +216,7 @@ const unclusteredSymbolLayer = {
     ]],
     //'icon-image': 'maki-marker-stroked-15-1',
     'icon-size': 1.5,
-    'icon-anchor': 'bottom',
+    //'icon-anchor': 'bottom',
     //'icon-ignore-placement': true,
     'icon-allow-overlap': true,
     //'text-field': ['get', 'status'],
@@ -215,26 +228,5 @@ const unclusteredSymbolLayer = {
     'text-radial-offset': 0.15,
     'text-optional': true,
   },
-};
-
-const unclusteredPointLayer = {
-  id: 'unclustered-point',
-  type: 'circle',
-  filter: ['!', ['has', 'point_count']],
-  layout: {
-    'visibility': 'visible'
-  },
-  paint: {
-    'circle-color': [
-      'match',
-      ['get', 'status'],
-      "deployed", "red",
-      "underway", "blue",
-      "yellow"
-    ],
-    'circle-radius': 6,
-    'circle-stroke-width': 2,
-    'circle-stroke-color': '#fff'
-  }
 };
 

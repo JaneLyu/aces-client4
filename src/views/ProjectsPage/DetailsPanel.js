@@ -210,16 +210,18 @@ export default function DetailsPanel(props) {
 
   const getStatusLabel = status => {
     switch (status) {
-      case Constants.STATUS_PLAN:
+      case Constants.PROJECT_TYPE_PLAN:
         return "Planning"
-      case Constants.STATUS_DESIGN:
-        return "Implementation"
-      case Constants.STATUS_IMPLEMENT:
-        return "Implementation"
-      case Constants.STATUS_LIVE:
-        return "Live"
-      case Constants.STATUS_ARCHIVE:
-        return "Archived"
+      case Constants.PROJECT_TYPE_DESIGN:
+        return "Design"
+      case Constants.PROJECT_TYPE_EVALUATION:
+        return "Evaluation"
+      case Constants.PROJECT_TYPE_DEPLOYMENT:
+        return "Deployment"
+      case Constants.PROJECT_TYPE_DATA:
+        return "Data"
+      case Constants.PROJECT_TYPE_OTHER:
+        return "Other"
     }
     return '';
   }
@@ -257,21 +259,27 @@ export default function DetailsPanel(props) {
   async function onLoad() {
     try {
       if (pprops.imageFiles) {
+        console.log("get image file");
         const imagef = await Storage.get(pprops.imageFiles, {
           identityId: pprops.userId
         });
         setImageFileURL(imagef);
-        //console.log(pprops.imageFilesURL);
+      } else {
+        setImageFileURL(null);
       }
+
       if (pprops.dataFiles) {
+        console.log("get data file");
         const dataf = await Storage.get(pprops.dataFiles, {
           identityId: pprops.userId
         });
         setDataFileURL(dataf);
+      } else {
+        setDataFileURL(null);
       }
       //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
     } catch (e) {
-      onError(e);
+      //console.log("error onload");
     }
   }
   onLoad();
@@ -312,7 +320,7 @@ export default function DetailsPanel(props) {
         </Box>
         <Box flexWrap="nowrap" style={{ width: '30%', textAlign: 'right' }}>
           <svg height="16" width="16" style={{ verticalAlign: 'middle' }}>
-            <circle cx="8" cy="8" r="8" stroke="white" stroke-width="0" fill={Constants.STATUS_COLORS[pprops.status]} />
+            <circle cx="8" cy="8" r="8" stroke="white" stroke-width="0" fill={Constants.PROJECT_TYPE_COLORS[pprops.status]} />
           </svg>
           <FormLabel style={{ paddingLeft: '10px', verticalAlign: 'middle' }}>
             {getStatusLabel(pprops.status)}
@@ -320,14 +328,14 @@ export default function DetailsPanel(props) {
         </Box>
       </Box>
 
-      <div style={{ margin: '30px 0 0 0' }} dangerouslySetInnerHTML={createDescriptionMarkup()}>
-      </div>
+      <div style={{ margin: '30px 0 0 0' }} dangerouslySetInnerHTML={createDescriptionMarkup()}></div>
 
-      <div style={{ margin: '20px 5px 0 10px' }}>
-        {
-          pprops && imageFileURL && <img src={imageFileURL} style={{ width: '100%' }} />
-        }
-      </div>
+      {
+        pprops && imageFileURL &&
+        <div style={{ margin: '20px 5px 0 10px' }}>
+          <img src={imageFileURL} style={{ width: '100%' }} />
+        </div>
+      }
 
       {
         pprops.lead && pprops.lead.name && <h4 style={{ margin: '30px 0px 0 0px', fontWeight: 'bold' }}>Project Lead</h4>

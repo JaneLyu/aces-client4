@@ -12,16 +12,13 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 
-import { Box, Checkbox, FormGroup, FormControlLabel, FormControl, Paper, Divider, ListSubheader, ListItemIcon } from "@material-ui/core";
+import { Box, Checkbox, FormGroup, FormControlLabel, FormControl, Paper, Divider, ListSubheader, ListItemIcon, Typography } from "@material-ui/core";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
-import {
-  STATUS_COLORS, STATUS_PLAN, STATUS_DESIGN, STATUS_IMPLEMENT, STATUS_LIVE, STATUS_ARCHIVE, ROOT_URL,
-  FILTER_NAME_CATEGORY, FILTER_NAME_MODE, FILTER_NAME_STATUS, FILTER_NAME_DISTRICT
-} from "../../constants"
+import * as Constants from "../../constants"
 
 //import { Store } from "../../store/store"
 //import { toggleProjectFilters, viewProject } from "../../store/actions"
@@ -29,18 +26,19 @@ import {
 //const useStyles = makeStyles(styles);
 const useStyles = makeStyles(theme => ({
   formControl: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(0),
   },
   filterCheckbox: {
-    padding: '4px 8px',
+    padding: '0px 4px',
     margin: '0px',
-    //fontSize: '10px'
+    fontSize: '0.5rem'
   },
   filterCheckboxLabel: {
     color: '#2F4F4F',
-    //fontSize: '5px' not observed
+    fontSize: '0.85rem'
   },
   filterTitle: {
+    padding: '2px 8px',
     backgroundColor: '#F0F8FF',
     color: '#2F4F4F',
     fontWeight: 'bold'
@@ -63,32 +61,35 @@ export default function FilterPanel(props) {
 
   const updateCheckboxes = () => {
     setStatusState({
-      planning: filterIsActive(FILTER_NAME_STATUS, STATUS_PLAN),
-      implementation: filterIsActive(FILTER_NAME_STATUS, STATUS_DESIGN),
-      live: filterIsActive(FILTER_NAME_STATUS, STATUS_LIVE)
+      planning: filterIsActive(Constants.FILTER_NAME_TYPE, Constants.PROJECT_TYPE_PLAN),
+      design: filterIsActive(Constants.FILTER_NAME_TYPE, Constants.PROJECT_TYPE_DESIGN),
+      evaluation: filterIsActive(Constants.FILTER_NAME_TYPE, Constants.PROJECT_TYPE_EVALUATION),
+      deployment: filterIsActive(Constants.FILTER_NAME_TYPE, Constants.PROJECT_TYPE_DEPLOYMENT),
+      data: filterIsActive(Constants.FILTER_NAME_TYPE, Constants.PROJECT_TYPE_DATA),
+      other: filterIsActive(Constants.FILTER_NAME_TYPE, Constants.PROJECT_TYPE_OTHER)
     });
 
     setCategoryState({
-      automated: filterIsActive(FILTER_NAME_CATEGORY, 'a'),
-      connected: filterIsActive(FILTER_NAME_CATEGORY, 'c'),
-      electric: filterIsActive(FILTER_NAME_CATEGORY, 'e'),
-      shared: filterIsActive(FILTER_NAME_CATEGORY, 's')
+      automated: filterIsActive(Constants.FILTER_NAME_CATEGORY, 'a'),
+      connected: filterIsActive(Constants.FILTER_NAME_CATEGORY, 'c'),
+      electric: filterIsActive(Constants.FILTER_NAME_CATEGORY, 'e'),
+      shared: filterIsActive(Constants.FILTER_NAME_CATEGORY, 's')
     });
 
     setModeState({
-      auto: filterIsActive(FILTER_NAME_MODE, 'a'),
-      bike: filterIsActive(FILTER_NAME_MODE, 'b'),
-      transit: filterIsActive(FILTER_NAME_MODE, 't')
+      auto: filterIsActive(Constants.FILTER_NAME_MODE, 'a'),
+      bike: filterIsActive(Constants.FILTER_NAME_MODE, 'b'),
+      transit: filterIsActive(Constants.FILTER_NAME_MODE, 't')
     });
     setDistrictState({
-      d1: filterIsActive(FILTER_NAME_DISTRICT, '1'),
-      d2: filterIsActive(FILTER_NAME_DISTRICT, '2'),
-      d3: filterIsActive(FILTER_NAME_DISTRICT, '3'),
-      d4: filterIsActive(FILTER_NAME_DISTRICT, '4'),
-      d5: filterIsActive(FILTER_NAME_DISTRICT, '5'),
-      d6: filterIsActive(FILTER_NAME_DISTRICT, '6'),
-      d7: filterIsActive(FILTER_NAME_DISTRICT, '7'),
-      turnpike: filterIsActive(FILTER_NAME_DISTRICT, 't')
+      d1: filterIsActive(Constants.FILTER_NAME_DISTRICT, '1'),
+      d2: filterIsActive(Constants.FILTER_NAME_DISTRICT, '2'),
+      d3: filterIsActive(Constants.FILTER_NAME_DISTRICT, '3'),
+      d4: filterIsActive(Constants.FILTER_NAME_DISTRICT, '4'),
+      d5: filterIsActive(Constants.FILTER_NAME_DISTRICT, '5'),
+      d6: filterIsActive(Constants.FILTER_NAME_DISTRICT, '6'),
+      d7: filterIsActive(Constants.FILTER_NAME_DISTRICT, '7'),
+      turnpike: filterIsActive(Constants.FILTER_NAME_DISTRICT, 't')
     });
   }
 
@@ -100,24 +101,36 @@ export default function FilterPanel(props) {
 
   const [statusState, setStatusState] = React.useState({
     planning: false,
-    implementation: false,
-    live: false
+    design: false,
+    evaluation: false,
+    deployment: false,
+    data: false,
+    other: false
   });
   const handleChangeStatus = (value) => event => {
     switch (value) {
-      case 1:
+      case Constants.PROJECT_TYPE_PLAN:
         setStatusState({ ...statusState, planning: event.target.checked });
         break;
-      case 2:
-        setStatusState({ ...statusState, implementation: event.target.checked });
+      case Constants.PROJECT_TYPE_DESIGN:
+        setStatusState({ ...statusState, design: event.target.checked });
         break;
-      case 4:
-        setStatusState({ ...statusState, live: event.target.checked });
+      case Constants.PROJECT_TYPE_EVALUATION:
+        setStatusState({ ...statusState, evaluation: event.target.checked });
+        break;
+      case Constants.PROJECT_TYPE_DEPLOYMENT:
+        setStatusState({ ...statusState, deployment: event.target.checked });
+        break;
+      case Constants.PROJECT_TYPE_DATA:
+        setStatusState({ ...statusState, data: event.target.checked });
+        break;
+      case Constants.PROJECT_TYPE_OTHER:
+        setStatusState({ ...statusState, other: event.target.checked });
         break;
       default:
         return;
     }
-    toggleProjectFilters({ name: FILTER_NAME_STATUS, value: value }, state.state, state.dispatch);
+    toggleProjectFilters({ name: Constants.FILTER_NAME_TYPE, value: value }, state.state, state.dispatch);
   };
 
   const [categoryState, setCategoryState] = React.useState({
@@ -143,7 +156,7 @@ export default function FilterPanel(props) {
       default:
         return;
     }
-    toggleProjectFilters({ name: FILTER_NAME_CATEGORY, value: value }, state.state, state.dispatch);
+    toggleProjectFilters({ name: Constants.FILTER_NAME_CATEGORY, value: value }, state.state, state.dispatch);
   };
 
   const [modeState, setModeState] = React.useState({
@@ -165,7 +178,7 @@ export default function FilterPanel(props) {
       default:
         return;
     }
-    toggleProjectFilters({ name: FILTER_NAME_MODE, value: value }, state.state, state.dispatch);
+    toggleProjectFilters({ name: Constants.FILTER_NAME_MODE, value: value }, state.state, state.dispatch);
   };
 
   const [districtState, setDistrictState] = React.useState({
@@ -207,7 +220,7 @@ export default function FilterPanel(props) {
       default:
         return;
     }
-    toggleProjectFilters({ name: FILTER_NAME_DISTRICT, value: value }, state.state, state.dispatch);
+    toggleProjectFilters({ name: Constants.FILTER_NAME_DISTRICT, value: value }, state.state, state.dispatch);
   };
 
 
@@ -219,9 +232,9 @@ export default function FilterPanel(props) {
 
   return (
     <Paper elevation={2} style={{
-      position: 'absolute', top: '75px', left: '10px', bottom: '24px',
+      position: 'absolute', top: '120px', left: '10px', bottom: '24px',
       width: '200px', overflow: 'auto'
-    }}>
+    }} >
       {/*       {
         state.state.projectFilters.map(filter => {
           return (
@@ -230,74 +243,106 @@ export default function FilterPanel(props) {
         })
       } */}
 
-      <List>
-        <Box component="div" style={{ padding: '0px 15px 10px 15px', margin: '0', fontWeight: 'bold', fontSize: '1rem' }}>
-          {/* Total Projects: {state.state.visibleProjects.length} */}
-        </Box>
+      <List dense={true} style={{ fontSize: '0.9rem' }}>
+        {/* <Box component="div" style={{ padding: '0px 15px 10px 15px', margin: '0', fontWeight: 'bold', fontSize: '1rem' }}>
+          Total Projects: {state.state.visibleProjects.length}
+        </Box> */}
+        <ListItem className={classes.filterTitle}>Category</ListItem>
+        <ListItem>
+          <FormGroup>
+            <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Automated</span>}
+              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.automated}
+                onChange={handleChangeCategory('a')} value="a" margin="dense" size="small" />} />
+            <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Connected</span>}
+              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.connected}
+                onChange={handleChangeCategory('c')} value="c" margin="dense" size="small" />} />
+            <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Electric</span>}
+              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.electric}
+                onChange={handleChangeCategory('e')} value="e" margin="dense" size="small" />} />
+            <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Shared</span>}
+              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.shared}
+                onChange={handleChangeCategory('s')} value="s" margin="dense" size="small" />} />
+          </FormGroup>
+        </ListItem>
+
         <ListItem className={classes.filterTitle}>Type</ListItem>
         <ListItem>
           <FormGroup>
             <Box>
-              <FormControlLabel className={classes.filterCheckboxLabel}
+              <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Planning</span>}
                 control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.planning}
-                  onChange={handleChangeStatus(1)} value="1" />} label="Planning" />
+                  onChange={handleChangeStatus(Constants.PROJECT_TYPE_PLAN)} value={Constants.PROJECT_TYPE_PLAN}
+                  margin="dense" size="small" />} />
               {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
-                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" fill={STATUS_COLORS[STATUS_PLAN]} />
+                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" 
+                fill={Constants.PROJECT_TYPE_COLORS[Constants.PROJECT_TYPE_PLAN]} />
               </svg> */}
             </Box>
             <Box>
-              <FormControlLabel className={classes.filterCheckboxLabel}
-                control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.implementation}
-                  onChange={handleChangeStatus(2)} value="2" />} label="Implementation" />
+              <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Design</span>}
+                control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.design}
+                  onChange={handleChangeStatus(Constants.PROJECT_TYPE_DESIGN)} value={Constants.PROJECT_TYPE_DESIGN}
+                  margin="dense" size="small" />} />
               {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
-                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" fill={STATUS_COLORS[STATUS_DESIGN]} />
+                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" 
+                fill={Constants.PROJECT_TYPE_COLORS[Constants.PROJECT_TYPE_DESIGN]} />
               </svg> */}
             </Box>
             <Box>
-              <FormControlLabel className={classes.filterCheckboxLabel}
-                control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.live}
-                  onChange={handleChangeStatus(4)} value="4" />} label="Live" />
+              <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Deployment</span>}
+                control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.deployment}
+                  onChange={handleChangeStatus(Constants.PROJECT_TYPE_DEPLOYMENT)} value={Constants.PROJECT_TYPE_DEPLOYMENT}
+                  margin="dense" size="small" />} />
               {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
-                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" fill={STATUS_COLORS[STATUS_LIVE]} />
+                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" 
+                fill={Constants.PROJECT_TYPE_COLORS[Constants.PROJECT_TYPE_DEPLOYMENT]} />
               </svg> */}
             </Box>
-          </FormGroup>
-        </ListItem>
-
-        <ListItem className={classes.filterTitle}>Category</ListItem>
-        <ListItem>
-          <FormGroup>
-            <FormControlLabel className={classes.filterCheckboxLabel}
-              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.automated}
-                onChange={handleChangeCategory('a')} value="a" />} label="Automated" />
-            <FormControlLabel className={classes.filterCheckboxLabel}
-              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.connected}
-                onChange={handleChangeCategory('c')} value="c" />} label="Connected" />
-            <FormControlLabel className={classes.filterCheckboxLabel}
-              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.electric}
-                onChange={handleChangeCategory('e')} value="e" />} label="Electric" />
-            <FormControlLabel className={classes.filterCheckboxLabel}
-              control={<Checkbox color='primary' className={classes.filterCheckbox} checked={categoryState.shared}
-                onChange={handleChangeCategory('s')} value="s" />} label="Shared" />
+            <Box>
+              <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Evaluation</span>}
+                control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.evaluation}
+                  onChange={handleChangeStatus(Constants.PROJECT_TYPE_EVALUATION)} value={Constants.PROJECT_TYPE_EVALUATION}
+                  margin="dense" size="small" />} />
+            </Box>
+            <Box>
+              <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Data</span>}
+                control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.data}
+                  onChange={handleChangeStatus(Constants.PROJECT_TYPE_DATA)} value={Constants.PROJECT_TYPE_DATA}
+                  margin="dense" size="small" />} />
+            </Box>
+            <Box>
+              <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Other</span>}
+                control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.other}
+                  onChange={handleChangeStatus(Constants.PROJECT_TYPE_OTHER)} value={Constants.PROJECT_TYPE_OTHER}
+                  margin="dense" size="small" />} />
+            </Box>
           </FormGroup>
         </ListItem>
 
         <ListItem className={classes.filterTitle}>Mode</ListItem>
         <ListItem>
           <FormGroup>
-            <FormControlLabel className={classes.filterCheckboxLabel}
+            <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Auto</span>}
               control={<Checkbox color='primary' className={classes.filterCheckbox} checked={modeState.auto}
-                onChange={handleChangeMode('a')} value="a" />} label="Auto" />
-            <FormControlLabel className={classes.filterCheckboxLabel}
+                onChange={handleChangeMode('a')} value="a" margin="dense" size="small" />} />
+            <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Bike</span>}
               control={<Checkbox color='primary' className={classes.filterCheckbox} checked={modeState.bike}
-                onChange={handleChangeMode('b')} value="b" />} label="Bike" />
-            <FormControlLabel className={classes.filterCheckboxLabel}
+                onChange={handleChangeMode('b')} value="b" margin="dense" size="small" />} />
+            <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Transit</span>}
               control={<Checkbox color='primary' className={classes.filterCheckbox} checked={modeState.transit}
-                onChange={handleChangeMode('t')} value="t" />} label="Transit" />
+                onChange={handleChangeMode('t')} value="t" margin="dense" size="small" />} />
           </FormGroup>
         </ListItem>
 
-{/*         <ListItem className={classes.filterTitle}>District</ListItem>
+        {/*         <ListItem className={classes.filterTitle}>Keyword</ListItem>
+        <ListItem>
+          <FormGroup>
+
+          </FormGroup>
+        </ListItem> */}
+
+
+        {/*         <ListItem className={classes.filterTitle}>District</ListItem>
         <ListItem>
           <FormGroup>
             <FormControlLabel className={classes.filterCheckboxLabel}

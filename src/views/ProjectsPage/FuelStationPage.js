@@ -12,8 +12,8 @@ import Box from '@material-ui/core/Box';
 
 import { Store } from "../../store/store"
 import {
-  fetchBikeshareStationData, fetchProjectsGeom, toggleProjectFilters, viewProjects, viewOneProject,
-  setBikeshareNetworkViewport, toggleGeomVisibility, toggleMapStyle, fetchBikeshareData
+  setFuelStationCity, fetchProjectsGeom, toggleProjectFilters, viewProjects, viewOneProject,
+  setFuelStationViewport, toggleGeomVisibility, toggleMapStyle, fetchBikeshareData
 } from "../../store/actions"
 
 import moment from "moment"
@@ -26,37 +26,23 @@ import * as Constants from "../../constants"
 
 const useStyles = makeStyles(styles);
 
-export default function BikesharePage(props) {
+export default function FuelStationPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const { state, dispatch } = React.useContext(Store);
   const { id } = useParams();
   const [popupInfo, setPopupInfo] = React.useState();
   const [mapCursorStyle, setMapCursorStyle] = React.useState();
+  //const [viewport, setViewport] = React.useState(Constants.MAPBOX_INITIAL_VIEWPORT);
 
   React.useEffect(
     () => {
-      //console.log("network id: " + id);
-      //state.bikeshares.length > 0 && 
-      fetchBikeshareStationData(id, state, dispatch)
+      console.log("showing fuel stations in " + id);
+      setFuelStationCity(id, state, dispatch);
+      // set viewport
     },
     []
   );
-
-  const mbBikeshareSourceRef = React.useRef();
-
-  const handleMapOnClick = event => {
-    if (!event.features || event.features.length === 0) return;
-    const feature = event.features[0];
-
-    // bikeshare
-    if (feature.properties && feature.properties.dataType === "bikeshare") {
-      // fetch station data
-      //props.history.push(Constants.ROOT_URL + "bikeshare/" + feature.properties.id);
-      return;
-    }
-
-  };
 
   const onMapStyleClick = event => {
     //console.log("toggle map style");
@@ -64,7 +50,7 @@ export default function BikesharePage(props) {
   }
 
   const onViewportChange = vp => {
-    setBikeshareNetworkViewport(vp, state, dispatch);
+    setFuelStationViewport(vp, state, dispatch);
   }
 
   const renderPopup = () => {
@@ -78,13 +64,16 @@ export default function BikesharePage(props) {
         onClose={() => setPopupInfo(null)}
       >
         <div style={{paddingTop: '8px'}}>
-          <p style={{ fontSize: '0.9rem' }}><strong>{popupInfo.properties.name}</strong></p>
+          <p style={{ fontSize: '0.9rem' }}><strong>{popupInfo.properties.station_name}</strong></p>
           <p style={{ fontSize: '0.75rem' }}>
-            Bikes available:&nbsp;&nbsp;<strong>{popupInfo.properties.free_bikes}</strong><br/>
-            Spaces available:&nbsp;&nbsp;<strong>{popupInfo.properties.empty_slots}</strong>
+            {popupInfo.properties.street_address}<br/>
+            {popupInfo.properties.city + ", " + popupInfo.properties.state + " " + popupInfo.properties.zip}
+          </p>
+          <p style={{ fontSize: '0.75rem' }}>
+            {popupInfo.properties.station_phone}
           </p>
           <span style={{ fontSize: '0.6rem', fontStyle: 'italic' }}>
-            Last updated {moment(popupInfo.properties.timestamp).format("M/D/YYYY, h:mm:ss a")}
+            Last updated {moment(popupInfo.properties.updated_at).format("M/D/YYYY, h:mm:ss a")}
           </span>
         </div>
       </Popup>
@@ -135,7 +124,7 @@ export default function BikesharePage(props) {
       <div>
         <Box display="flex" p={0} style={{ width: '100%' }}>
           <Box p={0} style={{ width: '100%', height: 'calc(100vh - 65px)', overflow: 'hidden' }}>
-            <MapGL {...state.bikeshareNetworkViewport}
+            <MapGL {...state.fuelStationViewport}
               style={{ width: '100%', height: '100%' }}
               cursorStyle={mapCursorStyle}
               mapStyle={state.mapStyle}
@@ -143,11 +132,11 @@ export default function BikesharePage(props) {
               onViewportChange={onViewportChange}
               onLoad={handleMapLoad} onClick={handleMapClick}
             >
-              <Source id="bikeshare-source"
+              <Source id="fuelstation-source"
                 type="geojson"
                 data={{
                   type: 'FeatureCollection',
-                  features: state.bikeshareNetwork ? state.bikeshareNetwork.stations : []
+                  features: state.fuelStationCity ? state.fuelStationCity.properties.stations : []
                 }}
               />
               <Layer {...stationMarkerLayer}
@@ -155,70 +144,25 @@ export default function BikesharePage(props) {
               {renderPopup()}
               <NavigationControl showCompass showZoom position='top-right' />
               {
-                state.bikeshareNetwork &&
+                state.fuelStationCity &&
                 <div style={{
                   position: 'absolute', padding: '15px', top: '2px', left: '0px',
                   background: 'white', boxShadow: '2px 2px 2px rgba(0,0,0,0.3)',
                   margin: '10px', borderRadius: '5px'
                 }}>
                   <div>
-                    <strong style={{ fontSize: '1.5rem' }}>{state.bikeshareNetwork.name}</strong>
-                    {
-                      state.bikeshareNetwork.location && 
-                      <div style={{ fontSize: '1rem', fontStyle: 'italic' }}>{state.bikeshareNetwork.location.city}</div>
-                    }
+                    <strong style={{ fontSize: '1.5rem' }}>
+                      {state.fuelStationCity.properties.name + ", " + state.fuelStationCity.properties.state}
+                    </strong>
                   </div>
                   <div style={{ fontSize: '1.2rem', marginTop: '10px' }}>
-                    <strong>{state.bikeshareNetwork.stations.length}</strong>
-                    {" bikeshare station" + (state.bikeshareNetwork.stations.length > 1 ? "s" : "")}
+                    <strong>{state.fuelStationCity.properties.stations.length}</strong>
+                    {" charging station" + (state.fuelStationCity.properties.stations.length > 1 ? "s" : "")}
                   </div>
                 </div>
               }
             </MapGL>
 
-            {/* <MapGL
-              {...state.bikeshareNetworkViewport}
-              width="100%"
-              height="100%"
-              mapStyle={state.mapStyle}
-              onViewportChange={onViewportChange}
-              mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-              interactiveLayerIds={[stationMarkerLayer.id]}
-              onClick={handleMapOnClick} onLoad={handleMapLoad}
-            >
-              <Source
-                type="geojson"
-                data={{
-                  type: 'FeatureCollection',
-                  features: state.bikeshareNetwork ? state.bikeshareNetwork.stations : []
-                }}
-                cluster={false}
-                ref={mbBikeshareSourceRef}
-              >
-                <Layer {...stationMarkerLayer} />
-              </Source>
-              <div style={{
-                position: 'absolute', padding: '10px', top: '2px',
-                right: '0px'
-              }}>
-                <NavigationControl />
-              </div>
-              {
-                state.bikeshareNetwork &&
-                <div style={{
-                  position: 'absolute', padding: '20px', top: '2px', left: '0px',
-                  background: 'white', boxShadow: '2px 2px 2px rgba(0,0,0,0.3)',
-                  margin: '20px', fontSize: '13px', borderRadius: '5px'
-                }}>
-                  <div style={{ fontSize: '25px', fontWeight: 'bold' }}>
-                    {state.bikeshareNetwork.name}{state.bikeshareNetwork.location && " (" + state.bikeshareNetwork.location.city + ")"}
-                  </div>
-                  <div style={{ fontSize: '20px', marginTop: '10px' }}>
-                    {state.bikeshareNetwork.stations.length + " station" + (state.bikeshareNetwork.stations.length > 1 ? "s" : "")}
-                  </div>
-                </div>
-              }
-            </MapGL> */}
            </Box>
         </Box>
 
@@ -253,14 +197,15 @@ export default function BikesharePage(props) {
 }
 
 const stationMarkerLayer = {
-  id: 'bikeshare-markers',
+  id: 'fuelstation-markers',
   //type: 'symbol',
   type: 'circle',
-  source: 'bikeshare-source',
+  source: 'fuelstation-source',
   paint: {
-    'circle-color': ['step', ['get', 'free_bikes'], '#ED0B5A', 2, '#FECC00', 6, '#16E127'],
+    //'circle-color': ['step', ['get', 'free_bikes'], '#ED0B5A', 2, '#FECC00', 6, '#16E127'],
+    'circle-color': '#2252D5',
     'circle-radius': 6,
     'circle-stroke-width': 2,
-    'circle-stroke-color': '#fff'
+    'circle-stroke-color': '#eee'
   }
 };

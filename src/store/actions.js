@@ -3,12 +3,8 @@ import { API, Auth } from "aws-amplify";
 
 
 // payload: projects, geojson, project data is features array; by properties.id
-const PROJECTS_URL = Constants.STATIC_ROOT_URL + "json/projects_data.json";
 export const fetchProjectsData = async dispatch => {
-  //console.log(FETCH_PROJECTS_DATA + " action started");
-
-  /*const data = await fetch(PROJECTS_URL);
-  const dataJSON = await data.json();*/
+  console.log("***** " + Constants.FETCH_PROJECTS_DATA);
 
   const data = await API.get("projects", "/projects/all");
   return dispatch({
@@ -31,9 +27,11 @@ export const fetchProjectsGeom = async dispatch => {
 };
 
 export const fetchBikeshareData = async dispatch => {
+  console.log("***** " + Constants.FETCH_BIKESHARE_DATA);
+
   let networks = [];
   try {
-    await fetch("https://api.citybik.es/v2/networks")
+    await fetch("http://api.citybik.es/v2/networks")
       .then(response => response.json())
       .then(data => networks = data.networks)
   } catch (e) {
@@ -47,15 +45,11 @@ export const fetchBikeshareData = async dispatch => {
 };
 
 export const fetchBikeshareStationData = async (networkId, state, dispatch) => {
-  /* const network = state.bikeshares.find(function (element) {
-    return element.properties.id === networkId;
-  });
- */
-  //console.log("GET http://api.citybik.es/v2/networks/" + networkId);
+  //console.log("***** " + Constants.FETCH_BIKESHARE_STATION_DATA + ": " + networkId);
 
   let networkData;
   try {
-    await fetch("https://api.citybik.es/v2/networks/" + networkId)
+    await fetch("http://api.citybik.es/v2/networks/" + networkId)
       .then(response => response.json())
       .then(data => networkData = data.network)
   } catch (e) {
@@ -71,6 +65,43 @@ export const fetchBikeshareStationData = async (networkId, state, dispatch) => {
 export const setBikeshareNetworkViewport = (viewport, state, dispatch) => {
   let dispatchObj = {
     type: Constants.SET_BIKESHARE_NETWORK_VIEWPORT,
+    payload: viewport
+  };
+  return dispatch(dispatchObj);
+};
+
+
+export const fetchFuelStationData = async dispatch => {
+  console.log("***** " + Constants.FETCH_FUELING_DATA);
+
+  let stations = [];
+  try {
+    await fetch("http://developer.nrel.gov/api/alt-fuel-stations/v1.json?api_key="
+      + Constants.NREL_TOKEN + "&access=public&fuel_type=ELEC&ev_charging_level=2%2Cdc_fast&state=US-FL&status=E")
+      .then(response => response.json())
+      .then(data => stations = data)
+  } catch (e) {
+    console.log(e);
+  }
+
+  return dispatch({
+    type: Constants.FETCH_FUELING_DATA,
+    payload: stations
+  });
+};
+
+export const setFuelStationCity = async (cityId, state, dispatch) => {
+  console.log("***** " + Constants.SET_FUELING_CITY);
+
+  return dispatch({
+    type: Constants.SET_FUELING_CITY,
+    payload: cityId
+  });
+};
+
+export const setFuelStationViewport = (viewport, state, dispatch) => {
+  let dispatchObj = {
+    type: Constants.SET_FUELING_VIEWPORT,
     payload: viewport
   };
   return dispatch(dispatchObj);
@@ -158,27 +189,21 @@ export const toggleGeomVisibility = (projectId, state, dispatch) => {
   return dispatch(dispatchObj);
 };
 
-// login
-// param: user
-// payload: user
-
-
-// logout
-// param: -
-// payload: null user
-
-
-// 
-
 
 //const SPAT_DATA_URL = 'https://transportationops.org/sites/transops/themes/transops/js/spat-pins.json';
 const SPAT_DATA_URL = Constants.STATIC_ROOT_URL + "json/spat-pins.json";
 export const fetchSpatData = async dispatch => {
-  const data = await fetch(SPAT_DATA_URL);
-  const dataJSON = await data.json();
+  let spatData;
+  try {
+    await fetch(SPAT_DATA_URL)
+      .then(response => response.json())
+      .then(data => spatData = data)
+  } catch (e) {
+    console.log(e);
+  }
   return dispatch({
     type: Constants.FETCH_SPAT_DATA,
-    payload: dataJSON
+    payload: spatData
   });
 };
 
@@ -186,6 +211,31 @@ export const setSpatViewport = (viewport, state, dispatch) => {
   let dispatchObj = {
     type: Constants.SET_SPAT_VIEWPORT,
     payload: viewport
+  };
+  return dispatch(dispatchObj);
+};
+
+
+export const toggleProjectsVisibility = (state, dispatch) => {
+  let dispatchObj = {
+    type: Constants.TOGGLE_PROJECTS_VISIBILITY,
+    payload: null
+  };
+  return dispatch(dispatchObj);
+};
+
+export const toggleBikeshareVisibility = (state, dispatch) => {
+  let dispatchObj = {
+    type: Constants.TOGGLE_BIKESHARE_VISIBILITY,
+    payload: null
+  };
+  return dispatch(dispatchObj);
+};
+
+export const toggleFuelVisibility = (state, dispatch) => {
+  let dispatchObj = {
+    type: Constants.TOGGLE_FUEL_VISIBILITY,
+    payload: null
   };
   return dispatch(dispatchObj);
 };
