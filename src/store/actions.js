@@ -31,7 +31,7 @@ export const fetchBikeshareData = async dispatch => {
 
   let networks = [];
   try {
-    await fetch("http://api.citybik.es/v2/networks")
+    await fetch("https://api.citybik.es/v2/networks")
       .then(response => response.json())
       .then(data => networks = data.networks)
   } catch (e) {
@@ -49,7 +49,7 @@ export const fetchBikeshareStationData = async (networkId, state, dispatch) => {
 
   let networkData;
   try {
-    await fetch("http://api.citybik.es/v2/networks/" + networkId)
+    await fetch("https://api.citybik.es/v2/networks/" + networkId)
       .then(response => response.json())
       .then(data => networkData = data.network)
   } catch (e) {
@@ -76,7 +76,7 @@ export const fetchFuelStationData = async dispatch => {
 
   let stations = [];
   try {
-    await fetch("http://developer.nrel.gov/api/alt-fuel-stations/v1.json?api_key="
+    await fetch("https://developer.nrel.gov/api/alt-fuel-stations/v1.json?api_key="
       + Constants.NREL_TOKEN + "&access=public&fuel_type=ELEC&ev_charging_level=2%2Cdc_fast&state=US-FL&status=E")
       .then(response => response.json())
       .then(data => stations = data)
