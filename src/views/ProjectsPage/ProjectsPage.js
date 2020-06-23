@@ -25,7 +25,6 @@ import DetailsPanel from "./DetailsPanel";
 import ResultsPanel from "./ResultsPanel";
 
 import * as Constants from "../../constants"
-import "./ProjectsPage.css"
 
 
 const useStyles = makeStyles(styles);
