@@ -175,7 +175,7 @@ function processBikeshareStationData(data) {
 }
 
 function processFuelStationData(data) {
-  if (!data) return null;
+  if (!data || !data.fuel_stations) return null;
 
   console.log("total stations: " + data.fuel_stations.length);
 
@@ -354,7 +354,7 @@ function reducer(state, action) {
     case Constants.FETCH_FUELING_DATA:
       let fuelData = processFuelStationData(action.payload);
       return {
-        ...state, fuelStations: fuelData.cities, fuelStationsTotal: fuelData.total
+        ...state, fuelStations: fuelData ? fuelData.cities : [], fuelStationsTotal: fuelData ? fuelData.total : 0
       };
     case Constants.SET_FUELING_CITY:
       let cityData = state.fuelStations.find(function (element) {

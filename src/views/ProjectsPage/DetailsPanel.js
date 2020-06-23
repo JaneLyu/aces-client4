@@ -256,26 +256,27 @@ export default function DetailsPanel(props) {
   //let pmodes = pprops.mode.toLowerCase().split(';');
   let pmodes = pprops.mode;
 
+  // TODO: state change (via viewport) causes onload to fire at every map movement
   async function onLoad() {
     try {
-      if (pprops.imageFiles) {
+      if (pprops.imageFiles && !imageFileURL) {
         console.log("get image file");
         const imagef = await Storage.get(pprops.imageFiles, {
           identityId: pprops.userId
         });
         setImageFileURL(imagef);
       } else {
-        setImageFileURL(null);
+        //setImageFileURL(null);
       }
 
-      if (pprops.dataFiles) {
+      if (pprops.dataFiles && !dataFileURL) {
         console.log("get data file");
         const dataf = await Storage.get(pprops.dataFiles, {
           identityId: pprops.userId
         });
         setDataFileURL(dataf);
       } else {
-        setDataFileURL(null);
+        //setDataFileURL(null);
       }
       //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
     } catch (e) {
@@ -331,7 +332,7 @@ export default function DetailsPanel(props) {
       <div style={{ margin: '30px 0 0 0' }} dangerouslySetInnerHTML={createDescriptionMarkup()}></div>
 
       {
-        pprops && imageFileURL &&
+        pprops && pprops.imageFiles && imageFileURL &&
         <div style={{ margin: '20px 5px 0 10px' }}>
           <img src={imageFileURL} style={{ width: '100%' }} />
         </div>

@@ -91,8 +91,8 @@ export const MAPBOX_INITIAL_VIEWPORT = {
 };
 
 
-//export const NREL_TOKEN = "FfZup1v4iecWbIY61fLkhgvql6eEdZzYiCcoQeXQ";
-export const NREL_TOKEN = "DEMO_KEY";
+export const NREL_TOKEN = "FfZup1v4iecWbIY61fLkhgvql6eEdZzYiCcoQeXQ";
+//export const NREL_TOKEN = "DEMO_KEY";
 
 
 // zoom levels from 0, meters / pixel
