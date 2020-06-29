@@ -26,8 +26,6 @@ import ResultsPanel from "./ResultsPanel";
 import MapGL, { Popup, Source, Layer, NavigationControl } from '@urbica/react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import moment from "moment"
-import { LinearInterpolator, WebMercatorViewport } from 'react-map-gl';
-import bbox from '@turf/bbox';
 
 import * as Constants from "../../constants"
 
@@ -42,8 +40,8 @@ export default function ProjectsPage(props) {
   const [hoveredProject, setHoveredProject] = React.useState();
   const [bikesharePopupInfo, setBikesharePopupInfo] = React.useState();
   const [chargingPopupInfo, setChargingPopupInfo] = React.useState();
-  const [activeProject, setActiveProject] = React.useState();
-  const [mapVp, setMapVp] = React.useState(Constants.MAPBOX_INITIAL_VIEWPORT);
+  //const [activeProject, setActiveProject] = React.useState();
+  //const [mapVp, setMapVp] = React.useState(Constants.MAPBOX_INITIAL_VIEWPORT);
 
   let params = useParams();
   let projectId = null;
