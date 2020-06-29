@@ -767,7 +767,7 @@ function getProjectViewport(projectId, state) {
     });
     newVp = {
       ...state.viewport,
-      longitude: longitude + (maxLng - minLng) / 1.0,
+      longitude: longitude + (maxLng - minLng) / 1.1,
       latitude: latitude,
       //zoom: Math.min(zoom, 12),
       zoom,

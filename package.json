@@ -9,7 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@urbica/react-map-gl": "^1.13.1",
-    "aws-amplify": "^3.0.18",
+    "aws-amplify": "^3.0.13",
     "chartist": "0.10.1",
     "classnames": "2.2.6",
     "dompurify": "^2.0.12",
