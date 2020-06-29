@@ -235,18 +235,10 @@ export default function FilterPanel(props) {
       position: 'absolute', top: '120px', left: '10px', bottom: '24px',
       width: '200px', overflow: 'auto'
     }} >
-      {/*       {
-        state.state.projectFilters.map(filter => {
-          return (
-            <span>{filter.name}-{filter.value}&nbsp;&nbsp;</span>
-          );
-        })
-      } */}
-
-      <List dense={true} style={{ fontSize: '0.9rem' }}>
-        {/* <Box component="div" style={{ padding: '0px 15px 10px 15px', margin: '0', fontWeight: 'bold', fontSize: '1rem' }}>
-          Total Projects: {state.state.visibleProjects.length}
-        </Box> */}
+      <div style={{ padding: '8px 10px 0px 10px', margin: '0', fontSize: '0.95rem', fontWeight: 'bold' }}>
+        {state.state.visibleProjects.length + " Project" + (state.state.visibleProjects.length > 1 ? "s" : "")}
+      </div>
+      <List dense={true} style={{ fontSize: '0.9rem', marginTop: '0' }}>
         <ListItem className={classes.filterTitle}>Category</ListItem>
         <ListItem>
           <FormGroup>

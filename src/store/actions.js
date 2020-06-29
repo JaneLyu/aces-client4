@@ -29,6 +29,42 @@ export const fetchProjectsGeom = async dispatch => {
 export const fetchBikeshareData = async dispatch => {
   console.log("***** " + Constants.FETCH_BIKESHARE_DATA);
 
+  var stations = [];
+  try {
+    fetch("https://api.citybik.es/v2/networks")
+      .then(response => response.json())
+      .then(data => {
+        var filtered = data.networks.filter((network) => {
+          return network.location.city.toLowerCase().endsWith(", fl");
+        });
+        return filtered;
+      })
+      .then(async networks => {
+        await Promise.all(networks.map((network) => {
+          return fetch("https://api.citybik.es/v2/networks/" + network.id)
+            .then(response => response.json())
+        }))
+          .then(responses => {
+            responses.forEach(res => {
+              if (res.network && res.network.stations && res.network.stations.length > 0) {
+                stations = stations.concat(res.network.stations)
+              }
+            })
+            //console.log(stations);
+
+            return dispatch({
+              type: Constants.FETCH_BIKESHARE_DATA,
+              payload: stations
+            });
+          });
+      });
+  } catch (e) {
+    console.log(e);
+  }
+};
+/* export const fetchBikeshareData = async dispatch => {
+  console.log("***** " + Constants.FETCH_BIKESHARE_DATA);
+
   let networks = [];
   try {
     await fetch("https://api.citybik.es/v2/networks")
@@ -42,10 +78,10 @@ export const fetchBikeshareData = async dispatch => {
     type: Constants.FETCH_BIKESHARE_DATA,
     payload: networks
   });
-};
+}; */
 
 export const fetchBikeshareStationData = async (networkId, state, dispatch) => {
-  //console.log("***** " + Constants.FETCH_BIKESHARE_STATION_DATA + ": " + networkId);
+  console.log("***** " + Constants.FETCH_BIKESHARE_STATION_DATA + ": " + networkId);
 
   let networkData;
   try {

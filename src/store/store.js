@@ -39,6 +39,7 @@ const initialState = {
   spatList: [],
 
   bikeshares: [],
+  bikeshareStations: [],
   bikesharesVisible: false,
   bikeshareNetwork: null,
   bikeshareNetworkViewport: Constants.MAPBOX_INITIAL_VIEWPORT,
@@ -105,9 +106,31 @@ function processProjectData(data) {
   return projects;
 }
 
-
-// data: array of networks
+// data is array of stations
 function processBikeshareData(data) {
+  if (!data) return [];
+
+  // filter out zero slot stations (demo)
+  let filtered = data.filter((station) => {
+    return station.empty_slots > 0 && !station.name.startsWith("TEST ");
+  });
+
+  let stations = filtered.map((station, index) => {
+    let n = {};
+    n["type"] = "Feature";
+    n["geometry"] = {
+      "type": "Point",
+      "coordinates": [station.longitude, station.latitude]
+    };
+    n["properties"] = station;
+    return n;
+  });
+
+  //console.log(stations);
+  return stations;
+}
+// data: array of networks
+function processBikeshareData2(data) {
   if (!data) return [];
 
   //console.log(data);
@@ -179,6 +202,27 @@ function processFuelStationData(data) {
 
   console.log("total stations: " + data.fuel_stations.length);
 
+  let processed = [];
+  // group by city
+  processed = data.fuel_stations.map((station) => {
+    let s = {};
+    s["type"] = "Feature";
+    s["geometry"] = {
+      "type": "Point",
+      "coordinates": [station.longitude, station.latitude]
+    };
+    s["properties"] = station;
+
+    return s;
+  });
+
+  return processed;
+}
+function processFuelStationData_Grouped(data) {
+  if (!data || !data.fuel_stations) return null;
+
+  console.log("total stations: " + data.fuel_stations.length);
+
   let processed = {
     "total": data.total_results,
     "cities": []
@@ -242,17 +286,7 @@ function reducer(state, action) {
 
   switch (action.type) {
     case Constants.FETCH_PROJECTS_DATA:
-      // payload = projects
-
       let projects = processProjectData(action.payload);
-      /*       let geoms = projects.map((proj, index) => {
-              // TODO: merge features
-              let g = proj.properties.geom.features[0];
-              g.properties["id"] = proj.properties.id;
-              g.properties["name"] = proj.properties.name;
-              g.properties["status"] = proj.properties.status;
-              return g;
-            }); */
       let geoms = [];
       projects.forEach((proj) => {
         proj.properties.geom.features.forEach((geo) => {
@@ -267,7 +301,7 @@ function reducer(state, action) {
       //console.log(geoms);
 
       return {
-        ...state, projects: projects, visibleProjects: Array.from(projects), projectGeoms: geoms
+        ...state, projects: projects, visibleProjects: projects, projectGeoms: geoms
       };
     case Constants.FETCH_PROJECTS_GEOM:
       // payload = projects
@@ -278,10 +312,15 @@ function reducer(state, action) {
       return {
         ...state, viewport: action.payload
       };
+    /*     case Constants.FETCH_BIKESHARE_DATA:
+          let networks = processBikeshareData(action.payload);
+          return {
+            ...state, bikeshares: networks
+          }; */
     case Constants.FETCH_BIKESHARE_DATA:
-      let networks = processBikeshareData(action.payload);
+      let stations = processBikeshareData(action.payload);
       return {
-        ...state, bikeshares: networks
+        ...state, bikeshareStations: stations
       };
     case Constants.FETCH_BIKESHARE_STATION_DATA:
       let network = processBikeshareStationData(action.payload);
@@ -354,7 +393,8 @@ function reducer(state, action) {
     case Constants.FETCH_FUELING_DATA:
       let fuelData = processFuelStationData(action.payload);
       return {
-        ...state, fuelStations: fuelData ? fuelData.cities : [], fuelStationsTotal: fuelData ? fuelData.total : 0
+        //...state, fuelStations: fuelData ? fuelData.cities : [], fuelStationsTotal: fuelData ? fuelData.total : 0
+        ...state, fuelStations: fuelData
       };
     case Constants.SET_FUELING_CITY:
       let cityData = state.fuelStations.find(function (element) {
@@ -700,60 +740,49 @@ function projectIsMatch(project, filter) {
 
 
 function getProjectViewport(projectId, state) {
-  // find project geoms
-  /*   var feature = state.projectGeoms.find(function (element) {
-      return element.properties.id == projectId;
-    });
-  
-    if (feature == undefined)
-      return { ...state.viewport }; */
-
   var features = state.projectGeoms.filter(function (element) {
     return element.properties.id == projectId;
   });
-  if (features.length === 0)
-    return { ...state.viewport };
+  if (features.length === 0) return { ...state.viewport };
 
-  // calculate bbox of geom
   const [minLng, minLat, maxLng, maxLat] = bbox({
     type: 'FeatureCollection',
     features: features
   });
 
-  //console.log(state.viewport);
-
   // assume new viewport is half width
   const futureVp = {
     ...state.viewport,
-    width: state.viewport.width / 2
+    width: window.innerWidth / 2,
+    height: window.innerHeight
   }
+  //console.log("innerWidth: " + window.innerWidth);
+  //console.log("innerWidth: " + window.innerHeight);
 
-  // construct a viewport instance from the current state
-  let vp = null;
+  let newVp;
   try {
-    vp = new WebMercatorViewport(futureVp);
+    var vp = new WebMercatorViewport(futureVp);
+    const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+      padding: 100
+    });
+    newVp = {
+      ...state.viewport,
+      longitude: longitude + (maxLng - minLng) / 1.0,
+      latitude: latitude,
+      //zoom: Math.min(zoom, 12),
+      zoom,
+      /*transitionInterpolator: new LinearInterpolator({
+        around: [event.offsetCenter.x, event.offsetCenter.y]
+      }),*/
+      transitionDuration: Constants.MAPBOX_TRANSITION_DURATION
+    }
   } catch (err) {
     console.error(err);
   }
 
-  if (vp == null) return;
+  if (!newVp) newVp = state.viewport;
 
-  const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-    padding: 40
-  });
-
-  return ({
-    ...state.viewport,
-    //width: state.viewport.width,
-    //height: state.viewport.height,
-    longitude,
-    latitude,
-    zoom,
-    /*transitionInterpolator: new LinearInterpolator({
-      around: [event.offsetCenter.x, event.offsetCenter.y]
-    }),*/
-    transitionDuration: Constants.MAPBOX_TRANSITION_DURATION
-  });
+  return newVp;
 }
 
 

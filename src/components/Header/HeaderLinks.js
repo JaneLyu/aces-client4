@@ -76,19 +76,26 @@ export default function HeaderLinks(props) {
     setAnchorEl(null);
   };
 
+  const isProjectsPage = () => {
+    let path = window.location.href;
+    return path.includes(Constants.ROOT_URL + "projects") || path.includes(Constants.ROOT_URL + "federal/nocoe") ||
+      path.includes(Constants.ROOT_URL + "federal/usdot");
+  };
 
   return (
     <List className={classes.list}>
-      <ListItem className={classes.listItem}>
+      <ListItem className={classes.listItem} style={{}}>
         <NavLink to={Constants.ROOT_URL + "about"} className={classes.navLink}
-          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>About</NavLink>
+          activeStyle={{fontWeight: 'bold'}}>About</NavLink>
       </ListItem>
       <ListItem className={classes.listItem}>
         <CustomDropdown
           left
           noLiPadding
           //dropdownHeader="Dropdown Header"
-          buttonText={Constants.ACES_LABEL + " Initiatives"}
+          buttonText={
+            <span style={{fontWeight: isProjectsPage() ? 'bold' : 'normal'}}>{Constants.ACES_LABEL + " Initiatives"}</span>
+          }
           buttonProps={{
             className: classes.navLink,
             color: "transparent"

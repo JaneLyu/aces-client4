@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { render } from 'react-dom';
+import MapGL, { Source, Layer, NavigationControl, ScaleControl } from "react-map-gl";
 import { useParams } from "react-router-dom";
 
 // @material-ui/core components
@@ -23,11 +24,6 @@ import {
 } from "../../store/actions"
 import DetailsPanel from "./DetailsPanel";
 import ResultsPanel from "./ResultsPanel";
-import MapGL, { Popup, Source, Layer, NavigationControl } from '@urbica/react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import moment from "moment"
-import { LinearInterpolator, WebMercatorViewport } from 'react-map-gl';
-import bbox from '@turf/bbox';
 
 import * as Constants from "../../constants"
 
@@ -37,13 +33,8 @@ const useStyles = makeStyles(styles);
 export default function ProjectsPage(props) {
   const classes = useStyles();
   const { ...rest } = props;
+
   const { state, dispatch } = React.useContext(Store);
-  const [mapCursorStyle, setMapCursorStyle] = React.useState();
-  const [hoveredProject, setHoveredProject] = React.useState();
-  const [bikesharePopupInfo, setBikesharePopupInfo] = React.useState();
-  const [chargingPopupInfo, setChargingPopupInfo] = React.useState();
-  const [activeProject, setActiveProject] = React.useState();
-  const [mapVp, setMapVp] = React.useState(Constants.MAPBOX_INITIAL_VIEWPORT);
 
   let params = useParams();
   let projectId = null;
@@ -80,191 +71,145 @@ export default function ProjectsPage(props) {
   };
 
 
+  const geomBaseFilter = ["==", ["get", "id"], projectId];
+  const polygonBaseFilter = ["==", ["geometry-type"], "Polygon"];
+  const lineBaseFilter = ["==", ["geometry-type"], "LineString"];
+  const pointBaseFilter = ["==", ["geometry-type"], "Point"];
+
+  const [geomPolygonFilter, setGeomPolygonFilter] = React.useState(["all", polygonBaseFilter, geomBaseFilter]);
+  const [geomLineFilter, setGeomLineFilter] = React.useState(["all", lineBaseFilter, geomBaseFilter]);
+  const [geomPointFilter, setGeomPointFilter] = React.useState(["all", pointBaseFilter, geomBaseFilter]);
+
   React.useEffect(
     () => {
       state.projects.length === 0 && fetchProjectsData(dispatch)
+      //&& fetchProjectsGeom(dispatch);
     },
     [state.projects]
   );
 
   React.useEffect(
     () => {
-      state.bikeshareStations.length === 0 && fetchBikeshareData(dispatch)
+      state.bikeshares.length === 0 && fetchBikeshareData(dispatch)
     },
-    [state.bikeshareStations]
+    []
   );
 
   React.useEffect(
     () => {
       state.fuelStations.length === 0 && fetchFuelStationData(dispatch)
     },
-    [state.fuelStations]
+    []
   );
 
+  const mbProjectSourceRef = React.useRef();
+  const mbPolygonSourceRef = React.useRef();
+  const mapboxRef = React.useRef();
+  const mbBikeshareSourceRef = React.useRef();
+  const mbFuelStationSourceRef = React.useRef();
 
-  const handleProjectsLayerClick = event => {
+  const handleBikeshareClick = event => {
+    if (!event.features || event.features.length === 0) return;
     const feature = event.features[0];
-    if (!feature) return;
 
-/*     setActiveProject(feature);
-    console.log(feature);
-
-    var id = feature.properties.id;
-    var features = state.projectGeoms.filter(function (element) {
-      return element.properties.id == id;
-    });
-
-    const [minLng, minLat, maxLng, maxLat] = bbox({
-      type: 'FeatureCollection',
-      features: features
-    });
-
-    const futureVp = {
-      ...state.viewport,
-      width: window.innerWidth / 2,
-      height: window.innerHeight
-    }
-    //console.log("innerWidth: " + window.innerWidth);
-    //console.log("innerWidth: " + window.innerHeight);
-
-    let newVp;
-    try {
-      var vp = new WebMercatorViewport(futureVp);
-      const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-        padding: 100
-      });
-      newVp = {
-        longitude: longitude,
-        latitude: latitude,
-        //zoom: Math.min(zoom, 12),
-        zoom
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    if (newVp) setMapVp(newVp); */
-
-    if (feature.properties.id) {
-      props.history.push(Constants.ROOT_URL + "projects/" + feature.properties.id);
-      //console.log("project: " + feature.properties.id);
-    }
-  };
-  const handleProjectsLayerHover = event => {
-    if (projectId) return;
-
-    setMapCursorStyle("pointer");
-
-    const feature = event.features[0];
-    if (!feature) return;
-
-    let id = feature.properties.id;
-    if (hoveredProject !== id) {
-      //console.log('show geom: ' + id);
-      toggleGeomVisibility(id, state, dispatch);
-      setHoveredProject(id);
-    }
-  };
-  const handleProjectsLayerLeave = event => {
-    if (projectId) return;
-
-    setMapCursorStyle();
-
-    if (hoveredProject) {
-      //console.log('hide geom');
-      toggleGeomVisibility(0, state, dispatch);
-      setHoveredProject(null);
-    }
-  };
-
-  const handleChargingLayerClick = event => {
-    const feature = event.features[0];
-    if (!feature) return;
-
-    setChargingPopupInfo(feature);
-  };
-
-  const handleBikeshareLayerClick = event => {
-    const feature = event.features[0];
-    if (!feature) return;
-
-    setBikesharePopupInfo(feature);
-  };
-
-  const handleLayerHover = event => {
-    setMapCursorStyle("pointer");
-  };
-  const handleLayerLeave = event => {
-    setMapCursorStyle();
-  };
-
-  const handleMapClick = event => {
-    if (!event.features || !event.features[0]) {
-      clearPopupInfo();
-    }
-  };
-
-  const clearPopupInfo = () => {
-    setBikesharePopupInfo(null);
-    setChargingPopupInfo(null);
-  };
-
-  const renderPopup = () => {
-    let popupInfo;
-
-    if (bikesharePopupInfo) {
-      popupInfo = bikesharePopupInfo;
-      return (
-        <Popup
-          longitude={popupInfo.geometry.coordinates[0]}
-          latitude={popupInfo.geometry.coordinates[1]}
-          closeButton={true}
-          closeOnClick={false}
-          onClose={() => clearPopupInfo()}
-        >
-          <div style={{ paddingTop: '8px' }}>
-            <p style={{ fontSize: '0.9rem' }}><strong>{popupInfo.properties.name}</strong></p>
-            <p style={{ fontSize: '0.75rem' }}>
-              Bikes available:&nbsp;&nbsp;<strong>{popupInfo.properties.free_bikes}</strong><br />
-            Spaces available:&nbsp;&nbsp;<strong>{popupInfo.properties.empty_slots}</strong>
-            </p>
-            <span style={{ fontSize: '0.6rem', fontStyle: 'italic' }}>
-              Last updated {moment(popupInfo.properties.timestamp).format("M/D/YYYY, h:mm:ss a")}
-            </span>
-          </div>
-        </Popup>
-      );
-    }
-
-    if (chargingPopupInfo) {
-      popupInfo = chargingPopupInfo;
-      return (
-        <Popup
-          longitude={popupInfo.geometry.coordinates[0]}
-          latitude={popupInfo.geometry.coordinates[1]}
-          closeButton={true}
-          closeOnClick={false}
-          onClose={() => clearPopupInfo()}
-        >
-          <div style={{ paddingTop: '8px' }}>
-            <p style={{ fontSize: '0.9rem' }}><strong>{popupInfo.properties.station_name}</strong></p>
-            <p style={{ fontSize: '0.75rem' }}>
-              {popupInfo.properties.street_address}<br />
-              {popupInfo.properties.city + ", " + popupInfo.properties.state + " " + popupInfo.properties.zip}
-            </p>
-            <p style={{ fontSize: '0.75rem' }}>
-              {popupInfo.properties.station_phone}
-            </p>
-            <span style={{ fontSize: '0.6rem', fontStyle: 'italic' }}>
-              Last updated {moment(popupInfo.properties.updated_at).format("M/D/YYYY, h:mm:ss a")}
-            </span>
-          </div>
-        </Popup>
-      );
-    }
-
-    return null;
+    console.log("bikeshare: " + feature.properties.id);
   }
 
+  const handleFuelCityClick = event => {
+    if (!event.features || event.features.length === 0) return;
+    const feature = event.features[0];
+
+    console.log("fuel city: " + feature.properties.name);
+  }
+
+  const handleMapOnClick = event => {
+    if (!event.features || event.features.length === 0) return;
+    const feature = event.features[0];
+
+    // bikeshare
+    if (feature.properties && feature.properties.dataType === "bikeshare") {
+      // fetch station data
+      props.history.push(Constants.ROOT_URL + "bikeshare/" + feature.properties.id);
+      return;
+    }
+
+    // fuel station
+    if (feature.properties && feature.properties.dataType === "fuel") {
+      //console.log("show fuel stations for " + feature.properties.name);
+      props.history.push(Constants.ROOT_URL + "fueling/" + feature.properties.name);
+      return;
+    }
+
+    if (!feature.properties.cluster) {
+      // clicked on project
+      //console.log('view project ' + feature.properties.id);
+
+      // change only if not viewing project details
+      if (!projectId) {
+        props.history.push(Constants.ROOT_URL + "projects/" + feature.properties.id);
+      }
+
+      return;
+    }
+
+    // clicked on cluster circle
+    const clusterId = feature.properties.cluster_id;
+
+    const projectSource = mbProjectSourceRef.current.getSource();
+    projectSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
+      if (err) {
+        return;
+      }
+
+      let vp = {
+        ...state.viewport,
+        longitude: feature.geometry.coordinates[0],
+        latitude: feature.geometry.coordinates[1],
+        zoom: zoom + 1,
+        transitionDuration: Constants.MAPBOX_TRANSITION_DURATION
+      };
+
+      setViewport(vp, state, dispatch);
+    });
+  };
+
+
+  const [hoveredProject, setHoveredProject] = React.useState(0);
+
+  const handleMapOnHover = event => {
+    // bikeshare or fuel
+    if (event.features && event.features.length > 0 && event.features[0].properties
+      && (event.features[0].properties.dataType === "bikeshare" || event.features[0].properties.dataType === "fuel")) {
+      return;
+    }
+
+    //console.log(projectId)
+    if (projectId) {
+      return;
+    }
+
+    // projects
+    if (!event.features || event.features.length <= 0 ||
+      !event.features[0].properties || !event.features[0].properties.id) {
+      // not over project icon, hide any visible geom
+      if (hoveredProject != 0) {
+        //_setGeomVisibility(hoveredProject, false);
+        toggleGeomVisibility(0, state, dispatch);
+        //console.log('hide geoms');
+        setHoveredProject(0);
+      }
+    } else {
+      // over project icon, show geom
+      let projectId = event.features[0].properties.id;
+
+      if (hoveredProject != projectId) {
+        //console.log('show geom project ' + projectId);
+        //_setGeomVisibility(projectId, true);
+        toggleGeomVisibility(projectId, state, dispatch);
+        setHoveredProject(projectId);
+      }
+    }
+  }
 
   const onViewportChange = vp => {
     setViewport(vp, state, dispatch);
@@ -292,8 +237,6 @@ export default function ProjectsPage(props) {
   const handleGoBack = event => {
     //console.log("go back");
     props.history.goBack();
-    //setActiveProject(null);
-    //setMapVp(Constants.MAPBOX_INITIAL_VIEWPORT);
   };
 
   return (
@@ -313,67 +256,82 @@ export default function ProjectsPage(props) {
 
       <div>
         <Box display="flex" p={0} style={{ width: '100%' }}>
-          <Box p={0} style={{ width: projectId ? '50vw' : '100%', height: 'calc(100vh - 65px)', overflow: 'hidden' }}>
+          <Box p={0} style={{ width: state.project != null ? '50vw' : '100%', height: 'calc(100vh - 65px)', overflow: 'hidden' }}>
             <MapGL
               {...state.viewport}
-              style={{ width: '100%', height: '100%' }}
-              cursorStyle={mapCursorStyle}
+              width="100%"
+              height="100%"
               mapStyle={state.mapStyle}
-              accessToken={Constants.MAPBOX_TOKEN}
               onViewportChange={onViewportChange}
-              onClick={handleMapClick} onLoad={handleMapLoad}
+              mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
+              interactiveLayerIds={[projectSymbolLayer.id, bikeshareSymbolLayer.id, fuelStationSymbolLayer.id]}
+              onHover={handleMapOnHover} onLoad={handleMapLoad} onClick={handleMapOnClick}
             >
-              <Source id="charging-source"
+              <Source
                 type="geojson"
                 data={{
                   type: 'FeatureCollection',
                   features: !projectId && state.fuelStationVisible && state.fuelStations
                 }}
-              />
-              <Layer id="charging-markers" {...chargingMarkerLayer}
-                onClick={handleChargingLayerClick} onHover={handleLayerHover} onLeave={handleLayerLeave} />
+                ref={mbFuelStationSourceRef}
+              >
+                <Layer {...fuelStationSymbolLayer} paint={state.mapMarkerPaint} />
+              </Source>
 
-              {renderPopup()}
-
-              <Source id="bikeshare-source"
+              <Source
                 type="geojson"
                 data={{
                   type: 'FeatureCollection',
-                  features: !projectId && state.bikesharesVisible && state.bikeshareStations
+                  features: !projectId && state.bikesharesVisible && state.bikeshares
                 }}
-              />
-              <Layer id="bikeshare-markers" {...bikeshareMarkerLayer}
-                onClick={handleBikeshareLayerClick} onHover={handleLayerHover} onLeave={handleLayerLeave} />
+                cluster={false}
+                ref={mbBikeshareSourceRef}
+              >
+                <Layer {...bikeshareSymbolLayer} paint={state.mapMarkerPaint} />
+              </Source>
 
-              <Source id="projects-source"
-                type="geojson"
-                data={{
-                  type: 'FeatureCollection',
-                  features: state.projectsVisible && state.visibleProjects
-                }}
-              />
-              <Layer id="projects-markers" {...projectsMarkerLayer} filter={state.mapMarkerFilter} paint={state.mapMarkerPaint}
-                onClick={handleProjectsLayerClick} onHover={handleProjectsLayerHover} onLeave={handleProjectsLayerLeave} />
-
-              <Source id="projectgeoms-source"
+              <Source
                 type="geojson"
                 data={{
                   type: 'FeatureCollection',
                   features: state.projectsVisible && state.projectGeoms
                 }}
-              />
-              <Layer id="projectgeoms-points" {...geomPointLayer} filter={state.mapGeomPointFilter} paint={state.mapGeomPointPaint} />
-              <Layer id="projectgeoms-polygons" {...geomPolygonLayer} filter={state.mapGeomPolygonFilter} paint={state.mapGeomPolygonPaint} />
-              <Layer id="projectgeoms-lines" {...geomLineLayer} filter={state.mapGeomLineFilter} paint={state.mapGeomLinePaint} />
+                ref={mbPolygonSourceRef}
+              >
+                <Layer {...geomPointLayer} filter={state.mapGeomPointFilter} paint={state.mapGeomPointPaint} />
+                <Layer {...geomPolygonLayer} filter={state.mapGeomPolygonFilter} paint={state.mapGeomPolygonPaint} />
+                <Layer {...geomLineLayer} filter={state.mapGeomLineFilter} paint={state.mapGeomLinePaint} />
+              </Source>
 
-              <NavigationControl showCompass showZoom position='top-right' />
+              <Source
+                type="geojson"
+                data={{
+                  type: 'FeatureCollection',
+                  features: state.projectsVisible && state.visibleProjects
+                }}
+                cluster={false}
+                clusterMaxZoom={14}
+                clusterRadius={20}
+                ref={mbProjectSourceRef}
+              >
+                <Layer {...projectSymbolLayer} filter={state.mapMarkerFilter} paint={state.mapMarkerPaint} />
+              </Source>
+
+              <div style={{
+                position: 'absolute', padding: '10px', top: '2px',
+                right: (true) ? '0px' : 'calc(20vw + 10px)'
+              }}>
+                <NavigationControl />
+              </div>
+
             </MapGL>
           </Box>
           <DetailsPanel {...detailsProps} />
         </Box>
 
+        {/* <ResultsPanel {...resultsProps} /> */}
         {
-          !projectId && state.projectsVisible && <FilterPanel {...filtersProps} />
+          state.projectsVisible && <FilterPanel {...filtersProps} />
         }
 
         {
@@ -398,26 +356,8 @@ export default function ProjectsPage(props) {
         }
 
         {
-          !projectId && (state.bikesharesVisible || state.fuelStationVisible) &&
-          <Paper elevation={2} style={{ position: 'absolute', top: '120px', left: '10px', width: '200px' }}>
-            {
-              state.bikesharesVisible &&
-              <div style={{ padding: '8px 10px 5px 10px', margin: '0', fontSize: '0.95rem', fontWeight: 'bold' }}>
-                {state.bikeshareStations.length + " Station" + (state.bikeshareStations.length > 1 ? "s" : "")}
-              </div>
-            }
-            {
-              state.fuelStationVisible &&
-              <div style={{ padding: '8px 10px 5px 10px', margin: '0', fontSize: '0.95rem', fontWeight: 'bold' }}>
-                {state.fuelStations.length + " Station" + (state.fuelStations.length > 1 ? "s" : "")}
-              </div>
-            }
-          </Paper>
-        }
-
-        {
           projectId &&
-          <Paper elevation={2} style={{ position: 'absolute', top: '78px', left: '10px', backgroundColor: 'white' }}>
+          <Paper elevation={2} style={{ position: 'absolute', top: '78px', left: '10px', backgroundColor: 'white'}}>
             <Button onClick={handleGoBack}>
               <ArrowBackIcon fontSize="small" />&nbsp;Back
             </Button>
@@ -461,29 +401,6 @@ export default function ProjectsPage(props) {
 }
 
 
-const chargingMarkerLayer = {
-  type: 'circle',
-  source: 'charging-source',
-  paint: {
-    'circle-color': '#2252D5',
-    'circle-radius': 5,
-    'circle-stroke-width': 2,
-    'circle-stroke-color': '#fff'
-  }
-};
-
-const bikeshareMarkerLayer = {
-  type: 'circle',
-  source: 'bikeshare-source',
-  paint: {
-    'circle-color': ['step', ['get', 'free_bikes'], '#ED0B5A', 2, '#FECC00', 6, '#16E127'],
-    'circle-radius': 5,
-    'circle-stroke-width': 2,
-    'circle-stroke-color': '#fff'
-  }
-};
-
-
 const clusterLayer = {
   id: 'clusters',
   type: 'circle',
@@ -511,9 +428,10 @@ const clusterCountLayer = {
   }
 };
 
-const projectsMarkerLayer = {
+const projectSymbolLayer = {
+  id: 'project-symbols',
   type: 'symbol',
-  source: 'projects-source',
+  source: 'projectdata',
   layout: {
     'icon-image': ['concat', 'maki-marker-stroked-15-', ['get', 'status']],
     //'icon-image': 'maki-marker-stroked-15-1',
@@ -596,13 +514,13 @@ const unclusteredPointLayer = {
 
 const geomPolygonLayer = {
   type: 'fill',
-  source: 'projectgeoms-source',
+  source: 'projectgeom',
 };
 const geomPointLayer = {
   type: 'circle',
-  source: 'projectgeoms-source',
+  source: 'projectgeom',
 };
 const geomLineLayer = {
-  source: 'projectgeoms-source',
+  source: 'projectgeom',
   type: 'line',
 };

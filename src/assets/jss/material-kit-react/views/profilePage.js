@@ -56,6 +56,18 @@ const profilePageStyle = {
   navWrapper: {
     margin: "20px auto 50px auto",
     textAlign: "center"
+  },
+
+  visionParagraph: {
+    padding: '0.5rem 0 0.5rem 0'
+  },
+  visionList: {
+    fontSize: '14px',
+    //padding: '0 0 0.5rem 0'
+    paddingRight: '1rem'
+  },
+  visionListItem: {
+    paddingBottom: '0.5rem'
   }
 };
 

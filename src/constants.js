@@ -82,9 +82,9 @@ export const MAPBOX_GEOM_POLYGON_PAINT_SATELLITE = {
 };
 
 export const MAPBOX_INITIAL_VIEWPORT = {
-  latitude: 27.75,
-  longitude: -84.0,
-  zoom: 6.2,
+  latitude: 27.8,
+  longitude: -83.0,
+  zoom: 6.4, //6.2,
   bearing: 0,
   pitch: 0,
   transitionDuration: MAPBOX_TRANSITION_DURATION
