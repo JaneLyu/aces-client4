@@ -99,7 +99,7 @@ export default function SpatPage(props) {
         <Header
           color="dark"
           fixed
-          brand="FL A&middot;C&middot;E&middot;S"
+          brand={Constants.ACES_BRAND}
           rightLinks={<HeaderLinks {...props} />}
           {...rest}
         />
@@ -119,7 +119,7 @@ export default function SpatPage(props) {
             <MapGL {...state.spatViewport}
               style={{ width: '100%', height: '100%' }}
               cursorStyle={mapCursorStyle}
-              mapStyle={state.mapStyle}
+              mapStyle={Constants.MAPBOX_STYLE_STREET}
               accessToken={Constants.MAPBOX_TOKEN}
               onViewportChange={onViewportChange}
               onLoad={handleMapLoad} onClick={handleMapClick}

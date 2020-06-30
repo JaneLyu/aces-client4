@@ -59,7 +59,7 @@ export default function USDOTPage(props) {
         <Header
           color="dark"
           fixed
-          brand="FL A&middot;C&middot;E&middot;S"
+          brand={Constants.ACES_BRAND}
           rightLinks={<HeaderLinks {...props} />}
           {...rest}
         />
