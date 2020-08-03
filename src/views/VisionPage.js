@@ -39,7 +39,7 @@ export default function VisionPage(props) {
         }}
         {...rest}
       />
-      <Parallax small filter image={require("assets/img/profile-bg.jpg")} />
+      <Parallax small filter image={require("assets/img/hero.jpg")} />
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div>
           <div className={classes.container}>
