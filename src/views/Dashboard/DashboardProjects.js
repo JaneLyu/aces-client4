@@ -16,7 +16,7 @@ import HeaderLinks from "components/Header/HeaderLinks.js";
 
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
-import { List, ListItem, Box, Paper, Button, Divider, ListItemIcon, ListItemText } from "@material-ui/core";
+import { List, ListItem, Box, Paper, Button, Divider, ListItemIcon, ListItemText, Container } from "@material-ui/core";
 import { People as PeopleIcon, Assignment as AssignmentIcon, ExitToApp as ExitToAppIcon } from '@material-ui/icons';
 import { NavLink, Link } from "react-router-dom";
 import * as Constants from "../../constants"
@@ -66,14 +66,14 @@ export default function DashboardPage(props) {
           {...rest}
         />
       </div>
-      <div>
-        <Box display="flex" p={0} style={{ width: '100%', backgroundColor: 'white' }}>
-          <DashboardNav {...rest} />
+      <div style={{width: '100vw', height: 'calc(100vh - 65px)', overflow: 'auto'}}>
+        <Container maxWidth="lg">
+          {/* <DashboardNav {...rest} /> */}
           {
             projectId == 0 ? <ProjectList {...rest} />
-            : <ProjectView {...projectViewProps} />
+              : <ProjectView {...projectViewProps} />
           }
-        </Box>
+        </Container>
         <Footer />
       </div>
     </Box>

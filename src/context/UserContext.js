@@ -14,6 +14,8 @@ function userReducer(state, action) {
       var match = dashboardUsers[Math.floor(Math.random() * dashboardUsers.length)];
 
       return { ...state, isAuthenticated: true, isAdmin: isAdmin, profile: { ...match }};
+    case "LOGIN_FAILURE":
+      return { ...state, isAuthenticated: false, isAdmin: false, profile: null };
     case "SIGN_OUT_SUCCESS":
       return { ...state, isAuthenticated: false, isAdmin: false, profile: null };
     default: {
@@ -68,8 +70,16 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setError(false);
   //setIsLoading(true);
 
-  //if (!!login && !!password) {
-  if (!!login) {
+  var auth = false;
+  if (!!login && !!password) {
+    if (login === "admin" && password === "cutr2") {
+      auth = true;
+    } else if (password === "cutr1") {
+      auth = true;
+    }
+  }
+
+  if (auth) {
     //setTimeout(() => {
     localStorage.setItem('auth_token', login)
     setError(null);

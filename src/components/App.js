@@ -12,7 +12,6 @@ import BikesharePage from "../views/ProjectsPage/BikesharePage.js";
 import FuelStationPage from "../views/ProjectsPage/FuelStationPage.js";
 import DashboardProjects from "../views/Dashboard/DashboardProjects";
 import DashboardUsers from "../views/Dashboard/DashboardUsers";
-import TestPage from "../views/TestPage"
 import SpatPage from "../views/SpatPage";
 import USDOTPage from "../views/USDOTPage";
 
@@ -50,7 +49,6 @@ export default function App() {
         <PrivateRoute path={rootpath + "dashboard/projects"} component={DashboardProjects} />
         <PrivateRoute path={rootpath + "dashboard"} component={DashboardProjects} />
 
-        <Route path={rootpath + "test"} component={TestPage} />
         <Route path={rootpath} component={LandingPage} />
       </Switch>
     </HashRouter>

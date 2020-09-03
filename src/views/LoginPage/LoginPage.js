@@ -62,14 +62,13 @@ export default function LoginPage(props) {
         {...rest}
       />
       <div>
-        <div className={classes.container} style={{minHeight: 'calc(100vh - 100px)'}}>
+        <div className={classes.container} style={{ minHeight: 'calc(100vh - 100px)' }}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={6}>
               <Card>
                 <form className={classes.form}>
-                  <CardHeader color="primary" className={classes.cardHeader}>
+                  <CardHeader className={classes.cardHeader}>
                     <h3>Login</h3>
-
                   </CardHeader>
                   <CardBody>
                     {/* <CustomInput
@@ -154,7 +153,7 @@ export default function LoginPage(props) {
                     ) : (
                         <Button
                           disabled={
-                            loginValue.length === 0 //|| passwordValue.length === 0
+                            loginValue.length === 0 || passwordValue.length === 0
                           }
                           onClick={handleLoginSubmit}
                           //variant="contained"

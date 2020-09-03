@@ -15,6 +15,15 @@ const spatInitialViewport = {
   transitionDuration: Constants.MAPBOX_TRANSITION_DURATION
 };
 
+const statewideProjectViewport = {
+  latitude: 30.437003, // +/- 0.04
+  longitude: -84.274687, // +/- 0.06
+  zoom: 3.5,
+  bearing: 0,
+  pitch: 0,
+  transitionDuration: Constants.MAPBOX_TRANSITION_DURATION
+};
+
 const initialState = {
   userProfile: null,
   users: [],
@@ -25,6 +34,7 @@ const initialState = {
   visibleProjects: [],
   project: null,
   viewport: Constants.MAPBOX_INITIAL_VIEWPORT,
+  projectsViewport: null,
   mapStyle: Constants.MAPBOX_STYLE_STREET,
   mapMarkerFilter: Constants.MAPBOX_MARKER_BASE_FILTER,
   mapMarkerPaint: Constants.MAPBOX_SYMBOL_PAINT_MAP,
@@ -495,19 +505,10 @@ function reducer(state, action) {
         mapGeomPolygonFilter: ['all', Constants.MAPBOX_GEOM_POLYGON_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
       };
     case Constants.VIEW_PROJECTS:
-      // reset viewport
-      newVp = {
-        ...state.viewport,
-        latitude: Constants.MAPBOX_INITIAL_VIEWPORT.latitude,
-        longitude: Constants.MAPBOX_INITIAL_VIEWPORT.longitude,
-        zoom: Constants.MAPBOX_INITIAL_VIEWPORT.zoom,
-        bearing: Constants.MAPBOX_INITIAL_VIEWPORT.bearing,
-        pitch: Constants.MAPBOX_INITIAL_VIEWPORT.pitch
-      };
       return {
         ...state,
         project: null,
-        viewport: newVp,
+        viewport: state.projectsViewport || Constants.MAPBOX_INITIAL_VIEWPORT,
         mapMarkerFilter: Constants.MAPBOX_MARKER_BASE_FILTER,
         mapGeomPointFilter: ['all', Constants.MAPBOX_GEOM_POINT_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
         mapGeomLineFilter: ['all', Constants.MAPBOX_GEOM_LINE_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
@@ -520,6 +521,7 @@ function reducer(state, action) {
       return {
         ...state,
         project: action.payload,
+        projectsViewport: state.viewport,
         viewport: getProjectViewport(proj.properties.id, state),
         mapMarkerFilter: ["all", Constants.MAPBOX_MARKER_BASE_FILTER, ["==", ["get", "id"], proj.properties.id]],
         mapGeomPointFilter: ["all", Constants.MAPBOX_GEOM_POINT_BASE_FILTER, ["==", ["get", "id"], proj.properties.id]],
@@ -767,7 +769,8 @@ function getProjectViewport(projectId, state) {
     });
     newVp = {
       ...state.viewport,
-      longitude: longitude + (maxLng - minLng) / 1.5,
+      //longitude: longitude + (maxLng - minLng) / 1.5,
+      longitude: longitude,
       latitude: latitude,
       //zoom: Math.min(zoom, 12),
       zoom,

@@ -30,6 +30,10 @@ export default function ProjectList(props) {
   const { isAuthenticated, isAdmin, profile } = useUserState();
   const userDispatch = useUserDispatch();
 
+  const handleSignout = () => {
+    signOut(userDispatch, props.history);
+  }
+
   React.useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -70,9 +74,10 @@ export default function ProjectList(props) {
   }
 
   return (
-    <Box style={{ width: '100%', overflow: 'auto', padding: '10px 20px 20px 20px', minHeight: 'calc(100vh - 150px)' }} >
+    <Box style={{ overflow: 'auto', padding: '10px 20px 20px 20px', minHeight: 'calc(100vh - 150px)' }} >
       {
-        pendingProjects.length > 0 &&
+        //pendingProjects.length > 0 &&
+        false &&
         <React.Fragment>
           <div style={{ margin: '30px 0 15px 0', fontSize: '1.4em', fontWeight: 'bold' }}>Pending Projects</div>
           <MaterialTable
@@ -127,7 +132,7 @@ export default function ProjectList(props) {
       }
 
       <div style={{ margin: '30px 0 15px 0', fontSize: '1.4em', fontWeight: 'bold' }}>
-        Active Projects
+        Projects
       </div>
       <MaterialTable
         columns={[
@@ -146,14 +151,18 @@ export default function ProjectList(props) {
         options={{
           search: activeProjects.length > 10,
           toolbar: activeProjects.length > 10,
-          paging: activeProjects.length > 10,
-          pageSize: 10,
+          paging: false,
+          //paging: activeProjects.length > 10,
+          //pageSize: 10,
           selection: false,
           actionsColumnIndex: -1
         }}
         actions={
           isAdmin
             ? [{
+              icon: 'visibility',
+              tooltip: ''
+            },{
               icon: 'edit',
               tooltip: 'Edit Project',
               onClick: handleEditProject
@@ -171,11 +180,11 @@ export default function ProjectList(props) {
         }
         onRowClick={handleEditProject}
       />
-      <div style={{ textAlign: 'right' }}>
-        <Fab color="primary" style={{ margin: '20px' }} onClick={handleAddProject}>
-          <AddIcon />
-        </Fab>
-      </div>
+      <Fab color="primary" style={{ margin: '20px', position: 'absolute', bottom: '30px', right: '60px' }} 
+        onClick={handleAddProject}>
+        <AddIcon />
+      </Fab>
+      <Button onClick={handleSignout} >Logout</Button>
     </Box>
   );
 }

@@ -39,7 +39,7 @@ export default function VisionPage(props) {
         }}
         {...rest}
       />
-      <Parallax small filter image={require("assets/img/hero.jpg")} />
+      <Parallax small filter image={require("assets/img/hero1c.jpg")} />
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div>
           <div className={classes.container}>
@@ -103,91 +103,6 @@ about how to incorporate planning for ACES technologies into their work. Private
 players are also active in Florida with new demonstrations, pilots, deployments and 
 developments being launched regularly. One example is the Babcock Ranch sustainable city 
 in Charlotte County, near Fort Myers.
-</p>
-
-<p className={classes.visionParagraph}>
-In addition to the public and private sectors, faculty and students from Florida universities, 
-colleges and high schools have always been important constituents of the FAV Summit and are 
-working on various ACES related projects in Florida and beyond. Academic research and education, 
-starting with high schools and earlier, are important to assuring that we are prepared for the 
-technological wave of change in our transportation system. Some current known examples 
-of Florida agency and university efforts related to ACES technologies include (but are not limited to):
-</p>
-
-<ul className={classes.visionList}>
-      <li className={classes.visionListItem}>
-	<strong>FAMU</strong>: Current projects include microscopic traffic simulation and driving simulator studies 
-      related to connected/automated Vehicles (CAV). Part of Central Florida Automated Vehicle 
-      Proving Ground Partnership.
-      </li>
-
-      <li className={classes.visionListItem}>
-	<strong>FAU</strong>: Current projects include connected vehicle (CV) 
-      driving simulator and virtual reality (VR) pedestrian simulator for testing CV 
-      communications (between vehicles and infrastructure) in multimodal urban networks (FAU). 
-      Recently completed NSF project to develop vehicular networking on-board/roadside unit 
-      containing hardware and software necessary to easily research and develop wireless systems 
-      for the next generation of transportation technology, including navigation sensors, 
-      human-machine interface (HMI) components, and RS-232, USB, and Wi-Fi.
-      </li>
-
-      <li className={classes.visionListItem}>
-      <strong>FIU</strong>: Current projects include "Performance Measurement 
-      and Management Using Connected and Automated Vehicle Data" (U.S. DOT STRIDE UTC); 
-      "Utilization of Connected Vehicle Data to Support Traffic Management Decisions" (FDOT); 
-      "Framework to Support Transportation Agency ITS Infrastructure and ITS Legacy Decisions 
-      with Consideration of Connected Vehicle Deployment and Automated Vehicle Initiatives" 
-      (NCHRP); “Testing of a Vision-Based Warning System on Transit Vehicles" (FDOT); 
-      and "Potential Implications of Automated Vehicles on Travel Behavior" (FDOT).
-      </li>
-
-      <li className={classes.visionListItem}>
-      <strong>FPU</strong>: Part of Central Florida Automated Vehicle Proving Ground Partnership and SunTrax.
-      </li>
-
-      <li className={classes.visionListItem}>
-      	<strong>FSU</strong>: See FAMU above. 
-      </li>
-
-      <li className={classes.visionListItem}>
-      	<strong>UCF</strong>: Part of U.S. DOT designated AV Proving 
-            Grounds Pilot Central Florida Automated Vehicle Proving Ground 
-            Partnership (FDOT, FTE Lynx, CFX and the City of Orlando).
-      </li>
-
-      <li className={classes.visionListItem}>
-      	<strong>UF</strong>: Projects include I-STREET (FDOT); “Autonomous Shuttle to 
-            Connect UF Campus to Downtown Gainesville” (FDOT and City of Gainesville); 
-            AV/CV Applications (City of Jacksonville); and Data Analytics Platform (FDOT D5).
-      </li>
-
-      <li className={classes.visionListItem}>
-      	<strong>UNF</strong>: Working with FAMU-FSU on CAV simulation.
-      </li>
-
-<li className={classes.visionListItem}>
-	<strong>USF</strong>: Projects include U.S. DOT designated Tampa CV Pilot 
-      (THEA, City of Tampa, HART, FDOT); Tampa Bay Smart Cities Alliance (City of Tampa); 
-      FTA Safety Research and Demonstration Program (RRD) CV deployments; HART AV Deployment 
-      Downtown Tampa (HART); USF Campus AV Shuttle Planning Study (Hillsborough County); 
-      Campus Automated Connected Testbed (in development); Campus Automated Shuttle 
-      Service Deployment Initiative (U.S. DOT); Smartphone Based Connected Bicycle 
-      Prototype Development for Sustainable Multimodal Transportation System (U.S. DOT); 
-      Enhancing Cybersecurity in Public Transportation (FDOT); “Autonomous Vehicle (AV) and 
-      Alternative Fuel Vehicle (AFV) Florida Market Penetration Rate and VMT Assessment Study” (FDOT); 
-      and "Pathway to a Driverless Highway Transportation System: A Behavior Analysis and Trajectory 
-      Control Approach" (NSF).
-</li>
-
-<li className={classes.visionListItem}>
-	<strong>Hillsborough Community College (HCC)</strong>: Supporting THEA CV Pilot through 
-      installation of after-market in-vehicle devices.
-</li>
-</ul>
-
-<p className={classes.visionParagraph}>
-While each of the above is discrete in scope and participants, each project will 
-provide new information to advance the implementation of ACES technology.  
 </p>
 
 <p className={classes.visionParagraph}>

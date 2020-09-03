@@ -85,7 +85,7 @@ export default function Header(props) {
       }
       {
         brand && brand.length > 0 && isAuthenticated && isAdmin && 
-        <span style={{ color: 'white', fontSize: '1.2em', verticalAlign: 'middle' }}>Administration</span>
+        <span style={{ color: 'white', fontSize: '1.2em', verticalAlign: 'middle' }}></span>
       }
     </div>
   );

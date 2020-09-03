@@ -78,8 +78,9 @@ export default function HeaderLinks(props) {
 
   const isProjectsPage = () => {
     let path = window.location.href;
-    return path.includes(Constants.ROOT_URL + "projects") || path.includes(Constants.ROOT_URL + "federal/nocoe") ||
-      path.includes(Constants.ROOT_URL + "federal/usdot");
+    return !(path.includes("/admin/") || path.includes("/dashboard/")) && 
+      (path.includes(Constants.ROOT_URL + "projects") || path.includes(Constants.ROOT_URL + "federal/nocoe") ||
+      path.includes(Constants.ROOT_URL + "federal/usdot"));
   };
 
   return (

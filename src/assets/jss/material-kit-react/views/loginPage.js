@@ -52,9 +52,13 @@ const signupPageStyle = {
     textAlign: "center",
     marginLeft: "20px",
     marginRight: "20px",
-    marginTop: "-40px",
-    padding: "20px 0",
-    marginBottom: "15px"
+    marginTop: "-25px",
+    padding: "5px 0",
+    marginBottom: "15px",
+    color: "#fff",
+    background: "linear-gradient(60deg, #479FBC, #247AAA)",
+    boxShadow:
+      "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
   },
   socialIcons: {
     maxWidth: "24px",

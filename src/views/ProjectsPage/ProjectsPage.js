@@ -42,9 +42,10 @@ export default function ProjectsPage(props) {
   const [chargingPopupInfo, setChargingPopupInfo] = React.useState();
   //const [activeProject, setActiveProject] = React.useState();
   //const [mapVp, setMapVp] = React.useState(Constants.MAPBOX_INITIAL_VIEWPORT);
+  const mapRef = React.useRef(null);
 
   let params = useParams();
-  let projectId = null;
+  let projectId;
 
   if (params.id != undefined && state.projects.length > 0) {
     projectId = params.id;
@@ -99,48 +100,52 @@ export default function ProjectsPage(props) {
     [state.fuelStations]
   );
 
+  React.useEffect(() => {
+    mapRef.current.getMap().resize();
+  }, [projectId]);
+
 
   const handleProjectsLayerClick = event => {
     const feature = event.features[0];
     if (!feature) return;
 
-/*     setActiveProject(feature);
-    console.log(feature);
-
-    var id = feature.properties.id;
-    var features = state.projectGeoms.filter(function (element) {
-      return element.properties.id == id;
-    });
-
-    const [minLng, minLat, maxLng, maxLat] = bbox({
-      type: 'FeatureCollection',
-      features: features
-    });
-
-    const futureVp = {
-      ...state.viewport,
-      width: window.innerWidth / 2,
-      height: window.innerHeight
-    }
-    //console.log("innerWidth: " + window.innerWidth);
-    //console.log("innerWidth: " + window.innerHeight);
-
-    let newVp;
-    try {
-      var vp = new WebMercatorViewport(futureVp);
-      const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-        padding: 100
-      });
-      newVp = {
-        longitude: longitude,
-        latitude: latitude,
-        //zoom: Math.min(zoom, 12),
-        zoom
-      }
-    } catch (err) {
-      console.error(err);
-    }
-    if (newVp) setMapVp(newVp); */
+    /*     setActiveProject(feature);
+        console.log(feature);
+    
+        var id = feature.properties.id;
+        var features = state.projectGeoms.filter(function (element) {
+          return element.properties.id == id;
+        });
+    
+        const [minLng, minLat, maxLng, maxLat] = bbox({
+          type: 'FeatureCollection',
+          features: features
+        });
+    
+        const futureVp = {
+          ...state.viewport,
+          width: window.innerWidth / 2,
+          height: window.innerHeight
+        }
+        //console.log("innerWidth: " + window.innerWidth);
+        //console.log("innerWidth: " + window.innerHeight);
+    
+        let newVp;
+        try {
+          var vp = new WebMercatorViewport(futureVp);
+          const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
+            padding: 100
+          });
+          newVp = {
+            longitude: longitude,
+            latitude: latitude,
+            //zoom: Math.min(zoom, 12),
+            zoom
+          }
+        } catch (err) {
+          console.error(err);
+        }
+        if (newVp) setMapVp(newVp); */
 
     if (feature.properties.id) {
       props.history.push(Constants.ROOT_URL + "projects/" + feature.properties.id);
@@ -314,15 +319,16 @@ export default function ProjectsPage(props) {
 
       <div>
         <Box display="flex" p={0} style={{ width: '100%' }}>
-          <Box p={0} style={{ width: projectId ? '50vw' : '100%', height: 'calc(100vh - 65px)', overflow: 'hidden' }}>
+          <Box p={0} style={{ overflow: 'hidden' }}>
             <MapGL
               {...state.viewport}
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: projectId ? '50vw' : '100vw', height: 'calc(100vh - 65px)' }}
               cursorStyle={mapCursorStyle}
               mapStyle={state.mapStyle}
               accessToken={Constants.MAPBOX_TOKEN}
               onViewportChange={onViewportChange}
               onClick={handleMapClick} onLoad={handleMapLoad}
+              ref={mapRef}
             >
               <Source id="charging-source"
                 type="geojson"
@@ -451,14 +457,9 @@ export default function ProjectsPage(props) {
               </ButtonBase>
           }
         </Paper>
-
       </div>
-
-
     </Box >
-
   );
-
 }
 
 
