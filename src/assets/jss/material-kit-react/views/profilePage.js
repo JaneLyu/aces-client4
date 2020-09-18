@@ -59,7 +59,8 @@ const profilePageStyle = {
   },
 
   visionParagraph: {
-    padding: '0.5rem 0 0.5rem 0'
+    padding: '0.5rem 0 0.5rem 0',
+    fontSize: '1rem'
   },
   visionList: {
     fontSize: '14px',
