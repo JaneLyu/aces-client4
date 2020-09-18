@@ -197,6 +197,7 @@ export default function DetailsPanel(props) {
     classes.imgFluid
   );
   const [imageFileURL, setImageFileURL] = useState();
+  const [showCustomImage, setShowCustomImage] = useState(false);
   const [dataFileURL, setDataFileURL] = useState();
 
   const { state } = props;
@@ -259,28 +260,27 @@ export default function DetailsPanel(props) {
   // TODO: state change (via viewport) causes onload to fire at every map movement
   async function onLoad() {
     try {
-      if (pprops.imageFiles && !imageFileURL) {
+      if (pprops.imageFiles /*&& !imageFileURL*/) {
         console.log("get image file");
         const imagef = await Storage.get(pprops.imageFiles, {
           identityId: pprops.userId
         });
         setImageFileURL(imagef);
-      } else {
-        //setImageFileURL(null);
       }
 
-      if (pprops.dataFiles && !dataFileURL) {
+      if (pprops.dataFiles /*&& !dataFileURL*/) {
         console.log("get data file");
         const dataf = await Storage.get(pprops.dataFiles, {
           identityId: pprops.userId
         });
         setDataFileURL(dataf);
-      } else {
-        //setDataFileURL(null);
       }
+      
       //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
     } catch (e) {
       //console.log("error onload");
+      setImageFileURL(null);
+      setDataFileURL(null);
     }
   }
   onLoad();
@@ -334,7 +334,7 @@ export default function DetailsPanel(props) {
       {
         pprops && pprops.imageFiles && imageFileURL &&
         <div style={{ margin: '20px 5px 0 10px' }}>
-          <img src={imageFileURL} style={{ width: '100%' }} />
+          <img src={imageFileURL} key={imageFileURL} style={{ width: '100%' }} />
         </div>
       }
 
