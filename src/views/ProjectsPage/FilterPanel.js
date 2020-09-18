@@ -265,48 +265,42 @@ export default function FilterPanel(props) {
                 control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.planning}
                   onChange={handleChangeStatus(Constants.PROJECT_TYPE_PLAN)} value={Constants.PROJECT_TYPE_PLAN}
                   margin="dense" size="small" />} />
-              {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
-                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" 
-                fill={Constants.PROJECT_TYPE_COLORS[Constants.PROJECT_TYPE_PLAN]} />
-              </svg> */}
+              <img src={require('assets/img/maki-marker-stroked-15-' + Constants.PROJECT_TYPE_PLAN + '.svg')} />
             </Box>
             <Box>
               <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Design</span>}
                 control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.design}
                   onChange={handleChangeStatus(Constants.PROJECT_TYPE_DESIGN)} value={Constants.PROJECT_TYPE_DESIGN}
                   margin="dense" size="small" />} />
-              {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
-                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" 
-                fill={Constants.PROJECT_TYPE_COLORS[Constants.PROJECT_TYPE_DESIGN]} />
-              </svg> */}
+              <img src={require('assets/img/maki-marker-stroked-15-' + Constants.PROJECT_TYPE_DESIGN + '.svg')} />
             </Box>
             <Box>
               <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Deployment</span>}
                 control={<Checkbox color='primary' className={classes.filterCheckbox} checked={statusState.deployment}
                   onChange={handleChangeStatus(Constants.PROJECT_TYPE_DEPLOYMENT)} value={Constants.PROJECT_TYPE_DEPLOYMENT}
                   margin="dense" size="small" />} />
-              {/* <svg height="12" width="12" style={{ verticalAlign: 'middle' }}>
-                <circle cx="6" cy="6" r="6" stroke="white" stroke-width="0" 
-                fill={Constants.PROJECT_TYPE_COLORS[Constants.PROJECT_TYPE_DEPLOYMENT]} />
-              </svg> */}
+              <img src={require('assets/img/maki-marker-stroked-15-' + Constants.PROJECT_TYPE_DEPLOYMENT + '.svg')} />
             </Box>
             <Box>
               <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Evaluation</span>}
                 control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.evaluation}
                   onChange={handleChangeStatus(Constants.PROJECT_TYPE_EVALUATION)} value={Constants.PROJECT_TYPE_EVALUATION}
                   margin="dense" size="small" />} />
+              <img src={require('assets/img/maki-marker-stroked-15-' + Constants.PROJECT_TYPE_EVALUATION + '.svg')} />
             </Box>
             <Box>
               <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Data</span>}
                 control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.data}
                   onChange={handleChangeStatus(Constants.PROJECT_TYPE_DATA)} value={Constants.PROJECT_TYPE_DATA}
                   margin="dense" size="small" />} />
+              <img src={require('assets/img/maki-marker-stroked-15-' + Constants.PROJECT_TYPE_DATA + '.svg')} />
             </Box>
             <Box>
               <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Other</span>}
                 control={<Checkbox color='primary' active className={classes.filterCheckbox} checked={statusState.other}
                   onChange={handleChangeStatus(Constants.PROJECT_TYPE_OTHER)} value={Constants.PROJECT_TYPE_OTHER}
                   margin="dense" size="small" />} />
+              <img src={require('assets/img/maki-marker-stroked-15-' + Constants.PROJECT_TYPE_OTHER + '.svg')} />
             </Box>
           </FormGroup>
         </ListItem>

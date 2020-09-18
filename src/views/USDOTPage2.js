@@ -66,32 +66,26 @@ export default function USDOTPage(props) {
       </div>
 
       <div>
-        <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px', overflow: 'hidden'}}>
-          <Box display="flex" style={{ padding: '5px 0 10px 0' }}>
-            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Connected Vehicle Deployment</span>
-            <a href="https://www.transportation.gov/research-and-technology/interactive-connected-vehicle-deployment-map"
-              target="_blank" rel="noopener noreferrer" style={{ marginLeft: '20px' }}>
+        <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px', overflow: 'hidden' }}>
+          <Box display="flex" style={{padding: '5px 0 10px 0'}}>
+            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Operational Connected Vehicle Deployments in the U.S.</span>
+            <a href="https://www.transportation.gov/research-and-technology/operational-connected-vehicle-deployments-us" 
+            target="_blank" rel="noopener noreferrer" style={{ marginLeft: '20px' }}>
               <img src={Constants.STATIC_ROOT_URL + 'images/external_link.png'} style={{ width: '20px', marginBottom: '5px' }} />
             </a>
           </Box>
-          <div style={{ fontStyle: 'italic' }}>Last updated: Friday, September 4, 2020</div>
-
+          <div style={{fontStyle: 'italic'}}>Last updated: Tuesday, June 2, 2020</div>
           <Box p={0} style={{ width: '100%', overflow: 'hidden' }}>
-            <div style={{ fontSize: '0.95rem', padding: '10px 0 10px 0'}}>
-              This interactive map shows operational (yellow) and planned (blue)
-              connected vehicle deployment locations across the U.S. It also contains a state-by-state crash fatalities
-              and the economic costs (red) that could potentially be mitigated through deployment of Safety Band-related technology.
-            </div>
-            <div>
-              <iframe frameBorder="0" style={{ width: '100%', height: 'calc(100vh - 250px)' }}
-              src="https://www.google.com/maps/d/u/0/embed?mid=1t1qjj74bqPEP_1qRKjxqNLmoQhYl3e2Q"></iframe>
-            </div>
+            <img src="https://www.transportation.gov/sites/dot.gov/files/2020-05/CV%20Deployment%20Map%205-2020_0.JPG" 
+            style={{ maxWidth: '100%', height: 'auto' }} />
           </Box>
         </Box>
 
       </div>
 
+
     </Box >
+
   );
 
 }

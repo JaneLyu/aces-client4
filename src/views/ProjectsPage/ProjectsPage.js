@@ -409,8 +409,29 @@ export default function ProjectsPage(props) {
           <Paper elevation={2} style={{ position: 'absolute', top: '120px', left: '10px', width: '200px' }}>
             {
               state.bikesharesVisible &&
-              <div style={{ padding: '8px 10px 5px 10px', margin: '0', fontSize: '0.95rem', fontWeight: 'bold' }}>
-                {state.bikeshareStations.length + " Station" + (state.bikeshareStations.length > 1 ? "s" : "")}
+              <div style={{ padding: '8px 10px 5px 10px', margin: '0' }}>
+                <div style={{ fontSize: '0.95rem', fontWeight: 'bold' }}>
+                  {state.bikeshareStations.length + " Station" + (state.bikeshareStations.length > 1 ? "s" : "")}
+                </div>
+                <div style={{ padding: '4px 0 0 6px', fontSize: '0.8rem' }}>
+                  <svg width="10px" height="10px">
+                    <circle cx="5" cy="5" r="5" stroke="white" stroke-width="0" fill="#16F45F" />
+                  </svg>
+                  &nbsp;&nbsp;<span>more than 3 bikes available</span>
+                </div>
+                <div style={{ padding: '4px 0 0 6px', fontSize: '0.8rem' }}>
+                  <svg width="10px" height="10px">
+                    <circle cx="5" cy="5" r="5" stroke="white" stroke-width="0" fill="#0E8F3A" />
+                  </svg>
+                  &nbsp;&nbsp;<span>1 to 3 bikes available</span>
+                </div>
+                <div style={{ padding: '4px 0 0 6px', fontSize: '0.8rem' }}>
+                  <svg width="10px" height="10px">
+                    <circle cx="5" cy="5" r="5" stroke="white" stroke-width="0" fill="#ED0B5A" />
+                  </svg>
+                  &nbsp;&nbsp;<span>no bike available</span>
+                </div>
+
               </div>
             }
             {
@@ -478,38 +499,10 @@ const bikeshareMarkerLayer = {
   type: 'circle',
   source: 'bikeshare-source',
   paint: {
-    'circle-color': ['step', ['get', 'free_bikes'], '#ED0B5A', 2, '#FECC00', 6, '#16E127'],
+    'circle-color': ['step', ['get', 'free_bikes'], '#ED0B5A', 1, '#0E8F3A', 4, '#16F45F'],
     'circle-radius': 5,
     'circle-stroke-width': 2,
     'circle-stroke-color': '#fff'
-  }
-};
-
-
-const clusterLayer = {
-  id: 'clusters',
-  type: 'circle',
-  source: 'projectdata',
-  filter: ['has', 'point_count'],
-  paint: {
-    //'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 5, '#f1f075', 15, '#f28cb1'],
-    'circle-color': '#9ABFC2',
-    //'circle-radius': ['step', ['get', 'point_count'], 20, 10, 30, 20, 40],
-    'circle-radius': ['step', ['get', 'point_count'], 15, 10, 25, 20, 35],
-    'circle-stroke-width': 2,
-    'circle-stroke-color': '#fff'
-  }
-};
-
-const clusterCountLayer = {
-  id: 'cluster-count',
-  type: 'symbol',
-  source: 'projectdata',
-  filter: ['has', 'point_count'],
-  layout: {
-    'text-field': '{point_count_abbreviated}',
-    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-    'text-size': 16
   }
 };
 
@@ -534,67 +527,6 @@ const projectsMarkerLayer = {
     'text-optional': true,
   },
 };
-
-const bikeshareSymbolLayer = {
-  id: 'bikeshare-symbols',
-  type: 'symbol',
-  source: 'bikeshare',
-  layout: {
-    'icon-image': 'bicycle-share',
-    //'icon-size': 1.5,
-    'icon-anchor': 'bottom',
-    //'icon-ignore-placement': true,
-    'icon-allow-overlap': true,
-    'text-field': ['get', 'name'],
-    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-    'text-size': 12,
-    //'text-size': ['step', ['zoom'], 0, 8, 12],  // show label at zoom level 9+,
-    //'text-anchor': 'top',
-    //'text-offset': [0,-.2],
-    'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
-    'text-radial-offset': 0.15,
-    'text-optional': true,
-  },
-};
-
-const fuelStationSymbolLayer = {
-  id: 'fuelstation-symbols',
-  type: 'symbol',
-  source: 'fuelstation',
-  layout: {
-    'icon-image': 'charging-station-15',
-    //'icon-size': 1.5,
-    'icon-anchor': 'bottom',
-    //'icon-ignore-placement': true,
-    'icon-allow-overlap': true,
-    'text-field': ['get', 'name'],
-    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-    'text-size': 12,
-    //'text-size': ['step', ['zoom'], 0, 8, 12],  // show city names at zoom level 9+
-    //'text-anchor': 'top',
-    //'text-offset': [0,-.2],
-    'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
-    'text-radial-offset': 0.15,
-    'text-optional': true,
-  }
-};
-
-const unclusteredPointLayer = {
-  id: 'unclustered-point',
-  type: 'circle',
-  source: 'bikeshares',
-  filter: ['!', ['has', 'point_count']],
-  layout: {
-    'visibility': 'visible'
-  },
-  paint: {
-    'circle-color': 'red',
-    'circle-radius': 6,
-    'circle-stroke-width': 2,
-    'circle-stroke-color': '#fff'
-  }
-};
-
 
 const geomPolygonLayer = {
   type: 'fill',

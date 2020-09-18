@@ -100,7 +100,6 @@ export const mapboxZP20 = [73551, 36775, 18387, 9194, 4597, 2298, 1149, 575, 287
 export const flHeight = 721000;
 export const flWidth = 582000;
 
-
 export const PROJECT_TYPE_PLAN = 1;
 export const PROJECT_TYPE_DESIGN = 2;
 export const PROJECT_TYPE_EVALUATION = 3;
@@ -114,7 +113,16 @@ export const FILTER_NAME_MODE = 'mode';
 export const FILTER_NAME_DISTRICT = 'district';
 
 //export const PROJECT_TYPE_COLORS = ['#ccc', '#9A00F0', '#FFD417', '#7373ff', '#00DC13', '#a3a3a3'];
-export const PROJECT_TYPE_COLORS = ['#ccc', '#F609B1', '#FFD000', '#7373ff', '#4EF609', '#a3a3a3'];
+//export const PROJECT_TYPE_COLORS = ['#ccc', '#F609B1', '#FFD000', '#7373ff', '#4EF609', '#a3a3a3'];
+export const PROJECT_TYPE_COLORS = [
+  '#ccc', 
+  '#e33565', // planning
+  '#f1c84c', // design
+  '#4494e2', // evaluation
+  '#61e565', // deployment
+  '#a872d9', // data
+  '#aab5be' // other
+];
 
 
 // actions

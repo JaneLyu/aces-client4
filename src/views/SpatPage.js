@@ -144,57 +144,16 @@ export default function SpatPage(props) {
                 margin: '10px', fontSize: '0.8rem', borderRadius: '5px'
               }}>
                 <div>
-                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-4.svg'} style={{ marginRight: '5px' }} />
+                  <img src={require('assets/img/maki-marker-stroked-15-c.svg')} style={{ marginRight: '5px' }} />
                   SPaT deployment underway
                 </div>
                 <div>
-                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-3.svg'} style={{ marginRight: '5px' }} />
+                  <img src={require('assets/img/maki-marker-stroked-15-4.svg')} style={{ marginRight: '5px' }} />
                   SPaT deployment operational
                 </div>
               </div>
             </MapGL>
 
-            {/* <MapGL
-              {...state.spatViewport}
-              width="100%"
-              height="100%"
-              mapStyle={state.mapStyle}
-              onViewportChange={onViewportChange}
-              mapboxApiAccessToken={Constants.MAPBOX_TOKEN}
-              interactiveLayerIds={[unclusteredSymbolLayer.id]}
-              onClick={handleMapOnClick}
-            >
-              <Source
-                type="geojson"
-                data={{
-                  type: 'FeatureCollection',
-                  features: state.spatList
-                }}
-                ref={mbProjectSourceRef}
-              >
-                <Layer {...spatSympbolLayer} paint={state.mapMarkerPaint} />
-              </Source>
-              {
-                renderPopup()
-              }
-              <div style={{ position: 'absolute', padding: '10px', top: '2px', right: '0px' }}>
-                <NavigationControl />
-              </div>
-              <div style={{
-                position: 'absolute', padding: '10px', top: '2px', left: '0px',
-                background: 'white', boxShadow: '2px 2px 2px rgba(0,0,0,0.3)',
-                margin: '10px', fontSize: '13px', borderRadius: '5px'
-              }}>
-                <div>
-                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-4.svg'} style={{ marginRight: '5px' }} />
-                  SPaT deployment underway
-                </div>
-                <div>
-                  <img src={Constants.STATIC_ROOT_URL + 'images/maki-marker-stroked-15-3.svg'} style={{ marginRight: '5px' }} />
-                  SPaT deployment operational
-                </div>
-              </div>
-            </MapGL> */}
           </Box>
         </Box>
       </div>
@@ -210,9 +169,9 @@ const spatSympbolLayer = {
     'icon-image': ['concat', 'maki-marker-stroked-15-', [
       'match',
       ['get', 'status'],
-      "deployed", 3,
-      "underway", 4,
-      0
+      "deployed", '4',
+      "underway", 'c',
+      ''
     ]],
     //'icon-image': 'maki-marker-stroked-15-1',
     'icon-size': 1.5,
