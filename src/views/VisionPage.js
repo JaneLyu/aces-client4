@@ -99,22 +99,19 @@ export default function VisionPage(props) {
                 and optimized ACES technologies according to desired performance measures.
               </p>
 
-              <p>
+              <p style={{fontSize: '1rem'}}>
                 <strong>Project Leadership</strong>
               </p>
 
-              <p>
+              <p style={{fontSize: '1rem'}}>
                 Project Manager: <a href="https://www.linkedin.com/in/raj-ponnaluri-pe-phd-ptoe-pmp-a356809/"
                   target="_blank" rel="noopener noreferrer">Raj Ponnaluri, Ph.D., P.E., PTOE, PMP</a>
               </p>
-
-              <p>
+              <p style={{fontSize: '1rem'}}>
                 Principal Investigator: <a href="https://www.cutr.usf.edu/2017/12/pei-sung-lin-its-program-director/"
                   target="_blank" rel="noopener noreferrer">Pei-Sung Lin, Ph.D., P.E., PTOE, FITE</a>
               </p>
-
             </div>
-
           </div>
         </div>
       </div>

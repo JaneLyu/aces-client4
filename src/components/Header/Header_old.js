@@ -10,8 +10,8 @@ import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 // @material-ui/icons
@@ -77,26 +77,60 @@ export default function Header(props) {
 
   const { isAuthenticated, isAdmin } = useUserState();
 
+  const brandComponent = (
+    <div><img src={require('assets/img/aces_logo_notext_sm.png')} height="25px"></img>
+      {
+        brand && brand.length > 0 &&
+        <Button component={Link} to={ROOT_URL} className={classes.title}>{brand}</Button>
+      }
+      {
+        brand && brand.length > 0 && isAuthenticated && isAdmin && 
+        <span style={{ color: 'white', fontSize: '1.2em', verticalAlign: 'middle' }}></span>
+      }
+    </div>
+  );
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
-        <Grid
-          justify="space-between"
-          container
-          spacing={24}
-        >
-          <Grid item>
-            <Typography type="title" color="inherit">
-              
-            </Typography>
-          </Grid>
-
-          <Grid item>
-            {rightLinks}
-          </Grid>
-        </Grid>
-
+        {leftLinks !== undefined ? brandComponent : null}
+        <div className={classes.flex}>
+          {leftLinks !== undefined ? (
+            <Hidden smDown implementation="css">
+              {leftLinks}
+            </Hidden>
+          ) : (
+              brandComponent
+            )}
+        </div>
+        <Hidden smDown implementation="css">
+          {rightLinks}
+        </Hidden>
+        <Hidden mdUp>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
       </Toolbar>
+      <Hidden mdUp implementation="js">
+        <Drawer
+          variant="temporary"
+          anchor={"right"}
+          open={mobileOpen}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          onClose={handleDrawerToggle}
+        >
+          <div className={classes.appResponsive}>
+            {leftLinks}
+            {rightLinks}
+          </div>
+        </Drawer>
+      </Hidden>
     </AppBar>
   );
 }

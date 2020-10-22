@@ -85,6 +85,10 @@ export default function HeaderLinks(props) {
 
   return (
     <List className={classes.list}>
+      <ListItem className={classes.listItem} style={{}}>
+        <NavLink to={Constants.ROOT_URL + "about"} className={classes.navLink}
+          activeStyle={{fontWeight: 'bold'}}>About</NavLink>
+      </ListItem>
       <ListItem className={classes.listItem}>
         <CustomDropdown
           left
@@ -105,6 +109,38 @@ export default function HeaderLinks(props) {
             <Link to={Constants.ROOT_URL + "federal/usdot"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;US DOT</Link>
           ]}
         />
+      </ListItem>
+      {/* <ListItem className={classes.listItem}>
+        <CustomDropdown
+          noLiPadding
+          buttonText="Federal Initiatives"
+          buttonProps={{
+            className: classes.navLink,
+            color: "transparent"
+          }}
+          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}
+          dropdownList={[
+            <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>NOCoE</Link>,
+            <Link to={Constants.ROOT_URL + "federal/usdot"} className={classes.dropdownLink}>US DOT</Link>
+          ]}
+        />
+      </ListItem> */}
+      {/*       <ListItem className={classes.listItem}>
+        <NavLink to={Constants.ROOT_URL + "people"} className={classes.navLink}
+          activeStyle={{ fontWeight: 'bold', borderBottom: 'solid 2px #fff' }}>People</NavLink>
+      </ListItem> */}
+
+      <ListItem className={classes.listItem}>
+        <IconButton style={{ padding: '0', margin: '7px 0 10px 30px' }} onClick={handleAvatarClick}>
+          {
+            isAuthenticated ? (
+              isAdmin ? <Avatar className={classes2.avatar} style={{ backgroundColor: '#FF8C00' }}>A</Avatar>
+                : <Avatar src={Constants.STATIC_ROOT_URL + 'images/user' + profile.id + '.jpg'}
+                  className={classes2.avatar}></Avatar>
+            )
+              : <Avatar className={classes2.avatar}><Person /></Avatar>
+          }
+        </IconButton>
       </ListItem>
     </List>
   );
