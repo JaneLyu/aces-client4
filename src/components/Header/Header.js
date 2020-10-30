@@ -80,22 +80,15 @@ export default function Header(props) {
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
-        <Grid
-          justify="space-between"
-          container
-          spacing={24}
-        >
+        <Grid container spacing={24} justify="flex-end">
           <Grid item>
             <Typography type="title" color="inherit">
-              
             </Typography>
           </Grid>
-
           <Grid item>
             {rightLinks}
           </Grid>
         </Grid>
-
       </Toolbar>
     </AppBar>
   );
