@@ -1,7 +1,8 @@
 import React from "react";
 import { LinearInterpolator, WebMercatorViewport } from 'react-map-gl';
 import bbox from '@turf/bbox';
-import * as Constants from "../constants"
+import * as Constants from "../constants";
+import GEOJSON_FL from "../assets/json/florida";
 
 export const Store = React.createContext("");
 
@@ -25,6 +26,8 @@ const statewideProjectViewport = {
 };
 
 const initialState = {
+  isLoading: true,
+
   userProfile: null,
   users: [],
   projects: [],
@@ -62,6 +65,22 @@ const initialState = {
 };
 
 
+function getLoadingStatus(state) {
+  var loading = true;
+
+  if (state) {
+    if (state.projects && state.projects.length > 0
+      //&& state.bikeshareStations && state.bikeshareStations.length > 0
+      //&& state.fuelStations && state.fuelStations.length > 0
+      ) {
+      loading = false;
+    }
+  }
+
+  return loading;
+}
+
+
 function processSpatData(data) {
   let processed = [];
   if (!data) return processed;
@@ -92,26 +111,25 @@ function processProjectData(data) {
   let filtered = data.filter((proj, index) => {
     return proj.active;
   });
+  //let filtered = data;
 
   let projects = filtered.map((proj, index) => {
     let p = Object.assign({}, proj.location);
     //p["type"] = "Feature";
     p["properties"] = proj;
     p.properties["id"] = proj.projectId;
-    p.properties["name"] = proj.title;
+    p.properties["name"] = proj.shortTitle;
     p.properties["status"] = parseInt(proj.status);
+    if (p.properties.statewide) {
+      p.properties.geom = JSON.parse(JSON.stringify(GEOJSON_FL));
+      p.geometry.coordinates = [];
+    }
     return p;
   });
 
-  /*   projects.sort((a, b) => {
-      if (a.properties.name < b.properties.name)
-        return -1;
-      if (a.properties.name > b.properties.name)
-        return 1;
-      return 0;
-    }); */
-
-  //console.log(projects);
+  projects.sort(function (a, b) {
+    return a.properties.status - b.properties.status || a.properties.name.localeCompare(b.properties.name);
+  });
 
   return projects;
 }
@@ -291,6 +309,7 @@ function processFuelStationData_Grouped(data) {
 function reducer(state, action) {
   var newFilters;
   let newVp;
+  let newState;
 
   //console.log('reducer: ' + action.type);
 
@@ -299,20 +318,28 @@ function reducer(state, action) {
       let projects = processProjectData(action.payload);
       let geoms = [];
       projects.forEach((proj) => {
-        proj.properties.geom.features.forEach((geo) => {
-          let g = geo;
-          g.properties["id"] = proj.properties.id;
-          g.properties["name"] = proj.properties.name;
-          g.properties["status"] = proj.properties.status;
-          geoms.push(g);
-        });
+        if (proj.properties.geom && proj.properties.geom.features.length > 0) {
+          proj.properties.geom.features.forEach((geo) => {
+            let g = geo;
+            g.properties["id"] = proj.properties.id;
+            g.properties["name"] = proj.properties.name;
+            g.properties["status"] = proj.properties.status;
+            geoms.push(g);
+          });
+        }
       });
 
+      //console.log(projects);
       //console.log(geoms);
 
-      return {
+      newState = {
         ...state, projects: projects, visibleProjects: projects, projectGeoms: geoms
       };
+
+      newState.isLoading = getLoadingStatus(newState);
+      //console.log("project data done; isloading: " + newState.isLoading);
+
+      return newState;
     case Constants.FETCH_PROJECTS_GEOM:
       // payload = projects
       return {
@@ -329,9 +356,14 @@ function reducer(state, action) {
           }; */
     case Constants.FETCH_BIKESHARE_DATA:
       let stations = processBikeshareData(action.payload);
-      return {
+
+      newState = {
         ...state, bikeshareStations: stations
       };
+      newState.isLoading = getLoadingStatus(newState);
+      //console.log("bikeshare data done; isloading: " + newState.isLoading);     
+      
+      return newState;
     case Constants.FETCH_BIKESHARE_STATION_DATA:
       let network = processBikeshareStationData(action.payload);
       newVp = state.bikeshareNetworkViewport;
@@ -402,10 +434,14 @@ function reducer(state, action) {
       };
     case Constants.FETCH_FUELING_DATA:
       let fuelData = processFuelStationData(action.payload);
-      return {
-        //...state, fuelStations: fuelData ? fuelData.cities : [], fuelStationsTotal: fuelData ? fuelData.total : 0
+
+      newState = {
         ...state, fuelStations: fuelData
       };
+      newState.isLoading = getLoadingStatus(newState);
+      //console.log("fueling data done; isloading: " + newState.isLoading);     
+      
+      return newState;
     case Constants.SET_FUELING_CITY:
       let cityData = state.fuelStations.find(function (element) {
         return element.properties.name === action.payload;
@@ -658,12 +694,16 @@ function filterProjects(projects, filters) {
   let districtFilters = filters.filter(function (element) {
     return element.name == 'district';
   });
+  let scopeFilters = filters.filter(function (element) {
+    return element.name == 'scope';
+  });
 
   projects.forEach(project => {
     let statusMatch = statusFilters.length == 0;
     let categoryMatch = categoryFilters.length == 0;
     let modeMatch = modeFilters.length == 0;
     let districtMatch = districtFilters.length == 0;
+    let scopeMatch = scopeFilters.length == 0;
 
     // 'and' among filter groups; 'or' within filter group
     for (let i = 0; i < statusFilters.length; i++) {
@@ -694,8 +734,15 @@ function filterProjects(projects, filters) {
         break;
       }
     }
+    for (let i = 0; i < scopeFilters.length; i++) {
+      let filter = scopeFilters[i];
+      if (projectIsMatch(project, filter)) {
+        scopeMatch = true;
+        break;
+      }
+    }
 
-    if (statusMatch && categoryMatch && modeMatch && districtMatch) {
+    if (statusMatch && categoryMatch && modeMatch && districtMatch && scopeMatch) {
       filtered.push(project);
     }
   });
@@ -734,6 +781,13 @@ function projectIsMatch(project, filter) {
       if (vals && vals.includes(filter.value.toLowerCase()))
         return true;
       break;
+    case Constants.FILTER_NAME_SCOPE:
+      projectData = project.properties.statewide;
+      if (filter.value == Constants.PROJECT_SCOPE_STATEWIDE && projectData)
+        return true;
+      if (filter.value == Constants.PROJECT_SCOPE_LOCAL && !projectData)
+        return true;
+      break;
     default:
       break;
   }
@@ -765,7 +819,7 @@ function getProjectViewport(projectId, state) {
   try {
     var vp = new WebMercatorViewport(futureVp);
     const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-      padding: 100
+      padding: 40
     });
     newVp = {
       ...state.viewport,

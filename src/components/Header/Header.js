@@ -14,6 +14,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+
 // @material-ui/icons
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -77,12 +80,13 @@ export default function Header(props) {
 
   const { isAuthenticated, isAdmin } = useUserState();
 
-  return (
+  /* return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
         <Grid container spacing={24} justify="flex-end">
           <Grid item>
             <Typography type="title" color="inherit">
+              dsafsdf
             </Typography>
           </Grid>
           <Grid item>
@@ -90,6 +94,63 @@ export default function Header(props) {
           </Grid>
         </Grid>
       </Toolbar>
+    </AppBar>
+  ); */
+
+  const brandComponent = (
+    <div>{/* <img src={require('assets/img/aces_logo_notext_sm.png')} height="25px"></img> */}
+      {
+        brand && brand.length > 0 &&
+        <Button component={Link} to={ROOT_URL + "projects"} className={classes.title}>{brand}</Button>
+      }
+      {
+        brand && brand.length > 0 && isAuthenticated && isAdmin &&
+        <span style={{ color: 'white', fontSize: '1.2em', verticalAlign: 'middle' }}></span>
+      }
+    </div>
+  );
+  return (
+    <AppBar className={appBarClasses} style={{height: '60px'}}>
+      <Toolbar className={classes.container}>
+        {leftLinks !== undefined ? brandComponent : null}
+        <div className={classes.flex}>
+          {leftLinks !== undefined ? (
+            <Hidden smDown implementation="css">
+              {leftLinks}
+            </Hidden>
+          ) : (
+              brandComponent
+            )}
+        </div>
+        <Hidden implementation="css">
+          {rightLinks}
+        </Hidden>
+{/*         <Hidden mdUp>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
+ */}      </Toolbar>
+      {/* <Hidden mdUp implementation="js">
+        <Drawer
+          variant="temporary"
+          anchor={"right"}
+          open={mobileOpen}
+          classes={{
+            paper: classes.drawerPaper
+          }}
+          onClose={handleDrawerToggle}
+        >
+          <div className={classes.appResponsive}>
+            {leftLinks}
+            {rightLinks}
+          </div>
+        </Drawer>
+      </Hidden> */}
     </AppBar>
   );
 }

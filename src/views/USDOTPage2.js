@@ -53,7 +53,7 @@ export default function USDOTPage(props) {
   return (
     <Box>
       <div style={{
-        position: 'relative', width: '100%', height: "65px", overflow: 'hidden', boxShadow:
+        position: 'relative', width: '100%', height: Constants.HEADER_HEIGHT + "px", overflow: 'hidden', boxShadow:
           "0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)"
       }}>
         <Header
@@ -67,7 +67,7 @@ export default function USDOTPage(props) {
 
       <div>
         <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px', overflow: 'hidden' }}>
-          <Box display="flex" style={{padding: '5px 0 10px 0'}}>
+          <Box display="flex" style={{padding: '0px 0 10px 0'}}>
             <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Operational Connected Vehicle Deployments in the U.S.</span>
             <a href="https://www.transportation.gov/research-and-technology/operational-connected-vehicle-deployments-us" 
             target="_blank" rel="noopener noreferrer" style={{ marginLeft: '20px' }}>

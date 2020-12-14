@@ -275,7 +275,7 @@ export default function DetailsPanel(props) {
         });
         setDataFileURL(dataf);
       }
-      
+
       //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
     } catch (e) {
       //console.log("error onload");
@@ -296,38 +296,47 @@ export default function DetailsPanel(props) {
 
   return (
     <Paper style={{
-      width: '50vw', height: 'calc(100vh - 65px)', overflow: 'auto', padding: '0px 15px 50px 15px',
+      width: '50vw', height: 'calc(100vh - ' + Constants.HEADER_HEIGHT + 'px)', overflow: 'auto', padding: '0px 15px 50px 15px',
       boxShadow: '-5px 0px 5px 0px #888888'
     }} >
-      <h3 className={classes.title} style={{ fontWeight: 'bold' }}>{pprops ? pprops.name : ''}</h3>
+      <div className={classes.title} style={{ fontWeight: 'bold', fontSize: '1.5rem', padding: '20px 0px 10px 0px' }}>
+        {pprops ? pprops.title : ''}
+      </div>
 
-      <Box display="flex" p={0} style={{ width: '100%', padding: '5px' }}>
-        <Box flexWrap="nowrap" style={{ width: '70%' }}>
-          {
-            pcategories.map((category) => {
-              return (getCategoryLabel(category) &&
-                <Chip size="small" color="primary" label={getCategoryLabel(category)} className={classes.chipLabel}></Chip>
-              );
-            })
-          }
-          &nbsp;&nbsp;&nbsp;
-          {
-            pmodes.map((mode) => {
-              return (getModeLabel(mode) &&
-                <Chip size="small" color="secondary" label={getModeLabel(mode)} className={classes.chipLabel}></Chip>
-              );
-            })
-          }
-        </Box>
-        <Box flexWrap="nowrap" style={{ width: '30%', textAlign: 'right' }}>
-          <svg height="16" width="16" style={{ verticalAlign: 'middle' }}>
-            <circle cx="8" cy="8" r="8" stroke="white" stroke-width="0" fill={Constants.PROJECT_TYPE_COLORS[pprops.status]} />
+      {
+        pprops.statewide &&
+        <Grid container spacing={1}
+          alignItems="flex-start">
+          <Grid item>
+            <img src={require('assets/img/statewide_icon.png')} height="22px" />
+            <span style={{ paddingLeft: '10px', fontSize: '1.15rem', color: '#005ca2', fontWeight: 'bold' }}>
+              Statewide Initiative
+                </span>
+          </Grid>
+        </Grid>
+      }
+
+      <Grid container spacing={1} direction="row" justify="space-between" alignItems="center">
+        <Grid item>
+          <svg height="15" width="15" style={{}}>
+            <circle cx="7.5" cy="7.5" r="7.5" stroke="white" stroke-width="0" fill={Constants.PROJECT_TYPE_COLORS[pprops.status]} />
           </svg>
-          <FormLabel style={{ paddingLeft: '10px', verticalAlign: 'middle' }}>
+          <span style={{ paddingLeft: '10px', color: '#666666', fontWeight: 'bold', fontSize: '1.15rem' }}>
             {getStatusLabel(pprops.status)}
-          </FormLabel>
-        </Box>
-      </Box>
+          </span>
+        </Grid>
+        <Grid item>
+          <div style={{ width: '', height: '', backgroundColor: '', padding: '0px', textAlign: '' }}>
+            {
+              ["a", "c", "e", "s"].map((cat, i) =>
+                (pprops.category.includes(cat))
+                  ? <img src={require('assets/img/aces_' + cat + '2_on.svg')} />
+                  : <img src={require('assets/img/aces_' + cat + '2_off.svg')} />
+              )
+            }
+          </div>
+        </Grid>
+      </Grid>
 
       <div style={{ margin: '30px 0 0 0' }} dangerouslySetInnerHTML={createDescriptionMarkup()}></div>
 

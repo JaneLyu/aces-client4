@@ -51,9 +51,9 @@ export default function App() {
 
         <Route path={rootpath} component={LandingPage} />
       </Switch>
-      <Redirect from={ROOT_URL} to={rootpath + "projects"} />
+{/*       <Redirect from={ROOT_URL} to={rootpath + "projects"} />
       <Redirect from={ROOT_URL + "#"} to={rootpath + "projects"} />
-    </HashRouter>
+ */}    </HashRouter>
   );
 
   // #######################################################################

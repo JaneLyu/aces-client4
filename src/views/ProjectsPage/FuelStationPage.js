@@ -109,7 +109,7 @@ export default function FuelStationPage(props) {
   return (
     <Box>
       <div style={{
-        position: 'relative', width: '100%', height: "65px", overflow: 'hidden', boxShadow:
+        position: 'relative', width: '100%', height: Constants.HEADER_HEIGHT + "px", overflow: 'hidden', boxShadow:
           "0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)"
       }}>
         <Header
@@ -123,7 +123,7 @@ export default function FuelStationPage(props) {
 
       <div>
         <Box display="flex" p={0} style={{ width: '100%' }}>
-          <Box p={0} style={{ width: '100%', height: 'calc(100vh - 65px)', overflow: 'hidden' }}>
+          <Box p={0} style={{ width: '100%', height: 'calc(100vh - ' + Constants.HEADER_HEIGHT + 'px)', overflow: 'hidden' }}>
             <MapGL {...state.fuelStationViewport}
               style={{ width: '100%', height: '100%' }}
               cursorStyle={mapCursorStyle}

@@ -55,7 +55,7 @@ export default function DashboardPage(props) {
   return (
     <Box style={{ backgroundColor: 'white' }}>
       <div style={{
-        position: 'relative', width: '100%', height: "65px", overflow: 'hidden', boxShadow:
+        position: 'relative', width: '100%', height: Constants.HEADER_HEIGHT + "px", overflow: 'hidden', boxShadow:
           "0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)"
       }}>
         <Header
@@ -66,7 +66,7 @@ export default function DashboardPage(props) {
           {...rest}
         />
       </div>
-      <div style={{width: '100vw', height: 'calc(100vh - 65px)', overflow: 'auto'}}>
+      <div style={{width: '100vw', height: 'calc(100vh - ' + Constants.HEADER_HEIGHT + 'px)', overflow: 'auto'}}>
         <Container maxWidth="lg">
           {/* <DashboardNav {...rest} /> */}
           {

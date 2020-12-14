@@ -1,7 +1,7 @@
 import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import { InputAdornment, CircularProgress, Icon, TextField } from "@material-ui/core";
+import { InputAdornment, CircularProgress, Icon, TextField, Grid, Paper, List, ListItem } from "@material-ui/core";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
 import People from "@material-ui/icons/People";
@@ -20,6 +20,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import { withRouter } from "react-router-dom";
 import { useUserDispatch, loginUser } from "../../context/UserContext";
+import * as Constants from "../../constants"
 
 
 import styles from "assets/jss/material-kit-react/views/loginPage.js";
@@ -51,6 +52,38 @@ export default function LoginPage(props) {
   const handleLoginSubmit = event => {
     loginUser(userDispatch, loginValue, passwordValue, props.history, setIsLoading, setError)
   };
+
+  var catarr = ["a", "c", "s"];
+  var projlist = [
+    {
+      properties: {
+        id: '46dsfasdf3adfad',
+        title: 'System (SCMS)',
+        category: ['c', 'e'],
+        status: 2,
+        statewide: true
+      }
+    },
+    {
+      properties: {
+        id: '46dsfasdf3adfad',
+        title: 'Systemdf add',
+        category: ['a', 'e'],
+        status: 1,
+        statewide: true
+      }
+    },
+    {
+      properties: {
+        id: '46dsfasdf3adfad',
+        title: 'Sysdsaf adfatem (SCMS)',
+        category: ['s', 'a'],
+        status: 3,
+        statewide: false
+      }
+    }
+
+  ];
 
   return (
     <div>
@@ -176,6 +209,7 @@ export default function LoginPage(props) {
               </Card>
             </GridItem>
           </GridContainer>
+
         </div>
         <Footer />
       </div>

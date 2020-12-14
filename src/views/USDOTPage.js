@@ -53,7 +53,7 @@ export default function USDOTPage(props) {
   return (
     <Box>
       <div style={{
-        position: 'relative', width: '100%', height: "65px", overflow: 'hidden', boxShadow:
+        position: 'relative', width: '100%', height: Constants.HEADER_HEIGHT + "px", overflow: 'hidden', boxShadow:
           "0 4px 18px 0px rgba(0, 0, 0, 0.12), 0 7px 10px -5px rgba(0, 0, 0, 0.15)"
       }}>
         <Header
@@ -67,7 +67,7 @@ export default function USDOTPage(props) {
 
       <div>
         <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px', overflow: 'hidden'}}>
-          <Box display="flex" style={{ padding: '5px 0 10px 0' }}>
+          <Box display="flex" style={{ padding: '0px 0 10px 0' }}>
             <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Connected Vehicle Deployment</span>
             <a href="https://www.transportation.gov/research-and-technology/interactive-connected-vehicle-deployment-map"
               target="_blank" rel="noopener noreferrer" style={{ marginLeft: '20px' }}>
@@ -83,7 +83,7 @@ export default function USDOTPage(props) {
               and the economic costs (red) that could potentially be mitigated through deployment of Safety Band-related technology.
             </div>
             <div>
-              <iframe frameBorder="0" style={{ width: '100%', height: 'calc(100vh - 250px)' }}
+              <iframe frameBorder="0" style={{ width: '100%', height: 'calc(100vh - 240px)' }}
               src="https://www.google.com/maps/d/u/0/embed?mid=1t1qjj74bqPEP_1qRKjxqNLmoQhYl3e2Q"></iframe>
             </div>
           </Box>

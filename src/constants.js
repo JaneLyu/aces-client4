@@ -10,8 +10,10 @@ export const ROOT_URL = "/";
 export const STATIC_ROOT_URL = root_url;
 
 
-export const ACES_LABEL = "A⋅C⋅E⋅S";
-export const ACES_BRAND = "FL " + ACES_LABEL;
+//export const ACES_LABEL = "A⋅C⋅E⋅S";
+export const ACES_LABEL = "ACES";
+export const ACES_BRAND = "" + ACES_LABEL + " Activity Viewer";
+export const HEADER_HEIGHT = 60; // px
 
 
 export const MAPBOX_TOKEN = "pk.eyJ1IjoieWh1YW5nNyIsImEiOiJjazJocjliaWEwdnd6M2hxZ2FnNHM3cDkwIn0.UQxOTkmbQTAv-e9El4zLKQ";
@@ -82,9 +84,9 @@ export const MAPBOX_GEOM_POLYGON_PAINT_SATELLITE = {
 };
 
 export const MAPBOX_INITIAL_VIEWPORT = {
-  latitude: 27.8,
-  longitude: -83.0,
-  zoom: 6.4, //6.2,
+  latitude: 27.9,
+  longitude: -84.8,
+  zoom: 6.1, //6.2,
   bearing: 0,
   pitch: 0,
   transitionDuration: MAPBOX_TRANSITION_DURATION
@@ -107,10 +109,14 @@ export const PROJECT_TYPE_DEPLOYMENT = 4;
 export const PROJECT_TYPE_DATA = 5;
 export const PROJECT_TYPE_OTHER = 6;
 
+export const PROJECT_SCOPE_STATEWIDE = 1;
+export const PROJECT_SCOPE_LOCAL = 2;
+
 export const FILTER_NAME_TYPE = 'status';
 export const FILTER_NAME_CATEGORY = 'category';
 export const FILTER_NAME_MODE = 'mode';
 export const FILTER_NAME_DISTRICT = 'district';
+export const FILTER_NAME_SCOPE = 'scope';
 
 //export const PROJECT_TYPE_COLORS = ['#ccc', '#9A00F0', '#FFD417', '#7373ff', '#00DC13', '#a3a3a3'];
 //export const PROJECT_TYPE_COLORS = ['#ccc', '#F609B1', '#FFD000', '#7373ff', '#4EF609', '#a3a3a3'];

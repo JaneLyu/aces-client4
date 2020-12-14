@@ -78,34 +78,27 @@ export default function HeaderLinks(props) {
 
   const isProjectsPage = () => {
     let path = window.location.href;
-    return !(path.includes("/admin/") || path.includes("/dashboard/")) && 
+    return !(path.includes("/admin/") || path.includes("/dashboard/")) &&
       (path.includes(Constants.ROOT_URL + "projects") || path.includes(Constants.ROOT_URL + "federal/nocoe") ||
-      path.includes(Constants.ROOT_URL + "federal/usdot"));
+        path.includes(Constants.ROOT_URL + "federal/usdot"));
   };
 
   return (
-    <List className={classes.list}>
-      <ListItem className={classes.listItem}>
-        <CustomDropdown
-          left
-          noLiPadding
-          //dropdownHeader="Dropdown Header"
-          buttonText={
-            <span style={{fontWeight: isProjectsPage() ? 'bold' : 'normal'}}>{Constants.ACES_LABEL + " Initiatives"}</span>
-          }
-          buttonProps={{
-            className: classes.navLink,
-            color: "transparent"
-          }}
-          dropdownList={[
-            <Link to={Constants.ROOT_URL + "projects"} className={classes.dropdownLink}>Florida</Link>,
-            { divider: true },
-            { header: true, content: <span>Federal</span> },
-            <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;NOCoE</Link>,
-            <Link to={Constants.ROOT_URL + "federal/usdot"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;US DOT</Link>
-          ]}
-        />
-      </ListItem>
-    </List>
+    <CustomDropdown
+      left
+      noLiPadding
+      buttonText={Constants.ACES_LABEL + " Initiatives"}
+      buttonProps={{
+        className: classes.navLink,
+        color: "transparent"
+      }}
+      dropdownList={[
+        <Link to={Constants.ROOT_URL + "projects"} className={classes.dropdownLink}>Florida</Link>,
+        { divider: true },
+        { header: true, content: <span>Federal</span> },
+        <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;NOCoE</Link>,
+        <Link to={Constants.ROOT_URL + "federal/usdot"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;US DOT</Link>
+      ]}
+    />
   );
 }
