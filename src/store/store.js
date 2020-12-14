@@ -558,7 +558,7 @@ function reducer(state, action) {
         ...state,
         project: action.payload,
         projectsViewport: state.viewport,
-        viewport: getProjectViewport(proj.properties.id, state),
+        viewport: getProjectViewport(proj, state),
         mapMarkerFilter: ["all", Constants.MAPBOX_MARKER_BASE_FILTER, ["==", ["get", "id"], proj.properties.id]],
         mapGeomPointFilter: ["all", Constants.MAPBOX_GEOM_POINT_BASE_FILTER, ["==", ["get", "id"], proj.properties.id]],
         mapGeomLineFilter: ["all", Constants.MAPBOX_GEOM_LINE_BASE_FILTER, ["==", ["get", "id"], proj.properties.id]],
@@ -795,9 +795,9 @@ function projectIsMatch(project, filter) {
 }
 
 
-function getProjectViewport(projectId, state) {
+function getProjectViewport(project, state) {
   var features = state.projectGeoms.filter(function (element) {
-    return element.properties.id == projectId;
+    return element.properties.id == project.properties.id;
   });
   if (features.length === 0) return { ...state.viewport };
 
@@ -819,7 +819,7 @@ function getProjectViewport(projectId, state) {
   try {
     var vp = new WebMercatorViewport(futureVp);
     const { longitude, latitude, zoom } = vp.fitBounds([[minLng, minLat], [maxLng, maxLat]], {
-      padding: 40
+      padding: project.properties.statewide ? 20 : 80,
     });
     newVp = {
       ...state.viewport,
