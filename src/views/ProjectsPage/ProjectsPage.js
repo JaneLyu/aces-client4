@@ -28,7 +28,6 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import moment from "moment"
 
 import * as Constants from "../../constants"
-import LoadSpinner from '../../components/LoadSpinner/LoadSpinner';
 
 
 const useStyles = makeStyles(styles);
