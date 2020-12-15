@@ -460,7 +460,7 @@ export default function FilterPanel(props) {
             </FormGroup>
           </ListItem>
 
-          <ListItem className={classes.filterTitle}>Mode</ListItem>
+{/*           <ListItem className={classes.filterTitle}>Mode</ListItem>
           <ListItem>
             <FormGroup>
               <FormControlLabel label={<span className={classes.filterCheckboxLabel}>Auto</span>}
@@ -473,7 +473,7 @@ export default function FilterPanel(props) {
                 control={<Checkbox color='primary' className={classes.filterCheckbox} checked={modeState.transit}
                   onChange={handleChangeMode('t')} value="t" margin="dense" size="small" />} />
             </FormGroup>
-          </ListItem>
+          </ListItem> */}
 
         </List>
 

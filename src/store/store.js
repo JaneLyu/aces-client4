@@ -41,6 +41,8 @@ const initialState = {
   mapStyle: Constants.MAPBOX_STYLE_STREET,
   mapMarkerFilter: Constants.MAPBOX_MARKER_BASE_FILTER,
   mapMarkerPaint: Constants.MAPBOX_SYMBOL_PAINT_MAP,
+  mapMarkerFocusFilter: Constants.MAPBOX_MARKER_FOCUS_BASE_FILTER,
+  mapMarkerFocusPaint: Constants.MAPBOX_SYMBOL_FOCUS_PAINT_MAP,
   mapGeomPointFilter: ['all', Constants.MAPBOX_GEOM_POINT_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
   mapGeomPointPaint: Constants.MAPBOX_GEOM_POINT_PAINT_MAP,
   mapGeomLineFilter: ['all', Constants.MAPBOX_GEOM_LINE_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
@@ -72,7 +74,7 @@ function getLoadingStatus(state) {
     if (state.projects && state.projects.length > 0
       //&& state.bikeshareStations && state.bikeshareStations.length > 0
       //&& state.fuelStations && state.fuelStations.length > 0
-      ) {
+    ) {
       loading = false;
     }
   }
@@ -127,8 +129,15 @@ function processProjectData(data) {
     return p;
   });
 
+  // sort order: type, statewide, n-s (latitude high to low, location coord[1])
   projects.sort(function (a, b) {
-    return a.properties.status - b.properties.status || a.properties.name.localeCompare(b.properties.name);
+    return (a.properties.status - b.properties.status ||
+      ((a.properties.statewide === b.properties.statewide) ? 0 : a.properties.statewide ? -1 : 1) ||
+      ((a.properties.statewide)
+        ? a.properties.name.localeCompare(b.properties.name)
+        : b.properties.location.geometry.coordinates[1] - a.properties.location.geometry.coordinates[1])
+      //a.properties.name.localeCompare(b.properties.name)
+    );
   });
 
   return projects;
@@ -362,7 +371,7 @@ function reducer(state, action) {
       };
       newState.isLoading = getLoadingStatus(newState);
       //console.log("bikeshare data done; isloading: " + newState.isLoading);     
-      
+
       return newState;
     case Constants.FETCH_BIKESHARE_STATION_DATA:
       let network = processBikeshareStationData(action.payload);
@@ -440,7 +449,7 @@ function reducer(state, action) {
       };
       newState.isLoading = getLoadingStatus(newState);
       //console.log("fueling data done; isloading: " + newState.isLoading);     
-      
+
       return newState;
     case Constants.SET_FUELING_CITY:
       let cityData = state.fuelStations.find(function (element) {
@@ -529,6 +538,7 @@ function reducer(state, action) {
       if (projId) {
         return {
           ...state,
+          mapMarkerFocusFilter: ["==", ["get", "id"], projId],
           mapGeomPointFilter: ["all", Constants.MAPBOX_GEOM_POINT_BASE_FILTER, ["==", ["get", "id"], projId]],
           mapGeomLineFilter: ["all", Constants.MAPBOX_GEOM_LINE_BASE_FILTER, ["==", ["get", "id"], projId]],
           mapGeomPolygonFilter: ["all", Constants.MAPBOX_GEOM_POLYGON_BASE_FILTER, ["==", ["get", "id"], projId]]
@@ -536,6 +546,7 @@ function reducer(state, action) {
       }
       return {
         ...state,
+        mapMarkerFocusFilter: Constants.MAPBOX_MARKER_FOCUS_BASE_FILTER,
         mapGeomPointFilter: ['all', Constants.MAPBOX_GEOM_POINT_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
         mapGeomLineFilter: ['all', Constants.MAPBOX_GEOM_LINE_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
         mapGeomPolygonFilter: ['all', Constants.MAPBOX_GEOM_POLYGON_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
@@ -546,6 +557,7 @@ function reducer(state, action) {
         project: null,
         viewport: state.projectsViewport || Constants.MAPBOX_INITIAL_VIEWPORT,
         mapMarkerFilter: Constants.MAPBOX_MARKER_BASE_FILTER,
+        mapMarkerFocusFilter: Constants.MAPBOX_MARKER_FOCUS_BASE_FILTER,
         mapGeomPointFilter: ['all', Constants.MAPBOX_GEOM_POINT_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
         mapGeomLineFilter: ['all', Constants.MAPBOX_GEOM_LINE_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],
         mapGeomPolygonFilter: ['all', Constants.MAPBOX_GEOM_POLYGON_BASE_FILTER, Constants.MAPBOX_GEOM_BASE_FILTER],

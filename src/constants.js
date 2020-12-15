@@ -24,6 +24,7 @@ export const MAPBOX_STYLE_SATELLITE = "mapbox://styles/yhuang7/ckbmkf85r1hzc1iqi
 export const MAPBOX_TRANSITION_DURATION = 0;
 
 export const MAPBOX_MARKER_BASE_FILTER = ['!', ['has', 'point_count']];
+export const MAPBOX_MARKER_FOCUS_BASE_FILTER = ["==", ["get", "id"], 0];
 export const MAPBOX_GEOM_BASE_FILTER = ["==", ["get", "id"], 0];
 export const MAPBOX_GEOM_POINT_BASE_FILTER = ["==", ["geometry-type"], "Point"];
 export const MAPBOX_GEOM_LINE_BASE_FILTER = ["==", ["geometry-type"], "LineString"];
@@ -35,9 +36,18 @@ export const MAPBOX_GEOM_OPACITY_MAP = 0.4;
 export const MAPBOX_GEOM_OPACITY_SATELLITE = 0.8;
 
 export const MAPBOX_SYMBOL_PAINT_MAP = {
+  'icon-opacity': 0.7,
+  'text-color': 'black',
+  'text-halo-color': 'white',
+  'text-halo-width': 0,
+  'text-opacity': 0.85,
+};
+export const MAPBOX_SYMBOL_FOCUS_PAINT_MAP = {
+  'icon-opacity': 1,
   'text-color': 'black',
   'text-halo-color': 'white',
   'text-halo-width': 0.5,
+  'text-opacity': 1,
 };
 export const MAPBOX_SYMBOL_PAINT_SATELLITE = {
   'text-color': 'white',

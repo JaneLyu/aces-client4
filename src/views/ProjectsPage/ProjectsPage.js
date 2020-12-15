@@ -305,8 +305,8 @@ export default function ProjectsPage(props) {
   return (
     <Box>
       {
-        state.isLoading && 
-        <div style={{position:'absolute', top: 'calc(50vh - 32px)', left: 'calc(50vw - 32px)'}}>
+        state.isLoading &&
+        <div style={{ position: 'absolute', top: 'calc(50vh - 32px)', left: 'calc(50vw - 32px)' }}>
           <img src={require('assets/img/loading.gif')} />
         </div>
       }
@@ -381,6 +381,8 @@ export default function ProjectsPage(props) {
                 />
                 <Layer id="projects-markers" {...projectsMarkerLayer} filter={state.mapMarkerFilter} paint={state.mapMarkerPaint}
                   onClick={handleProjectsLayerClick} onHover={handleProjectsLayerHover} onLeave={handleProjectsLayerLeave} />
+                <Layer id="projects-markers-focus" {...projectsMarkerFocusLayer} filter={state.mapMarkerFocusFilter}
+                  paint={state.mapMarkerFocusPaint} />
 
                 <NavigationControl showCompass showZoom position='top-right' />
               </MapGL>
@@ -525,21 +527,50 @@ const projectsMarkerLayer = {
   source: 'projects-source',
   layout: {
     'icon-image': ['concat', 'maki-marker-stroked-15-', ['get', 'status']],
-    //'icon-image': 'maki-marker-stroked-15-1',
-    'icon-size': 1.5,
+    'icon-size': 1.2,
     'icon-anchor': 'bottom',
     //'icon-ignore-placement': true,
     'icon-allow-overlap': true,
     'text-field': ['get', 'name'],
-    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    'text-font': ['DIN Offc Pro Regular', 'Arial Unicode MS Regular'],
     'text-size': 12,
     //'text-size': ['step', ['zoom'], 0, 8, 12],  // show label at zoom level
-    //'text-anchor': 'top',
+    'text-anchor': 'bottom',
     //'text-offset': [0,-.2],
-    'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
-    'text-radial-offset': 0.15,
+    //'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
+    'text-radial-offset': 1.65,
     'text-optional': true,
   },
+  paint: {
+    //'icon-opacity': 0.1,
+    //'text-color': 'red',
+    //'text-halo-color': 'white',
+    //'text-halo-width': 0,
+  }
+};
+
+const projectsMarkerFocusLayer = {
+  type: 'symbol',
+  source: 'projects-source',
+  layout: {
+    'icon-image': ['concat', 'maki-marker-stroked-15-', ['get', 'status']],
+    'icon-size': 1.8,
+    'icon-anchor': 'bottom',
+    'icon-allow-overlap': true,
+    'text-field': ['get', 'name'],
+    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+    'text-size': 14,
+    'text-anchor': 'bottom',
+    //'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
+    'text-radial-offset': 2.2,
+    'text-optional': true,
+  },
+  paint: {
+    //'icon-opacity': 1,
+    //'text-color': 'black',
+    //'text-halo-color': 'white',
+    //'text-halo-width': 0.5,
+  }
 };
 
 const geomPolygonLayer = {
