@@ -37,7 +37,7 @@ export const MAPBOX_GEOM_OPACITY_SATELLITE = 0.8;
 
 export const MAPBOX_SYMBOL_PAINT_MAP = {
   'icon-opacity': 0.6,
-  'text-color': '#333333',
+  'text-color': '#222222',
   'text-halo-color': 'white',
   'text-halo-width': 1,
   'text-opacity': 1,
