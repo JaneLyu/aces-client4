@@ -43,6 +43,8 @@ import {
   completedTasksChart
 } from "../../variables/charts.js";
 
+import { Store } from "../../store/store"
+
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import DOMPurify from 'dompurify';
@@ -196,18 +198,23 @@ export default function DetailsPanel(props) {
     classes.imgRoundedCircle,
     classes.imgFluid
   );
+  const [currId, setCurrId] = useState();
   const [imageFileURL, setImageFileURL] = useState();
   const [showCustomImage, setShowCustomImage] = useState(false);
   const [dataFileURL, setDataFileURL] = useState();
 
-  const { state } = props;
+  const { state, dispatch } = React.useContext(Store);
+
+  /* const { state } = props;
 
   if (state.state.project == null)
-    return null;
+    return null; */
 
-  let pprops = state.state.project ? state.state.project.properties : null;
+  //let pprops = state.state.project ? state.state.project.properties : null;
+  let pprops = state.project ? state.project.properties : null;
 
   if (!pprops) return null;
+
 
   const getStatusLabel = status => {
     switch (status) {
@@ -251,6 +258,7 @@ export default function DetailsPanel(props) {
     return null;
   }
 
+
   //let pcategories = pprops.category.toLowerCase().split(';');
   let pcategories = pprops.category;
 
@@ -259,30 +267,40 @@ export default function DetailsPanel(props) {
 
   // TODO: state change (via viewport) causes onload to fire at every map movement
   async function onLoad() {
-    try {
-      if (pprops.imageFiles /*&& !imageFileURL*/) {
-        console.log("get image file");
-        const imagef = await Storage.get(pprops.imageFiles, {
-          identityId: pprops.userId
-        });
-        setImageFileURL(imagef);
-      }
+    //console.log("onload: " + pprops.id);
 
-      if (pprops.dataFiles /*&& !dataFileURL*/) {
-        console.log("get data file");
-        const dataf = await Storage.get(pprops.dataFiles, {
-          identityId: pprops.userId
-        });
-        setDataFileURL(dataf);
-      }
+    if (!currId || currId != pprops.id) {
+      setCurrId(pprops.id);
+      try {
+        if (pprops.imageFiles /*&& !imageFileURL*/) {
+          console.log("get image file");
+          const imagef = await Storage.get(pprops.imageFiles, {
+            identityId: pprops.userId
+          });
+          setImageFileURL(imagef);
+        }
 
-      //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
-    } catch (e) {
-      //console.log("error onload");
-      setImageFileURL(null);
-      setDataFileURL(null);
+        if (pprops.dataFiles /*&& !dataFileURL*/) {
+          console.log("get data file");
+          const dataf = await Storage.get(pprops.dataFiles, {
+            identityId: pprops.userId
+          });
+          setDataFileURL(dataf);
+        }
+
+        //setEditorState(EditorState.createWithContent(convertFromRaw(description)));
+      } catch (e) {
+        //console.log("error onload");
+        setImageFileURL(null);
+        setDataFileURL(null);
+      }
+    } else {
+      //console.log("same project");
+      //setImageFileURL(null);
+      //setDataFileURL(null);
     }
   }
+
   onLoad();
 
   function formatFilename(str) {
@@ -321,18 +339,16 @@ export default function DetailsPanel(props) {
       {
         pprops.lead && pprops.lead.name &&
         <Grid container style={{ padding: '10px 20px' }}>
-          <Grid>
-            <Box display="flex" p={0} style={{ width: '100%' }}>
-              <div>
-                <FormLabel style={{ fontWeight: 'bold', color: 'black' }}>{pprops.lead.name}</FormLabel>
-                {
-                  pprops.lead.email &&
-                  <span style={{ marginLeft: '30px' }}>
-                    <a href={"mailto:" + pprops.lead.email}>{pprops.lead.email}</a>
-                  </span>
-                }
-              </div>
-            </Box>
+          <Grid item>
+            <div style={{ fontFamily: 'Arial, Helvetica, sans-serif', color: 'black' }}>
+              {pprops.lead.name}
+              {
+                pprops.lead.email &&
+                <span style={{ marginLeft: '30px' }}>
+                  <a href={"mailto:" + pprops.lead.email}>{pprops.lead.email}</a>
+                </span>
+              }
+            </div>
           </Grid>
         </Grid>
       }
@@ -393,7 +409,7 @@ export default function DetailsPanel(props) {
           <svg height="15" width="15">
             <circle cx="7.5" cy="7.5" r="7.5" stroke="white" stroke-width="0" fill={Constants.PROJECT_TYPE_COLORS[pprops.status]} />
           </svg>
-          <span style={{ paddingLeft: '10px', color: '', fontWeight: 'bold', fontSize: '1rem' }}>
+          <span style={{ paddingLeft: '10px', fontFamily: 'Arial, Helvetica, sans-serif' }}>
             {getStatusLabel(pprops.status)}
           </span>
         </Grid>
@@ -444,7 +460,7 @@ export default function DetailsPanel(props) {
       }
       <Grid container spacing={1} style={{ padding: '10px 20px' }}>
         <Grid item>
-          <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>
+          <span style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
             January 11, 2021
           </span>
         </Grid>
