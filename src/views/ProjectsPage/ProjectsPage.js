@@ -457,7 +457,7 @@ export default function ProjectsPage(props) {
 
         {
           !state.isLoading && projectId &&
-          <Paper elevation={2} style={{ position: 'absolute', top: '78px', left: '10px', backgroundColor: 'white' }}>
+          <Paper elevation={2} style={{ position: 'absolute', top: (Constants.HEADER_HEIGHT + 12) + 'px', left: '10px', backgroundColor: 'white' }}>
             <Button onClick={handleGoBack}>
               <ArrowBackIcon fontSize="small" />&nbsp;Back
             </Button>
@@ -532,13 +532,13 @@ const projectsMarkerLayer = {
     //'icon-ignore-placement': true,
     'icon-allow-overlap': true,
     'text-field': ['get', 'name'],
-    'text-font': ['DIN Offc Pro Regular', 'Arial Unicode MS Regular'],
+    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Regular'],
     'text-size': 12,
     //'text-size': ['step', ['zoom'], 0, 8, 12],  // show label at zoom level
     'text-anchor': 'bottom',
     //'text-offset': [0,-.2],
     //'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
-    'text-radial-offset': 1.65,
+    'text-radial-offset': 1.7,
     'text-optional': true,
   },
   paint: {
@@ -554,15 +554,15 @@ const projectsMarkerFocusLayer = {
   source: 'projects-source',
   layout: {
     'icon-image': ['concat', 'maki-marker-stroked-15-', ['get', 'status']],
-    'icon-size': 1.8,
+    'icon-size': 1.2,
     'icon-anchor': 'bottom',
     'icon-allow-overlap': true,
     'text-field': ['get', 'name'],
     'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-    'text-size': 14,
+    'text-size': 12,
     'text-anchor': 'bottom',
     //'text-variable-anchor': ['top', 'left', 'right', 'bottom', 'center', 'top-left', 'top-right', 'bottom-left', 'bottom-right'],
-    'text-radial-offset': 2.2,
+    'text-radial-offset': 1.7,
     'text-optional': true,
   },
   paint: {

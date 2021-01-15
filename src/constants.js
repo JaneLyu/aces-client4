@@ -36,11 +36,11 @@ export const MAPBOX_GEOM_OPACITY_MAP = 0.4;
 export const MAPBOX_GEOM_OPACITY_SATELLITE = 0.8;
 
 export const MAPBOX_SYMBOL_PAINT_MAP = {
-  'icon-opacity': 0.7,
+  'icon-opacity': 0.5,
   'text-color': 'black',
-  'text-halo-color': 'white',
+  //'text-halo-color': 'white',
   'text-halo-width': 0,
-  'text-opacity': 0.85,
+  'text-opacity': 0.55,
 };
 export const MAPBOX_SYMBOL_FOCUS_PAINT_MAP = {
   'icon-opacity': 1,

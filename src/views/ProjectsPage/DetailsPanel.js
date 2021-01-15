@@ -296,27 +296,48 @@ export default function DetailsPanel(props) {
 
   return (
     <Paper style={{
-      width: '50vw', height: 'calc(100vh - ' + Constants.HEADER_HEIGHT + 'px)', overflow: 'auto', padding: '0px 15px 50px 15px',
+      width: '50vw', height: 'calc(100vh - ' + Constants.HEADER_HEIGHT + 'px)', overflow: 'auto', padding: '0px 20px 50px 20px',
       boxShadow: '-5px 0px 5px 0px #888888'
     }} >
-      <div className={classes.title} style={{ fontWeight: 'bold', fontSize: '1.5rem', padding: '20px 0px 10px 0px' }}>
+      <div className={classes.title} style={{ fontWeight: 'bold', fontSize: '1.5rem', lineHeight: '1.75rem', padding: '20px 0px 10px 0px' }}>
         {pprops ? pprops.title : ''}
       </div>
 
       {
         pprops.statewide &&
-        <Grid container spacing={1}
-          alignItems="flex-start">
+        <Grid container spacing={1} alignItems="flex-start" style={{ padding: '0px 0px 10px 0px' }}>
           <Grid item>
-            <img src={require('assets/img/statewide_icon.png')} height="22px" />
-            <span style={{ paddingLeft: '10px', fontSize: '1.15rem', color: '#005ca2', fontWeight: 'bold' }}>
+            <img src={require('assets/img/statewide_icon.png')} height="16px" />
+            <span style={{ paddingLeft: '10px', fontSize: '1rem', color: '#005ca2', fontWeight: 'bold' }}>
               Statewide Initiative
                 </span>
           </Grid>
         </Grid>
       }
 
-      <Grid container spacing={1} direction="row" justify="space-between" alignItems="center">
+      {
+        pprops.lead && pprops.lead.name && <h4 style={{ margin: '20px 0px 0px 0px', fontWeight: 'bold' }}>Project Lead</h4>
+      }
+      {
+        pprops.lead && pprops.lead.name &&
+        <Grid container style={{ padding: '10px 20px' }}>
+          <Grid>
+            <Box display="flex" p={0} style={{ width: '100%' }}>
+              <div>
+                <FormLabel style={{ fontWeight: 'bold', color: 'black' }}>{pprops.lead.name}</FormLabel>
+                {
+                  pprops.lead.email &&
+                  <span style={{ marginLeft: '30px' }}>
+                    <a href={"mailto:" + pprops.lead.email}>{pprops.lead.email}</a>
+                  </span>
+                }
+              </div>
+            </Box>
+          </Grid>
+        </Grid>
+      }
+
+      {/*       <Grid container spacing={1} direction="row" justify="space-between" alignItems="center">
         <Grid item>
           <svg height="15" width="15" style={{}}>
             <circle cx="7.5" cy="7.5" r="7.5" stroke="white" stroke-width="0" fill={Constants.PROJECT_TYPE_COLORS[pprops.status]} />
@@ -336,62 +357,61 @@ export default function DetailsPanel(props) {
             }
           </div>
         </Grid>
+      </Grid> */}
+
+      {
+        <h4 style={{ margin: '20px 0px 0 0px', fontWeight: 'bold' }}>Abstract / Project Information</h4>
+      }
+      <Grid container spacing={1} style={{ padding: '10px 20px 0px 20px' }}>
+        <Grid item>
+          <div style={{}} dangerouslySetInnerHTML={createDescriptionMarkup()}></div>
+        </Grid>
       </Grid>
 
-      <div style={{ margin: '30px 0 0 0' }} dangerouslySetInnerHTML={createDescriptionMarkup()}></div>
+      {
+        <h4 style={{ margin: '20px 0px 0 0px', fontWeight: 'bold' }}>ACES Category</h4>
+      }
+      <Grid container spacing={1} style={{ padding: '10px 20px' }}>
+        <Grid item>
+          <div>
+            {
+              ["a", "c", "e", "s"].map((cat, i) =>
+                (pprops.category.includes(cat))
+                  ? <img src={require('assets/img/aces_' + cat + '2_on.svg')} />
+                  : <img src={require('assets/img/aces_' + cat + '2_off.svg')} />
+              )
+            }
+          </div>
+        </Grid>
+      </Grid>
 
+      {
+        <h4 style={{ margin: '20px 0px 0 0px', fontWeight: 'bold' }}>Project Type</h4>
+      }
+      <Grid container spacing={1} style={{ padding: '10px 20px' }}>
+        <Grid item>
+          <svg height="15" width="15">
+            <circle cx="7.5" cy="7.5" r="7.5" stroke="white" stroke-width="0" fill={Constants.PROJECT_TYPE_COLORS[pprops.status]} />
+          </svg>
+          <span style={{ paddingLeft: '10px', color: '', fontWeight: 'bold', fontSize: '1rem' }}>
+            {getStatusLabel(pprops.status)}
+          </span>
+        </Grid>
+      </Grid>
+
+      {
+        pprops && pprops.imageFiles && imageFileURL && <h4 style={{ margin: '20px 0px 0 0px', fontWeight: 'bold' }}>Images</h4>
+      }
       {
         pprops && pprops.imageFiles && imageFileURL &&
-        <div style={{ margin: '20px 5px 0 10px' }}>
-          <img src={imageFileURL} key={imageFileURL} style={{ width: '100%' }} />
-        </div>
-      }
-
-      {
-        pprops.lead && pprops.lead.name && <h4 style={{ margin: '30px 0px 0 0px', fontWeight: 'bold' }}>Project Lead</h4>
-      }
-      {
-        pprops.lead && pprops.lead.name &&
-        <Grid container>
-          <Grid>
-            <Box display="flex" p={0} style={{ width: '100%' }}>
-              <div style={{ padding: '10px 10px', verticalAlign: 'middle' }}>
-                <FormLabel style={{ fontWeight: 'bold', color: 'black' }}>{pprops.lead.name}</FormLabel>
-                {
-                  pprops.lead.email &&
-                  <span style={{ marginLeft: '20px' }}>
-                    <a href={"mailto:" + pprops.lead.email}>{pprops.lead.email}</a>
-                  </span>
-                }
-              </div>
-            </Box>
+        <Grid container spacing={1} style={{ padding: '10px 20px' }}>
+          <Grid item>
+            <div style={{ margin: '' }}>
+              <img src={imageFileURL} key={imageFileURL} style={{ maxWidth: '100%' }} />
+            </div>
           </Grid>
         </Grid>
       }
-      <Grid container>
-        {
-          /* pprops.people.map((person) => {
-            return (
-              <Grid item xs={12} sm={12} md={6}>
-                <Box display="flex" p={2} style={{ width: '100%' }}>
-                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden' }}>
-                    <img src={Constants.STATIC_ROOT_URL + 'images/user' + person.id + '.jpg'} width="80px" />
-                  </div>
-                  <div style={{ padding: '10px 10px', verticalAlign: 'middle' }}>
-                    <FormLabel style={{ fontWeight: 'bold', color: 'black' }}>{person.name}</FormLabel>
-                    <div style={{ paddingTop: '10px' }}>
-                      <i className={"far fa-envelope"} style={{ margin: '4px', padding: '0' }} />
-                      <i className={"fab fa-linkedin"} style={{ margin: '4px', padding: '0' }} />
-                      <i className={"fab fa-twitter"} style={{ margin: '4px', padding: '0' }} />
-                      <i className={"fab fa-facebook"} style={{ margin: '4px', padding: '0' }} />
-                    </div>
-                  </div>
-                </Box>
-              </Grid>
-            );
-          }) */
-        }
-      </Grid>
 
       {
         dataFileURL && pprops.dataFiles &&
@@ -419,41 +439,16 @@ export default function DetailsPanel(props) {
         </GridContainer>
       }
 
-      {/*       <GridContainer>
-        <GridItem xs={12} sm={12} md={6}>
-          <Card chart>
-            <CardHeader color="success">
-              <ChartistGraph
-                className="ct-chart"
-                data={pprops.datasets[0]}
-                type="Line"
-                options={dailySalesChart.options}
-              //listener={dailySalesChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Data Set 1</h4>
-            </CardBody>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={6}>
-          <Card chart>
-            <CardHeader color="warning">
-              <ChartistGraph
-                className="ct-chart"
-                data={pprops.datasets[1]}
-                type="Bar"
-                options={emailsSubscriptionChart.options}
-                responsiveOptions={emailsSubscriptionChart.responsiveOptions}
-              //listener={emailsSubscriptionChart.animation}
-              />
-            </CardHeader>
-            <CardBody>
-              <h4 className={classes.cardTitle}>Data Set 2</h4>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer> */}
+      {
+        <h4 style={{ margin: '20px 0px 0 0px', fontWeight: 'bold' }}>Last Update</h4>
+      }
+      <Grid container spacing={1} style={{ padding: '10px 20px' }}>
+        <Grid item>
+          <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>
+            January 11, 2021
+          </span>
+        </Grid>
+      </Grid>
 
     </Paper>
   );
