@@ -129,10 +129,11 @@ function processProjectData(data) {
     return p;
   });
 
-  // sort order: type, statewide, n-s (latitude high to low, location coord[1])
+  // sort order: type, statewide (true or false/empty), n-s (latitude high to low, location coord[1])
   projects.sort(function (a, b) {
     return (a.properties.status - b.properties.status ||
-      ((a.properties.statewide === b.properties.statewide) ? 0 : a.properties.statewide ? -1 : 1) ||
+      ((a.properties.statewide && b.properties.statewide) || (!a.properties.statewide && !b.properties.statewide) ? 0 
+        : a.properties.statewide ? -1 : 1) ||
       ((a.properties.statewide)
         ? a.properties.name.localeCompare(b.properties.name)
         : b.properties.location.geometry.coordinates[1] - a.properties.location.geometry.coordinates[1])
