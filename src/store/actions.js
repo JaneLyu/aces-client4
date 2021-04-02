@@ -192,6 +192,14 @@ export const viewOneProject = (projectId, state, dispatch) => {
   return dispatch(dispatchObj);
 };
 
+export const resetProjectsView = (state, dispatch) => {
+  let dispatchObj = {
+    type: Constants.RESET_PROJECTS_VIEW,
+    payload: null
+  };
+  return dispatch(dispatchObj);
+};
+
 export const viewProjects = (state, dispatch) => {
   let dispatchObj = {
     type: Constants.VIEW_PROJECTS,

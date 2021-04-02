@@ -577,6 +577,16 @@ function reducer(state, action) {
         mapGeomLineFilter: ["all", Constants.MAPBOX_GEOM_LINE_BASE_FILTER, ["==", ["get", "id"], proj.properties.id]],
         mapGeomPolygonFilter: ["all", Constants.MAPBOX_GEOM_POLYGON_BASE_FILTER, ["==", ["get", "id"], proj.properties.id]]
       };
+    case Constants.RESET_PROJECTS_VIEW:
+      // set aces view, reset filters, reset viewport
+      return {
+        ...state,
+        projectsVisible: true, bikesharesVisible: false, fuelStationVisible: false,
+        filters: [], visibleProjects: Array.from(state.projects),
+        project: null,
+        viewport: Constants.MAPBOX_INITIAL_VIEWPORT,
+      };
+
     case Constants.ADD_PROJECT_FILTER:
       // payload = filter
       newFilters = [...state.projectFilters, action.payload];

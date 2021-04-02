@@ -74,7 +74,7 @@ export default function USDOTPage(props) {
               <img src={Constants.STATIC_ROOT_URL + 'images/external_link.png'} style={{ width: '20px', marginBottom: '5px' }} />
             </a>
           </Box>
-          <div style={{ fontStyle: 'italic' }}>Last updated: Friday, September 4, 2020</div>
+          <div style={{ fontStyle: 'italic' }}>Last updated: Wednesday, March 31, 2021</div>
 
           <Box p={0} style={{ width: '100%', overflow: 'hidden' }}>
             <div style={{ fontSize: '0.95rem', padding: '10px 0 10px 0'}}>

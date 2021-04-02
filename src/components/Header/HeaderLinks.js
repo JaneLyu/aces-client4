@@ -22,7 +22,8 @@ import { Button } from "components/CustomButtons/Button";
 import * as Constants from "../../constants"
 
 import { useUserState, useUserDispatch, loginUser, signOut } from "../../context/UserContext";
-
+import { Store } from "../../store/store"
+import { resetProjectsView } from "../../store/actions"
 
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
 
@@ -41,7 +42,8 @@ const useStyles2 = makeStyles(theme => ({
 export default function HeaderLinks(props) {
   const classes = useStyles();
   const classes2 = useStyles2();
-
+  
+  const { state, dispatch } = React.useContext(Store);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
@@ -83,6 +85,10 @@ export default function HeaderLinks(props) {
         path.includes(Constants.ROOT_URL + "federal/usdot"));
   };
 
+  const handleProjectsClick = event => {
+    resetProjectsView(state, dispatch);
+  };
+
   return (
     <CustomDropdown
       left
@@ -93,7 +99,7 @@ export default function HeaderLinks(props) {
         color: "transparent"
       }}
       dropdownList={[
-        <Link to={Constants.ROOT_URL + "projects"} className={classes.dropdownLink}>Florida</Link>,
+        <Link to={Constants.ROOT_URL + "projects"} className={classes.dropdownLink} onClick={handleProjectsClick}>Florida</Link>,
         { divider: true },
         { header: true, content: <span>Federal</span> },
         <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;NOCoE</Link>,

@@ -100,10 +100,6 @@ export default function ProjectsPage(props) {
     [state.fuelStations]
   );
 
-  React.useEffect(() => {
-    //mapRef.current.getMap().resize();
-  }, [projectId]);
-
 
   const handleProjectsLayerClick = event => {
     const feature = event.features[0];
@@ -214,7 +210,7 @@ export default function ProjectsPage(props) {
   const renderPopup = () => {
     let popupInfo;
 
-    if (bikesharePopupInfo) {
+    if (state.bikesharesVisible && bikesharePopupInfo) {
       popupInfo = bikesharePopupInfo;
       return (
         <Popup
@@ -238,7 +234,7 @@ export default function ProjectsPage(props) {
       );
     }
 
-    if (chargingPopupInfo) {
+    if (state.fuelStationVisible && chargingPopupInfo) {
       popupInfo = chargingPopupInfo;
       return (
         <Popup

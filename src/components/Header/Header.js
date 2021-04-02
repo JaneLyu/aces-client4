@@ -22,6 +22,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 import { ROOT_URL } from "../../constants"
 import { useUserState, useUserDispatch, loginUser, signOut } from "../../context/UserContext";
+import { Store } from "../../store/store"
+import { resetProjectsView } from "../../store/actions"
 
 // core components
 import styles from "assets/jss/material-kit-react/components/headerStyle.js";
@@ -31,6 +33,7 @@ const useStyles = makeStyles(styles);
 export default function Header(props) {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { state, dispatch } = React.useContext(Store);
 
   React.useEffect(() => {
     window.scrollTo(0, 0)
@@ -97,11 +100,15 @@ export default function Header(props) {
     </AppBar>
   ); */
 
+  const handleProjectsClick = event => {
+    resetProjectsView(state, dispatch);
+  };
+
   const brandComponent = (
     <div>{/* <img src={require('assets/img/aces_logo_notext_sm.png')} height="25px"></img> */}
       {
         brand && brand.length > 0 &&
-        <Button component={Link} to={ROOT_URL + "projects"} className={classes.title}>{brand}</Button>
+        <Button component={Link} to={ROOT_URL + "projects"} className={classes.title} onClick={handleProjectsClick}>{brand}</Button>
       }
       {
         brand && brand.length > 0 && isAuthenticated && isAdmin &&
