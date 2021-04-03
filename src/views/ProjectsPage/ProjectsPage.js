@@ -279,14 +279,20 @@ export default function ProjectsPage(props) {
   };
 
   const handleACESViewClick = event => {
+    if (state.projectsVisible) return;
+
     toggleProjectsVisibility(state, dispatch);
     clearPopupInfo();
   };
   const handleBikeshareViewClick = event => {
+    if (state.bikesharesVisible) return;
+
     toggleBikeshareVisibility(state, dispatch);
     clearPopupInfo();
   };
   const handleFuelViewClick = event => {
+    if (state.fuelStationVisible) return;
+
     toggleFuelVisibility(state, dispatch);
     clearPopupInfo();
   };
