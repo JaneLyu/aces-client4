@@ -102,7 +102,7 @@ export default function FilterPanel(props) {
   React.useEffect(
     () => {
       updateCheckboxes();
-    }, []);
+    }, [state.projectFilters]);
 
 
   const [statusState, setStatusState] = React.useState({

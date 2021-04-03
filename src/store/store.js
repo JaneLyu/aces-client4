@@ -582,7 +582,7 @@ function reducer(state, action) {
       return {
         ...state,
         projectsVisible: true, bikesharesVisible: false, fuelStationVisible: false,
-        filters: [], visibleProjects: Array.from(state.projects),
+        projectFilters: [], visibleProjects: Array.from(state.projects),
         project: null,
         viewport: Constants.MAPBOX_INITIAL_VIEWPORT,
       };
