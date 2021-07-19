@@ -461,7 +461,7 @@ export default function DetailsPanel(props) {
       <Grid container spacing={1} style={{ padding: '10px 20px' }}>
         <Grid item>
           <span style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
-            March 25, 2021
+            July 19, 2021
           </span>
         </Grid>
       </Grid>
