@@ -99,7 +99,7 @@ export default function HeaderLinks(props) {
         color: "transparent"
       }}
       dropdownList={[
-        <Link to={Constants.ROOT_URL + "projects"} className={classes.dropdownLink} onClick={handleProjectsClick}>Florida</Link>,
+        <Link to={Constants.ROOT_URL} className={classes.dropdownLink} onClick={handleProjectsClick}>Florida</Link>,
         { divider: true },
         { header: true, content: <span>Federal</span> },
         <Link to={Constants.ROOT_URL + "federal/nocoe"} className={classes.dropdownLink}>&nbsp;&nbsp;&nbsp;&nbsp;NOCoE</Link>,

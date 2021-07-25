@@ -1,5 +1,4 @@
 const dev = {
-  STRIPE_KEY: "YOUR_STRIPE_DEV_PUBLIC_KEY",
   s3: {
     REGION: "us-east-2",
     BUCKET: "aces-uploads"
@@ -33,7 +32,6 @@ const dev = {
 
 
 const prod = {
-  STRIPE_KEY: "YOUR_STRIPE_PROD_PUBLIC_KEY",
   s3: {
     REGION: "us-east-2",
     BUCKET: "aces-uploads"

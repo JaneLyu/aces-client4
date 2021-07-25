@@ -108,7 +108,7 @@ export default function Header(props) {
     <div>{/* <img src={require('assets/img/aces_logo_notext_sm.png')} height="25px"></img> */}
       {
         brand && brand.length > 0 &&
-        <Button component={Link} to={ROOT_URL + "projects"} className={classes.title} onClick={handleProjectsClick}>{brand}</Button>
+        <Button component={Link} to={ROOT_URL} className={classes.title} onClick={handleProjectsClick}>{brand}</Button>
       }
       {
         brand && brand.length > 0 && isAuthenticated && isAdmin &&

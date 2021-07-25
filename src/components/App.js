@@ -49,10 +49,10 @@ export default function App() {
         <PrivateRoute path={rootpath + "dashboard/projects"} component={DashboardProjects} />
         <PrivateRoute path={rootpath + "dashboard"} component={DashboardProjects} />
 
-        <Route path={rootpath} component={LandingPage} />
+        <Route path={rootpath} component={ProjectsPage} />
       </Switch>
-      <Redirect from={ROOT_URL} to={rootpath + "projects"} />
-      <Redirect from={ROOT_URL + "#"} to={rootpath + "projects"} />
+      {/* <Redirect from={ROOT_URL} to={rootpath + "projects"} />
+      <Redirect from={ROOT_URL + "#"} to={rootpath + "projects"} /> */}
     </HashRouter>
   );
 
