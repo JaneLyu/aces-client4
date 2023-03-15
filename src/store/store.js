@@ -327,6 +327,7 @@ function reducer(state, action) {
     case Constants.FETCH_PROJECTS_DATA:
       let projects = processProjectData(action.payload);
       let geoms = [];
+
       projects.forEach((proj) => {
         if (proj.properties.geom && proj.properties.geom.features.length > 0) {
           proj.properties.geom.features.forEach((geo) => {

@@ -328,7 +328,7 @@ export default function DetailsPanel(props) {
             <img src={require('assets/img/statewide_icon.png')} height="16px" />
             <span style={{ paddingLeft: '10px', fontSize: '1rem', color: '#005ca2', fontWeight: 'bold' }}>
               Statewide Initiative
-                </span>
+            </span>
           </Grid>
         </Grid>
       }
@@ -460,9 +460,11 @@ export default function DetailsPanel(props) {
       }
       <Grid container spacing={1} style={{ padding: '10px 20px' }}>
         <Grid item>
-          <span style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
-            July 19, 2021
-          </span>
+          {pprops.updatedAt &&
+            <span style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
+              {new Date(pprops.updatedAt).toLocaleDateString()}
+            </span>
+          }
         </Grid>
       </Grid>
 
