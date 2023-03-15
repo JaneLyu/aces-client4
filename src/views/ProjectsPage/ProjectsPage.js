@@ -22,7 +22,7 @@ import {
   toggleProjectsVisibility, toggleBikeshareVisibility, toggleFuelVisibility
 } from "../../store/actions"
 import DetailsPanel from "./DetailsPanel";
-import ResultsPanel from "./ResultsPanel";
+//import ResultsPanel from "./ResultsPanel";
 import MapGL, { Popup, Source, Layer, NavigationControl } from '@urbica/react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import moment from "moment"
