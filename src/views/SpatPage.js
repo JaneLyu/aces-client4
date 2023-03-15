@@ -69,6 +69,8 @@ export default function SpatPage(props) {
     const feature = event.features[0];
     if (!feature) return;
 
+    console.log("show popup");
+    console.log(feature);
     setPopupInfo(feature)
   };
 
