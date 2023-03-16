@@ -66,8 +66,8 @@ export default function SpatPage(props) {
   }
 
   const handleLayerClick = event => {
-    //console.log("layer click");
-    //console.log(event);
+    console.log("layer click");
+    console.log(event);
     const feature = event.features[0];
     if (!feature) return;
 
@@ -88,8 +88,8 @@ export default function SpatPage(props) {
   };
 
   const handleMapClick = event => {
-    //console.log("map click");
-    //console.log(event);
+    console.log("map click");
+    console.log(event);
     if (!event.features || !event.features[0]) {
       //setPopupInfo(null);
     }
