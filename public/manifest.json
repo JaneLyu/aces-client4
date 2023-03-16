@@ -1,6 +1,6 @@
 {
-  "short_name": "",
-  "name": "",
+  "short_name": "ACES Activity Viewer",
+  "name": "ACES Activity Viewer",
   "icons": [
     {
       "src": "favicon.ico",
