@@ -113,7 +113,7 @@ export default function SpatPage(props) {
       <div>
         <Box p={0} style={{ width: '100%', padding: '20px 20px 20px 20px' }}>
           <Box display="flex" style={{ padding: '0px 0 10px 0' }}>
-            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>NOCoE SPaT Challenge</span>
+            <span style={{ fontSize: '25px', fontWeight: 'bold' }}>NOCoE SPaTs Challenge</span>
             <a href="https://transportationops.org/spatchallenge" target="_blank" rel="noopener noreferrer"
               style={{ marginLeft: '20px' }}>
               <img src={Constants.STATIC_ROOT_URL + 'images/external_link.png'} style={{ width: '20px', marginBottom: '5px' }} />
