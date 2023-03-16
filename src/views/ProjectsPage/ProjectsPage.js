@@ -198,7 +198,7 @@ export default function ProjectsPage(props) {
 
   const handleMapClick = event => {
     if (!event.features || !event.features[0]) {
-      clearPopupInfo();
+      //clearPopupInfo();
     }
   };
 

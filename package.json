@@ -8,7 +8,7 @@
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
-    "@urbica/react-map-gl": "1.14.1",
+    "@urbica/react-map-gl": "1.16.2",
     "aws-amplify": "^3.0.24",
     "chartist": "0.10.1",
     "classnames": "2.2.6",

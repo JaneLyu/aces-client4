@@ -50,10 +50,10 @@ export default function SpatPage(props) {
         latitude={popupInfo.geometry.coordinates[1]}
         closeButton={true}
         closeOnClick={false}
-        maxWidth="300px"
+        maxWidth="400px"
         onClose={() => setPopupInfo(null)}
       >
-        <div style={{ maxHeight: '300px', overflow: 'auto', marginTop: '8px' }}>
+        <div style={{ overflow: 'auto', marginTop: '8px' }}>
           <p style={{ fontSize: '0.7rem' }}><strong>Location:</strong>&nbsp;&nbsp;{popupInfo.properties.location}</p>
           <p style={{ fontSize: '0.7rem' }}><strong>Timeline:</strong>&nbsp;&nbsp;{popupInfo.properties.timeline}</p>
           <p style={{ fontSize: '0.7rem' }}><strong>Description:</strong>&nbsp;&nbsp;
@@ -66,12 +66,13 @@ export default function SpatPage(props) {
   }
 
   const handleLayerClick = event => {
+    //console.log("layer click");
+    //console.log(event);
     const feature = event.features[0];
     if (!feature) return;
 
-    console.log("show popup");
-    console.log(feature);
     setPopupInfo(feature)
+    //event.originalEvent.stopPropagation();
   };
 
   const handleLayerHover = event => {
@@ -87,8 +88,10 @@ export default function SpatPage(props) {
   };
 
   const handleMapClick = event => {
+    //console.log("map click");
+    //console.log(event);
     if (!event.features || !event.features[0]) {
-      setPopupInfo(null);
+      //setPopupInfo(null);
     }
   };
 
@@ -133,7 +136,7 @@ export default function SpatPage(props) {
                   features: state.spatList
                 }}
               />
-              <Layer {...spatSympbolLayer} paint={state.mapMarkerPaint} 
+              <Layer {...spatSympbolLayer} paint={state.mapMarkerPaint}
                 onClick={handleLayerClick} onHover={handleLayerHover} onLeave={handleLayerLeave} />
 
               {renderPopup()}
@@ -154,8 +157,8 @@ export default function SpatPage(props) {
                   SPaT deployment operational
                 </div>
               </div>
-            </MapGL>
 
+            </MapGL>
           </Box>
         </Box>
       </div>
